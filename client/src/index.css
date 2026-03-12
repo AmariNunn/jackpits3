@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Oswald:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --font-body: 'Lora', serif;
+  --font-display: 'Playfair Display', serif;
+  --font-athletic: 'Bebas Neue', 'Oswald', sans-serif;
+
+  --background: 38 47% 93%;
+  --foreground: 145 60% 9%;
+
+  --primary: 145 63% 17%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 38 30% 88%;
+  --secondary-foreground: 145 63% 17%;
+
+  --muted: 38 20% 88%;
+  --muted-foreground: 145 20% 35%;
+
+  --accent: 38 55% 50%;
+  --accent-foreground: 145 60% 9%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 38 20% 82%;
+  --input: 38 20% 82%;
+  --ring: 145 63% 17%;
+
+  --card: 38 40% 96%;
+  --card-foreground: 145 60% 9%;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 145 60% 5%;
+  --foreground: 38 20% 90%;
+
+  --primary: 145 63% 25%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 145 30% 15%;
+  --secondary-foreground: 38 20% 90%;
+
+  --muted: 145 30% 15%;
+  --muted-foreground: 38 20% 60%;
+
+  --accent: 38 55% 50%;
+  --accent-foreground: 145 60% 10%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 145 30% 20%;
+  --input: 145 30% 20%;
+  --ring: 145 63% 25%;
+
+  --card: 145 40% 10%;
+  --card-foreground: 38 20% 90%;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 overflow-x-hidden;
+    font-family: var(--font-body);
+    color: #0d1f0f;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight;
+    color: #0d1f0f;
+  }
+}
+
+.font-athletic {
+  font-family: var(--font-athletic);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.bg-cream {
+  background-color: #f5f0e8;
+}
+
+.bg-forest {
+  background-color: #1a6b3a;
+}
+
+.bg-deep-black {
+  background-color: #0d1f0f;
+}
+
+.text-forest {
+  color: #1a6b3a;
+}
+
+.text-gold {
+  color: #c9973a;
+}
+
+.text-cream {
+  color: #f5f0e8;
+}
+
+.text-deep {
+  color: #0d1f0f;
+}
+
+.border-gold {
+  border-color: #c9973a;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/40;
+}

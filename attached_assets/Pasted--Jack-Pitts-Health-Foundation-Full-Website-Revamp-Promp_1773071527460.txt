@@ -1,0 +1,154 @@
+# Jack Pitts Health Foundation — Full Website Revamp Prompt
+
+## Overview
+Revamp the existing Jack Pitts Health Foundation website (jackpits - Replit project) into a visually stunning, story-driven experience that honors Jack Pitts' extraordinary legacy as a football pioneer, civil rights figure, and community health champion. The site should feel like a premium sports foundation meets legacy tribute — think ESPN documentary energy crossed with The Masters aesthetic.
+
+---
+
+## Design Direction
+
+**Aesthetic**: Editorial sports legacy — rich forest green (#1a6b3a) as dominant color, deep cream/ivory (#f5f0e8) as background, warm gold (#c9973a) as accent, and near-black (#0d1f0f) for text. The vibe is "Sports Illustrated Hall of Fame issue meets civil rights museum exhibit."
+
+**Typography**: 
+- Display/Headlines: `Playfair Display` (serif, dramatic) for hero titles
+- Subheadings: `Bebas Neue` or `Oswald` (bold, athletic) for stats and labels
+- Body: `Lora` (elegant serif) for copy
+- Import from Google Fonts
+
+**Key Visual Assets to Use**:
+- Real photos from the gallery (tournament photos — group shots on course, dinner, trophies)
+- Anime-style illustrations of Jack Pitts (green polo, green cap, blue mirrored sunglasses, white mustache) in three poses: trophy raise, golf swing, putting stance, and celebration fist pump — these should be used as featured hero/section artwork throughout the site
+- Use the anime "trophy raise" image on the homepage hero
+- Use the "swing" image on the Schedule page
+- Use the "putting" image in the Registration section
+- Use the "celebration" image on the About/Legacy section
+
+---
+
+## Pages to Update
+
+### 1. HOME PAGE — Complete Redesign
+
+**Hero Section:**
+- Full-viewport dark green textured background (subtle noise/grain)
+- Huge serif headline: **"JACK PITTS"** in 120px+ Playfair Display, stacked layout
+- Subhead: *"CHAMPIONING COMMUNITY HEALTH & WELLNESS"*
+- EST. 2010 pill badge
+- Two CTA buttons: "Register Now" (solid green) | "Sponsorship" (outlined)
+- Place the **anime trophy-raise illustration** on the right side of the hero — large, dramatic, slightly overlapping the background
+- Floating stat card: **"15+ YEARS OF IMPACT"**
+- Two real event photos as floating polaroid-style cards on the left side
+
+**Mission Section (NEW — deeply expanded):**
+Add a full "The Legend" section BETWEEN the current hero and the stats. This should feel like a magazine feature story. Layout: large pull quote on left, body text on right, with a real photo of Jack Pitts raising the trophy.
+
+Content to include:
+> **"THE FINEST QUARTERBACK PROSPECT WE'VE EVER SEEN ON FILM"**
+> *— Duffy Daugherty, Michigan State Head Coach*
+
+Body copy:
+"In 1965, Jack Pitts walked off the field in Decatur, Georgia as both the State Champion quarterback of Trinity High School AND the class valedictorian — with over 20 scholarship offers in hand. He chose Michigan State, becoming one of the first African American players from metro Atlanta to compete in the Big Ten. His recruitment wasn't just a football decision — it was a statement that echoed through the civil rights movement."
+
+**Legacy Stats Bar (NEW):**
+Animated counter row with these stats:
+- **33** Career Touchdowns
+- **19-14** Championship Victory Score  
+- **20+** Scholarship Offers
+- **2** National Titles (MSU 1965 & 1966)
+- **15+** Years of Foundation Impact
+
+**Awards & Honors Section (NEW — timeline style):**
+Horizontal scrolling or vertical timeline with cards:
+1. **1965** — Class A GIA State Championship MVP
+2. **1966** — GIA East-West All-Star Game MVP
+3. **2015** — Decatur Athletics Wall of Honor Inductee
+4. **2024** — Georgia High School Football Hall of Fame Inductee (College Football Hall of Fame, Atlanta)
+
+Style each card with a gold accent border, year in large Bebas Neue, and a brief description.
+
+**"A Catalyst for Change" Section (NEW):**
+Full-width green background section. Large italic Playfair Display pull quote:
+> *"If you can play, you can play. That should be how you're defined in recruiting."*
+> — Jack Pitts
+
+Below the quote, 2-column copy:
+Left: His role in Duffy Daugherty's pipeline recruiting Black players from the segregated South — a program that produced two national championships.
+Right: His connection to Jimmy Raye — the first Black quarterback from the South to win a major national title — whom Jack calls his hero.
+
+---
+
+### 2. SCHEDULE PAGE
+- Keep the existing timeline layout but add the **anime golf swing illustration** as a large background watermark or side element
+- Upgrade card styling: more dramatic shadows, gold clock icons, serif event titles
+
+---
+
+### 3. GALLERY PAGE
+- Keep the photo grid
+- Add a full-width banner at the top: **"MOMENTS THAT MATTER"** in huge Playfair Display over a dark green overlay
+- Add the anime illustrations as decorative elements between photo rows
+- Keep the "+ Add Photo" button
+
+---
+
+### 4. SPONSORSHIP PAGE
+- Keep all tier cards
+- Add the **anime celebration illustration** to the hero banner area
+- Add a new quote block at the top from the Foundation: *"Your sponsorship doesn't just put your name on a sign — it continues a legacy of breaking barriers."*
+- Style the tier cards with more drama: gold border for Platinum, silver border for Gold, etc.
+
+---
+
+### 5. REGISTRATION PAGE
+- Keep all pricing and How-to-Register content
+- Place the **anime putting illustration** next to or above the pricing card
+- Add a small "About the Honoree" callout box with Jack's photo and a 2-sentence bio
+- Keep the Download Entry Form button
+
+---
+
+### 6. FOOTER (ALL PAGES)
+Add a new "Legacy" blurb:
+*"Jack Pitts — Trinity High School Class A GIA State Champion (1965) · Michigan State University · 2024 Georgia High School Football Hall of Fame Inductee · Dedicated to the National Kidney Foundation of Michigan."*
+
+---
+
+## Animations & Interactions
+- Entrance animations: sections fade + slide up on scroll (Intersection Observer)
+- Stats counter: number count-up animation when scrolled into view
+- Hero illustration: subtle float/bob animation on the anime art
+- Nav: sticky with backdrop blur on scroll
+- Hover states on cards: lift + shadow deepening
+- Award timeline cards: staggered reveal animation
+
+---
+
+## Technical Notes
+- Keep all existing routes: `/`, `/schedule`, `/gallery`, `/sponsorship`, `/registration`
+- Keep all existing functionality (Download Entry Form button, photo upload, Select Sponsorship buttons)
+- All anime illustration images are already uploaded — reference them by their existing file paths in the project
+- The four anime images are:
+  1. Trophy raise / holding claret jug pose → use on Home hero
+  2. Golf swing follow-through → use on Schedule page
+  3. Putting stance → use on Registration page  
+  4. Celebration fist pump → use on About/Legacy section of Home
+- Maintain the green color identity but enrich it with the full palette above
+- Mobile responsive — all new sections must work on mobile
+- Keep existing nav structure: Home | Schedule | Gallery | Sponsorship | Registration | Register Now CTA
+
+---
+
+## Summary of New Content Blocks to Add
+
+| Section | Location | New? |
+|---|---|---|
+| "The Legend" feature story | Home | ✅ NEW |
+| Animated legacy stats bar | Home | ✅ NEW |
+| Awards & Honors timeline | Home | ✅ NEW |
+| "A Catalyst for Change" quote section | Home | ✅ NEW |
+| Anime illustration placements | All pages | ✅ NEW |
+| Legacy footer blurb | All pages | ✅ UPDATED |
+| Sponsorship impact quote | Sponsorship | ✅ NEW |
+| About the Honoree callout | Registration | ✅ NEW |
+
+The goal is to make someone who visits this site feel the full weight of Jack Pitts' story — not just a golf tournament website, but a tribute to a trailblazer who helped change American sports history.
