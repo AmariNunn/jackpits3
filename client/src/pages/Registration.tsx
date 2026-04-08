@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Utensils, Heart } from "lucide-react";
+import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -218,7 +218,7 @@ export default function Registration() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10"
           >
             <div className="bg-white rounded-2xl shadow-lg border-t-4 border-t-[#1a6b3a] overflow-hidden flex flex-col">
               <div className="bg-[#1a6b3a] p-5 text-center text-white">
@@ -283,30 +283,6 @@ export default function Registration() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg border-t-4 border-t-[#0d1f0f]/40 overflow-hidden flex flex-col">
-              <div className="bg-[#0d1f0f] p-5 text-center text-white">
-                <Utensils className="w-8 h-8 mx-auto mb-2 opacity-80" />
-                <h3 className="text-xl font-display font-bold">Banquet Only</h3>
-                <p className="text-white/70 text-sm mt-1 font-body">Not golfing? Come to dinner!</p>
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="text-center mb-4">
-                  <p className="text-4xl font-display font-bold text-[#0d1f0f]">$45</p>
-                  <p className="text-[#0d1f0f]/50 text-sm font-body">per person</p>
-                </div>
-                <div className="bg-[#f5f0e8] rounded-xl p-4 mb-6 flex-1 border border-[#c9973a]/20">
-                  <p className="font-display font-bold text-[#0d1f0f] text-sm mb-2">James & Martha Bibbs Humanitarian Awards Banquet</p>
-                  <p className="text-xs text-[#0d1f0f]/60 font-body">Join us for a memorable evening celebrating community impact and honoring our honorees.</p>
-                </div>
-                <Button
-                  data-testid="button-open-banquet"
-                  className="w-full h-12 text-base font-bold bg-[#0d1f0f] hover:bg-[#0d1f0f]/80 text-white"
-                  onClick={() => openModal("banquet")}
-                >
-                  Get Banquet Tickets
-                </Button>
-              </div>
-            </div>
           </motion.div>
 
           <motion.div
