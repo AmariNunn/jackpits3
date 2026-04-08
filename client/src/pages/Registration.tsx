@@ -313,7 +313,7 @@ export default function Registration() {
               <div className="bg-white rounded-2xl shadow-xl border border-[#0d1f0f]/10 overflow-hidden">
                 <div className="bg-[#0d1f0f] px-6 py-5">
                   <h2 className="text-xl font-display font-bold text-white">Online Registration Form</h2>
-                  <p className="text-white/60 text-sm font-body mt-1">Fill out the form below. Payment is mailed separately.</p>
+                  <p className="text-white/70 text-sm font-body mt-1">Complete your registration below — <span className="text-[#c9973a] font-semibold">secure your spot instantly when you pay online.</span></p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-8" noValidate>
@@ -566,7 +566,7 @@ export default function Registration() {
                       </div>
                       <div className="text-right">
                         <p className="text-3xl font-display font-bold text-[#1a6b3a]" data-testid="text-total">${total.toFixed(2)}</p>
-                        <p className="text-xs text-[#0d1f0f]/40 font-body">payable by check</p>
+                        <p className="text-xs text-[#1a6b3a]/70 font-body font-semibold">due at registration</p>
                       </div>
                     </div>
                   </div>
@@ -578,16 +578,27 @@ export default function Registration() {
                     </div>
                   )}
 
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-3">
                     <Button
                       type="submit"
                       data-testid="button-submit-registration"
                       disabled={submitting}
-                      className="w-full h-12 text-base font-bold bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white shadow-lg"
+                      className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase"
                     >
-                      {submitting ? "Submitting…" : "Submit Registration"}
+                      {submitting ? "Submitting…" : `Reserve My Spot — Pay $${total.toFixed(2)} Online Now →`}
                     </Button>
-                    <p className="text-center text-xs text-[#0d1f0f]/40 mt-3 font-body">
+
+                    <div className="bg-[#1a6b3a]/5 rounded-lg px-4 py-3 border border-[#1a6b3a]/10">
+                      <p className="text-center text-xs text-[#0d1f0f]/50 font-body leading-relaxed">
+                        <span className="font-semibold text-[#0d1f0f]/60">100% Secure · Instant Confirmation · Limited Spots Available</span>
+                      </p>
+                    </div>
+
+                    <p className="text-center text-[10px] text-[#0d1f0f]/30 font-body leading-snug px-2">
+                      Prefer to pay by check? Mail your check payable to <em>Jack Pitts Health Foundation</em> along with a printed copy of your submitted form. Spot is not guaranteed until payment is received. Online payment is recommended for immediate confirmation.
+                    </p>
+
+                    <p className="text-center text-xs text-[#0d1f0f]/35 font-body">
                       The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
                     </p>
                   </div>
