@@ -132,7 +132,7 @@ export default function Home() {
                 data-testid="badge-impact"
               >
                 <Trophy className="w-5 h-5 text-[#c9973a]" />
-                <span className="text-[#f5f0e8] font-athletic tracking-widest text-xs sm:text-sm uppercase">15+ Years of Impact</span>
+                <span className="text-[#f5f0e8] font-athletic tracking-widest text-xs sm:text-sm uppercase">16+ Years of Impact</span>
               </motion.div>
             </motion.div>
           </div>
@@ -174,7 +174,7 @@ export default function Home() {
                 <p>
                   In 1965, Jack Pitts led Trinity High School (Decatur, GA) to the Class A GIA State Championship —
                   throwing two touchdowns, scoring the winning TD, and intercepting a key pass in the title game.
-                  He was also valedictorian of his graduating class, receiving over 20 scholarship offers.
+                  He was also valedictorian of his graduating class, receiving more than 30 scholarship offers from major universities across the country.
                 </p>
                 <p>
                   Recruited by legendary Michigan State coach Duffy Daugherty, Jack is believed to be the first
@@ -205,7 +205,7 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
                 className="absolute -bottom-4 -left-4 sm:-bottom-8 sm:-left-8 bg-[#1a6b3a] p-5 sm:p-8 md:p-10 rounded-xl sm:rounded-2xl shadow-2xl border-4 sm:border-8 border-[#f5f0e8]"
               >
-                <p className="text-white text-3xl sm:text-5xl font-display font-bold mb-1">15+</p>
+                <p className="text-white text-3xl sm:text-5xl font-display font-bold mb-1">16+</p>
                 <p className="text-white/80 font-athletic tracking-widest uppercase text-[10px] sm:text-xs">Years of Impact</p>
               </motion.div>
             </motion.div>
@@ -218,11 +218,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-4 text-center">
             {[
-              { value: 33, suffix: "", label: "Career Touchdowns" },
+              { value: 56, suffix: "", label: "Career Touchdowns" },
               { value: 19, suffix: "-14", label: "Championship Victory" },
-              { value: 20, suffix: "+", label: "Scholarship Offers" },
+              { value: 30, suffix: "+", label: "Scholarship Offers" },
               { value: 2, suffix: "", label: "National Titles" },
-              { value: 15, suffix: "+", label: "Years of Impact" },
+              { value: 16, suffix: "+", label: "Years of Impact" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -334,9 +334,9 @@ export default function Home() {
                 transition={{ delay: 0.3 }}
               >
                 <p className="text-[#f5f0e8]/80 font-body leading-relaxed text-base md:text-lg">
-                  The Jack Pitts Health Foundation has raised over $50,000 for health organizations
-                  through five years of golf tournaments — supporting research, education, and direct
-                  services impacting kidney disease, breast cancer, prostate cancer, and diabetes.
+                  The Jack Pitts Health Foundation has raised more than $170,000 for health organizations
+                  over 16 years of golf tournaments — supporting the National Kidney Foundation of Michigan
+                  and other vital organizations dedicated to research, education, and direct community services.
                 </p>
               </motion.div>
 
@@ -375,7 +375,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
             {[
               { icon: "⛳", title: "4-Person Scramble", desc: "Compete in our signature scramble format with cash prizes up to $1,000 and a chance to be part of something bigger than golf." },
-              { icon: "🤝", title: "Community Impact", desc: "Over $50,000 raised for health organizations — fighting kidney disease, breast cancer, prostate cancer, and diabetes." },
+              { icon: "🤝", title: "Community Impact", desc: "More than $170,000 raised over 16 years — benefiting the National Kidney Foundation of Michigan and other organizations serving those in need." },
               { icon: "🏆", title: "Legacy of Excellence", desc: "Named MVP, State Champion, valedictorian, and Big Ten trailblazer — Jack Pitts' legacy drives every event we host." }
             ].map((item, i) => (
               <motion.div

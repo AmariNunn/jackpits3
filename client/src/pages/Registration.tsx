@@ -25,16 +25,24 @@ export default function Registration() {
               className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-[#0d1f0f]/10"
             >
               <div className="bg-[#1a6b3a] p-5 sm:p-8 text-center text-white">
-                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 text-white">Player Entry</h3>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 text-white">Individual Entry</h3>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="text-4xl sm:text-5xl font-display font-bold">$125</span>
-                  <span className="text-white/80 font-body text-sm sm:text-base">/ person</span>
+                  <span className="text-white/80 font-body text-sm sm:text-base">/ golfer</span>
                 </div>
                 <p className="mt-2 text-sm text-[#c9973a] font-athletic tracking-wider bg-[#c9973a]/20 inline-block px-3 py-1 rounded-full">
-                  Early Bird Price: Before July 18
+                  Early Registration: Before July 11, 2026
                 </p>
                 <div className="mt-2 text-white/60 text-sm font-body">
-                  $150 / person after July 18
+                  $150 / golfer after July 11, 2026
+                </div>
+                <div className="mt-4 pt-4 border-t border-white/20">
+                  <p className="text-sm font-athletic tracking-wider text-white/80 mb-1">Team of Four</p>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-2xl font-display font-bold">$500</span>
+                    <span className="text-white/60 text-sm font-body">/ team (before July 11)</span>
+                  </div>
+                  <div className="text-white/50 text-xs mt-1 font-body">$600 / team after July 11, 2026</div>
                 </div>
               </div>
 
@@ -42,11 +50,10 @@ export default function Registration() {
                 <div className="space-y-4">
                   {[
                     "18 Holes of Golf with Cart",
-                    "Continental Breakfast",
                     "Lunch at the Turn",
-                    "Dinner Buffet",
+                    "Cash Prizes",
+                    "Awards Banquet",
                     "Prizes for Men & Women",
-                    "Gift Bag (Balls, Towel, Tees)"
                   ].map((feature, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="w-6 h-6 rounded-full bg-[#1a6b3a]/10 text-[#1a6b3a] flex items-center justify-center shrink-0">
@@ -57,10 +64,16 @@ export default function Registration() {
                   ))}
                 </div>
 
+                <div className="bg-[#f5f0e8] p-4 rounded-xl border border-[#c9973a]/20">
+                  <p className="text-sm font-athletic text-[#0d1f0f]/70 tracking-wider uppercase mb-1">Awards Banquet</p>
+                  <p className="font-display font-bold text-[#0d1f0f]">James & Martha Bibbs Humanitarian Awards Banquet</p>
+                  <p className="text-sm text-[#0d1f0f]/60 font-body mt-1">$45 per person for non-golfers</p>
+                </div>
+
                 <div className="pt-6 border-t border-[#0d1f0f]/10">
                   <p className="text-center text-sm text-[#0d1f0f]/50 mb-6 font-body">
-                    <strong>Deadline:</strong> July 18, 2025<br/>
-                    <em>Note: No cash accepted at the course.</em>
+                    <strong>Registration Deadline:</strong> July 11, 2026<br/>
+                    <em>No cash accepted at the course.</em>
                   </p>
                   <Button className="w-full h-12 text-lg font-bold shadow-lg bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white" data-testid="button-download-form">
                     <Download className="w-5 h-5 mr-2" /> Download Entry Form
@@ -103,7 +116,7 @@ export default function Registration() {
                       <p className="font-mono text-sm text-[#0d1f0f]">
                         Jack Pitts Health Foundation<br/>
                         P.O. Box 250014<br/>
-                        West Bloomfield, MI 48323
+                        West Bloomfield, MI 48325
                       </p>
                     </div>
                   </div>

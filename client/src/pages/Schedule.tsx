@@ -6,19 +6,18 @@ import swingImg from "@assets/ChatGPT_Image_Mar_8,_2026,_07_29_17_PM_17732834860
 
 export default function Schedule() {
   const events = [
-    { time: "8:00 AM", title: "Registration & Breakfast", desc: "Check-in at the clubhouse, grab your cart, and enjoy a continental breakfast before the tournament begins." },
-    { time: "9:00 AM", title: "Putting Contest", desc: "Warm up and compete in our putting contest on the practice green — exclusive sponsor recognition at this station." },
-    { time: "10:00 AM", title: "Shotgun Start — 4-Person Scramble", desc: "All teams tee off simultaneously across the course in our signature 4-person scramble format with cash prizes up to $1,000." },
-    { time: "12:00 PM", title: "Lunch at the Turn", desc: "Refreshments and lunch served at the halfway house — sponsored hospitality keeping you fueled through the back nine." },
-    { time: "3:30 PM", title: "Post-Round Reception", desc: "Drinks and appetizers in the clubhouse while scores are tallied and Closest to the Pin and Longest Drive winners are announced." },
-    { time: "4:30 PM", title: "James & Martha Bibbs Humanitarian Award Luncheon", desc: "Our annual celebration of community service — buffet dinner, prize presentations, raffle drawing, and recognition of this year's honorees." },
+    { time: "7:00 AM", title: "Registration Opens", desc: "Check in at the clubhouse, collect your cart, and prepare for a distinguished day on the course. Registration closes promptly at 8:00 AM." },
+    { time: "8:30 AM", title: "Shotgun Start — 4-Person Scramble", desc: "All teams tee off simultaneously across the course in our signature 4-person scramble format with cash prizes and the spirit of friendly competition." },
+    { time: "11:00 AM", title: "Lunch at the Turn", desc: "A gracious lunch is served throughout the round at the Michigan State University Club — not limited to the back nine. Enjoy refreshments and fine company as play continues." },
+    { time: "3:30 PM", title: "Scores & Skins Announced", desc: "Scores and Skins are carefully tallied during lunch and announced at 3:30 PM — honoring the finest play of the day with well-deserved recognition." },
+    { time: "4:00 PM", title: "Annual Awards Celebration", desc: "Our distinguished annual celebration of community impact, professional achievement, and dedicated service. Selected individuals are honored at the luncheon for their exceptional contributions to the foundation's mission." },
   ];
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
       <PageHeader
         title="Event Schedule"
-        subtitle="Annual Golf Outing · 4-Person Scramble · Forest Akers West Golf Course, MSU"
+        subtitle="Annual Golf Outing · 4-Person Scramble · Michigan State University Club"
         leftImage={swingImg}
       />
 

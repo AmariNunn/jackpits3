@@ -9,50 +9,44 @@ import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_17730
 
 const opportunities = [
   {
-    title: "🏆 TITLE SPONSOR",
-    price: "$10,000+",
-    description: 'Exclusive title naming rights: "[Company Name] Presents the Jack Pitts Open." Maximum brand visibility throughout the event and beyond.',
+    title: "💎 PLATINUM SPONSOR",
+    price: "$10,000",
+    description: "The pinnacle of partnership — maximum visibility and recognition across all event channels, with three foursome teams and distinguished sponsor status.",
     features: [
-      "Exclusive title naming rights",
-      "Premier logo on all event materials & banners",
-      "4 complimentary golfer registrations",
-      "Hole-in-One sponsorship recognition",
-      "VIP table at Awards Luncheon (8 seats)",
-      "Speaking opportunity at the event",
-      "Full-page ad in event program",
-      "Social media spotlight campaign",
-      "Year-round logo on Foundation website"
+      "Three foursome teams (12 golfers)",
+      "Banner and poster placement at the event",
+      "Recognition in all event communications and Awards program",
+      "Sponsor of community outreach activities",
+      "Premier recognition at the Awards Luncheon",
+      "Year-round presence on Foundation website"
     ],
     borderColor: "border-t-[#c9973a] border-t-[6px]",
     bgColor: "bg-gradient-to-b from-[#c9973a]/5 to-white",
     badge: "text-[#c9973a] border-[#c9973a]/40"
   },
   {
-    title: "🥇 EAGLE SPONSOR",
+    title: "🥇 GOLD SPONSOR",
     price: "$5,000",
-    description: "Premium partnership with strong brand presence across all event materials and communications.",
+    description: "A distinguished partnership offering strong brand presence and two foursome teams at this celebrated annual event.",
     features: [
-      "Logo on event banner & all printed materials",
-      "4 complimentary golfer registrations",
-      "Reserved VIP table at Awards Luncheon (4 seats)",
-      "Half-page ad in event program",
-      "Recognition in all event announcements",
-      "Logo on Foundation website for one year",
-      "Social media feature post"
+      "Two foursome teams (8 golfers)",
+      "Banner and poster placement at the event",
+      "Recognition in all event communications and Awards program",
+      "Reserved seating at the Awards Luncheon",
+      "Listed on Foundation website"
     ],
     borderColor: "border-t-amber-500 border-t-[6px]",
     bgColor: "bg-gradient-to-b from-amber-500/5 to-white",
     badge: "text-amber-600 border-amber-500/40"
   },
   {
-    title: "🥈 BIRDIE SPONSOR",
-    price: "$2,500",
-    description: "Meaningful community partnership with event visibility and program recognition.",
+    title: "🥈 SILVER SPONSOR",
+    price: "$3,000",
+    description: "A valued partnership with course signage and full recognition in all event communications and the Awards program.",
     features: [
-      "2 complimentary golfer registrations",
-      "Company name on event banner",
-      "Quarter-page ad in event program",
-      "Awards luncheon recognition",
+      "One foursome team (4 golfers)",
+      "Signage displayed at the event",
+      "Recognition in all event communications and Awards program",
       "Listed on Foundation website"
     ],
     borderColor: "border-t-gray-400 border-t-[6px]",
@@ -60,27 +54,27 @@ const opportunities = [
     badge: "text-gray-500 border-gray-400/40"
   },
   {
-    title: "🥉 PAR SPONSOR",
-    price: "$1,000",
-    description: "Solid community support with golfer registration and event program recognition.",
+    title: "🍽️ LUNCH AT THE TURN",
+    price: "$2,500",
+    description: "Exclusive sponsorship of the signature mid-round luncheon — a memorable moment of hospitality enjoyed by every golfer on the course.",
     features: [
-      "1 complimentary golfer registration",
-      "Company name listed in event program",
-      "Recognition from the podium at luncheon",
+      "One foursome team (4 golfers)",
+      "Exclusive signage at The Turn",
+      "Recognition at the Awards program",
       "Listed on Foundation website"
     ],
-    borderColor: "border-t-[#1a6b3a] border-t-4",
-    bgColor: "bg-white",
+    borderColor: "border-t-[#1a6b3a] border-t-[6px]",
+    bgColor: "bg-gradient-to-b from-[#1a6b3a]/5 to-white",
     badge: "text-[#1a6b3a] border-[#1a6b3a]/40"
   },
   {
     title: "⛳ HOLE SPONSOR",
     price: "$500",
-    description: "Dedicated tee or hole signage with your company name and logo on the course.",
+    description: "Dedicated tee or hole signage proudly displaying your name and logo at one of the course's finest stations.",
     features: [
-      "Dedicated tee/hole signage with logo",
-      "Listing in event program",
-      "Social media thank-you mention"
+      "Dedicated tee or hole signage with name and logo",
+      "Listing in the event program",
+      "Recognition in event announcements"
     ],
     borderColor: "border-t-[#1a6b3a]/70 border-t-4",
     bgColor: "bg-white",
@@ -89,9 +83,9 @@ const opportunities = [
   {
     title: "🤝 COMMUNITY SPONSOR",
     price: "$250",
-    description: "Show your community commitment with recognition in all event announcements and program.",
+    description: "A meaningful expression of community commitment, recognized with gratitude in our event program and announcements.",
     features: [
-      "Company name listed in event program",
+      "Company name listed in the event program",
       "Recognition in event announcements",
       "Certificate of appreciation"
     ],
@@ -193,7 +187,7 @@ export default function Sponsorship() {
             Select your tier, complete the registration form, and mail your check payable to <strong>Jack Pitts Health Foundation</strong>.
           </p>
           <p className="text-sm opacity-60 mb-6 md:mb-8 font-body">
-            P.O. Box 250014 · West Bloomfield, MI 48323 · jnpitts@comcast.net · www.jackpittshealthfoundation.org
+            P.O. Box 250014 · West Bloomfield, MI 48325 · tiger.pitts@icloud.com · www.jpittsfoundation.com
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Button size="lg" className="w-full sm:w-auto bg-[#c9973a] hover:bg-[#c9973a]/90 text-white font-bold px-8" data-testid="button-contact-foundation">
