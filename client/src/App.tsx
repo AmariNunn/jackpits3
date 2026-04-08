@@ -18,17 +18,17 @@ import { Footer } from "@/components/Footer";
 function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const spring = useSpring(scrollYProgress, { stiffness: 180, damping: 28 });
-  const left = useTransform(spring, (v) => `calc(${v * 100}% - ${v * 32}px)`);
+  const top = useTransform(spring, (v) => `calc(${v * 100}% - ${v * 32}px)`);
   const rotate = useTransform(spring, [0, 1], [0, 1440]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[100] pointer-events-none" style={{ height: "35px" }}>
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#1a6b3a]" />
+    <div className="fixed top-0 right-0 bottom-0 z-[100] pointer-events-none" style={{ width: "35px" }}>
+      <div className="absolute top-0 bottom-0 right-0 w-[3px] bg-[#1a6b3a]" />
       <motion.img
         src={golfBallImg}
         alt=""
-        style={{ left, rotate }}
-        className="absolute bottom-[3px] w-8 h-8 object-contain drop-shadow-md"
+        style={{ top, rotate }}
+        className="absolute right-[3px] w-8 h-8 object-contain drop-shadow-md"
       />
     </div>
   );
