@@ -80,7 +80,7 @@ export function Navbar() {
                 </motion.span>
               </Link>
             ))}
-            <div className="pl-4">
+            <div className="pl-0 -translate-x-4">
               <Link href="/registration">
                 <Button
                   variant="default"
