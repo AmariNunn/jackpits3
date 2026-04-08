@@ -150,7 +150,7 @@ export default function Gallery() {
       { id: -14, imageUrl: imgAc603f7b, caption: "Honorees with their trophies" },
     ];
 
-    const displayItems = [...staticImages, ...(items || [])];
+    const displayItems = [...staticImages, ...(items || [])].filter((_, idx) => idx < 8 || idx > 13);
 
     // Split into groups
     const group1 = displayItems.slice(0, 5);
