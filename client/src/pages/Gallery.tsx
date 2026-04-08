@@ -47,6 +47,11 @@ import img1745 from "@assets/img_1745_1775630647897.jpg";
 import img1732 from "@assets/img_1732_1775630647897.jpg";
 import img1858b from "@assets/img_1858_1775630647897.jpg";
 import img1729b from "@assets/img_1729_1775630647898.jpg";
+import img1656 from "@assets/img_1656_1775631232295.jpg";
+import img1654 from "@assets/img_1654_1775631232296.jpg";
+import img1628 from "@assets/img_1628_1775631232296.jpg";
+import img1632 from "@assets/img_1632_1775631232296.jpg";
+import img1655 from "@assets/img_1655_1775631232298.jpg";
 
 // Carousel component for slides
 function Carousel({ items, title, description }: { items: any[]; title: string; description?: string }) {
@@ -192,19 +197,24 @@ export default function Gallery() {
       { id: -31, imageUrl: img1732, caption: "Orange and yellow team group" },
       { id: -32, imageUrl: img1858b, caption: "Indoor award presentation moment" },
       { id: -33, imageUrl: img1729b, caption: "Final group shot on the green" },
+      { id: -34, imageUrl: img1656, caption: "Friendly foursome at the end of the day" },
+      { id: -35, imageUrl: img1654, caption: "Two friends sharing a laugh by the cart" },
+      { id: -36, imageUrl: img1628, caption: "Getting checked in at tournament registration" },
+      { id: -37, imageUrl: img1632, caption: "Pure joy — hands up on the fairway" },
+      { id: -38, imageUrl: img1655, caption: "Ready for another round" },
     ];
 
     // Only hide the old DB placeholder entries, not any static photos
     const hiddenIds = new Set([19, 20, 21, 22, 23, 24, 25, 26, 27]);
     const displayItems = [...staticImages, ...(items || [])].filter((item) => !hiddenIds.has(item.id));
 
-    // Split all 33 photos into 6 meaningful sections
-    const group1 = displayItems.slice(0, 6);
-    const group2 = displayItems.slice(6, 12);
-    const group3 = displayItems.slice(12, 18);
-    const group4 = displayItems.slice(18, 24);
-    const group5 = displayItems.slice(24, 29);
-    const group6 = displayItems.slice(29);
+    // Split all 38 photos into 6 sections (~6-7 each)
+    const group1 = displayItems.slice(0, 7);
+    const group2 = displayItems.slice(7, 14);
+    const group3 = displayItems.slice(14, 20);
+    const group4 = displayItems.slice(20, 26);
+    const group5 = displayItems.slice(26, 32);
+    const group6 = displayItems.slice(32);
 
     return [
       { title: "Awards & Banquet", description: "Honoring excellence and celebrating together", items: group1 },
