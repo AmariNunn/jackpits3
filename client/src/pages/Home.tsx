@@ -114,7 +114,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Link href="/registration">
                   <Button size="lg" className="w-full sm:w-auto bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-8 sm:px-10 h-12 sm:h-14 rounded-full text-base sm:text-lg font-bold shadow-xl border-0" data-testid="button-register-hero">
-                    Reserve Now
+                    Register Now
                   </Button>
                 </Link>
                 <Link href="/sponsorship">
