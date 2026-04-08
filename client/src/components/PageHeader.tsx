@@ -21,7 +21,7 @@ export function PageHeader({ title, subtitle, backgroundImage, leftImage }: Page
         initial={{ opacity: 0, x: 24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0 flex items-end justify-end pointer-events-none z-[1]"
+        className="hidden sm:flex absolute inset-0 items-end justify-end pointer-events-none z-[1]"
       >
         <img
           src={sideImage}

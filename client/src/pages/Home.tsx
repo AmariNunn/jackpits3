@@ -108,7 +108,7 @@ export default function Home() {
               <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[#c9973a] mb-4 md:mb-5 uppercase tracking-wide leading-tight">
                 Annual Golf Outing
               </p>
-              <p className="text-xs sm:text-sm text-[#f5f0e8]/60 mb-8 md:mb-10 max-w-lg mx-auto lg:mx-0 font-athletic tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+              <p className="text-sm sm:text-sm text-[#f5f0e8]/80 sm:text-[#f5f0e8]/60 mb-8 md:mb-10 max-w-lg mx-auto lg:mx-0 font-athletic tracking-[0.2em] sm:tracking-[0.25em] uppercase">
                 Benefiting the National Kidney Foundation of Michigan
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
