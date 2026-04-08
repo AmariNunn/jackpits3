@@ -166,12 +166,12 @@ export default function Gallery() {
       { id: -14, imageUrl: imgAc603f7b, caption: "Honorees with their trophies" },
     ];
 
-    const displayItems = items && items.length > 0 ? items : staticImages;
+    const displayItems = [...staticImages, ...(items || [])];
 
     // Split into groups
-    const group1 = displayItems.slice(0, 3);
-    const group2 = displayItems.slice(3, 6);
-    const group3 = displayItems.slice(6);
+    const group1 = displayItems.slice(0, 5);
+    const group2 = displayItems.slice(5, 10);
+    const group3 = displayItems.slice(10);
 
     return [
       { title: "Tournament Highlights", description: "Celebrating the best moments", items: group1 },
