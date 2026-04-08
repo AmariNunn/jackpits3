@@ -206,46 +206,7 @@ export default function Gallery() {
 
       <section className="py-12 md:py-20 bg-[#f5f0e8]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end mb-8">
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="gap-2 border-[#1a6b3a]/20 text-[#1a6b3a] hover:bg-[#1a6b3a]/5" data-testid="button-add-photo">
-                  <Plus size={16} /> Add Photo
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add to Gallery</DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="url">Image URL</Label>
-                    <Input
-                      id="url"
-                      placeholder="/images/example.jpg"
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      required
-                      data-testid="input-image-url"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="caption">Caption</Label>
-                    <Input
-                      id="caption"
-                      placeholder="Enter a caption..."
-                      value={caption}
-                      onChange={(e) => setCaption(e.target.value)}
-                      data-testid="input-caption"
-                    />
-                  </div>
-                  <Button type="submit" disabled={createItem.isPending} className="w-full bg-[#1a6b3a] hover:bg-[#1a6b3a]/90" data-testid="button-submit-photo">
-                    {createItem.isPending ? "Adding..." : "Add Photo"}
-                  </Button>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
+          
 
           {isLoading ? (
             <div className="flex justify-center py-32">
