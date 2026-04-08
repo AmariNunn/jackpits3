@@ -150,7 +150,8 @@ export default function Gallery() {
       { id: -14, imageUrl: imgAc603f7b, caption: "Honorees with their trophies" },
     ];
 
-    const displayItems = [...staticImages, ...(items || [])].filter((_, idx) => idx < 8 || idx > 13);
+    const hiddenIds = new Set([-8, -9, -10, -11, -12, -13, 25, 26, 27]);
+    const displayItems = [...staticImages, ...(items || [])].filter((item) => !hiddenIds.has(item.id));
 
     // Split into groups
     const group1 = displayItems.slice(0, 5);
