@@ -26,7 +26,7 @@ export function PageHeader({ title, subtitle, backgroundImage, leftImage }: Page
         <img
           src={sideImage}
           alt=""
-          className="h-[88%] w-auto max-w-[32%] object-contain object-right drop-shadow-2xl translate-x-2 md:translate-x-4"
+          className="h-[88%] w-auto max-w-[32%] object-contain object-right drop-shadow-2xl -translate-x-[150px]"
         />
       </motion.div>
 
