@@ -76,7 +76,7 @@ export default function Home() {
               <img
                 src={trophyRaise}
                 alt="Jack Pitts raising trophy"
-                className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/2 h-auto object-contain animate-float drop-shadow-2xl"
+                className="w-[45%] sm:w-2/3 md:w-1/2 lg:w-1/2 h-auto object-contain animate-float drop-shadow-2xl"
                 data-testid="img-hero-trophy"
               />
               <div className="absolute inset-0 bg-[#1a6b3a]/20 rounded-3xl -z-10 blur-3xl opacity-50" />
@@ -88,7 +88,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-left max-w-2xl"
+              className="text-left max-w-2xl pr-[47%] sm:pr-0"
             >
               <motion.span
                 initial={{ opacity: 0, y: 10 }}
