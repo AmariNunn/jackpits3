@@ -66,7 +66,7 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
       </div>
 
       <div className="relative group">
-        <div className="relative aspect-video rounded-3xl overflow-hidden bg-black/5 shadow-xl">
+        <div className="relative aspect-video rounded-3xl overflow-hidden bg-[#0d1f0f] shadow-xl">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.img
               key={currentIndex}
@@ -81,7 +81,7 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
                 x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.5 },
               }}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain"
             />
           </AnimatePresence>
 
