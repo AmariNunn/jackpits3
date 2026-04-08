@@ -139,15 +139,15 @@ export default function Gallery() {
   // Organize items into different carousel groups
   const carouselGroups = useMemo(() => {
     const staticImages = [
-      { id: -1, imageUrl: "/images/JP 19.png", caption: "Putting for birdie" },
-      { id: -2, imageUrl: "/images/JP 21.png", caption: "Team photo at the 18th" },
-      { id: -3, imageUrl: "/images/JP 22.png", caption: "The winning drive" },
-      { id: -4, imageUrl: "/images/JP 23.png", caption: "Lunch on the patio" },
-      { id: -5, imageUrl: "/images/JP 24.png", caption: "Awards ceremony" },
-      { id: -6, imageUrl: "/images/JP9.png", caption: "Starting the day" },
-      { id: -7, imageUrl: "/images/JP10.png", caption: "Good times" },
-      { id: -8, imageUrl: "/images/JP 7.png", caption: "On the green" },
-      { id: -9, imageUrl: "/images/JP 14.png", caption: "Group shot" },
+      { id: -1, imageUrl: "/images/tournament-1.jpg", caption: "A memorable day on the course" },
+      { id: -2, imageUrl: "/images/tournament-2.jpg", caption: "Team photo at the 18th" },
+      { id: -3, imageUrl: "/images/tournament-3.jpg", caption: "The winning drive" },
+      { id: -4, imageUrl: "/images/tournament-4.png", caption: "Celebrating excellence" },
+      { id: -5, imageUrl: "/images/tournament-5.png", caption: "Awards ceremony" },
+      { id: -6, imageUrl: "/images/tournament-6.png", caption: "Starting the day" },
+      { id: -7, imageUrl: "/images/tournament-7.png", caption: "In full swing" },
+      { id: -8, imageUrl: "/images/tournament-8.png", caption: "Focused on the perfect putt" },
+      { id: -9, imageUrl: "/images/tournament-9.png", caption: "A winning moment" },
     ];
 
     const displayItems = items && items.length > 0 ? items : staticImages;
