@@ -14,9 +14,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import trophyImg from "@assets/ChatGPT_Image_Mar_8,_2026,_07_29_09_PM_1773071637027.png";
-import swingImg from "@assets/ChatGPT_Image_Mar_8,_2026,_07_29_17_PM_1773071637027.png";
-import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_1773071637027.png";
+import img1869 from "@assets/img_1869_1775627155323.jpg";
+import img1867 from "@assets/img_1867_1775627182910.jpg";
+import img1782 from "@assets/img_1782_1775627297000.jpg";
+import img1788 from "@assets/img_1788_1775627297001.jpg";
+import img1783 from "@assets/img_1783_1775627297001.jpg";
+import img1787 from "@assets/img_1787_1775627297001.jpg";
+import img1779 from "@assets/img_1779_1775627297001.jpg";
+import img1786 from "@assets/img_1786_1775627297002.jpg";
+import img1785 from "@assets/img_1785_1775627297002.jpg";
+import img1682 from "@assets/img_1682_1775627297002.jpg";
+import img1789 from "@assets/img_1789_1775627297002.jpg";
+import img1793 from "@assets/img_1793_1775627297002.jpg";
+import img1795 from "@assets/img_1795_1775627297003.jpg";
+import imgAc603f7b from "@assets/ac603f7b-fdad-4ad4-9ece-4d7b05d8bbc3_1775627299254.jpg";
 
 // Carousel component for slides
 function Carousel({ items, title, description }: { items: any[]; title: string; description?: string }) {
@@ -139,15 +150,20 @@ export default function Gallery() {
   // Organize items into different carousel groups
   const carouselGroups = useMemo(() => {
     const staticImages = [
-      { id: -1, imageUrl: "/images/tournament-1.jpg", caption: "A memorable day on the course" },
-      { id: -2, imageUrl: "/images/tournament-2.jpg", caption: "Team photo at the 18th" },
-      { id: -3, imageUrl: "/images/tournament-3.jpg", caption: "The winning drive" },
-      { id: -4, imageUrl: "/images/tournament-4.png", caption: "Celebrating excellence" },
-      { id: -5, imageUrl: "/images/tournament-5.png", caption: "Awards ceremony" },
-      { id: -6, imageUrl: "/images/tournament-6.png", caption: "Starting the day" },
-      { id: -7, imageUrl: "/images/tournament-7.png", caption: "In full swing" },
-      { id: -8, imageUrl: "/images/tournament-8.png", caption: "Focused on the perfect putt" },
-      { id: -9, imageUrl: "/images/tournament-9.png", caption: "A winning moment" },
+      { id: -1, imageUrl: img1869, caption: "Celebrating with friends at the banquet" },
+      { id: -2, imageUrl: img1867, caption: "Group photo at the awards luncheon" },
+      { id: -3, imageUrl: img1782, caption: "Proud winners on the course" },
+      { id: -4, imageUrl: img1788, caption: "A memorable group photo on the green" },
+      { id: -5, imageUrl: img1783, caption: "More great moments from the outing" },
+      { id: -6, imageUrl: img1787, caption: "Smiles and team spirit together" },
+      { id: -7, imageUrl: img1779, caption: "Ladies foursome on the course" },
+      { id: -8, imageUrl: img1786, caption: "Tournament group at the clubhouse" },
+      { id: -9, imageUrl: img1785, caption: "Another strong team on the fairway" },
+      { id: -10, imageUrl: img1682, caption: "A full day of golf and community" },
+      { id: -11, imageUrl: img1789, caption: "Posing after a great round" },
+      { id: -12, imageUrl: img1793, caption: "Friends gathered after play" },
+      { id: -13, imageUrl: img1795, caption: "Another winning team photo" },
+      { id: -14, imageUrl: imgAc603f7b, caption: "Honorees with their trophies" },
     ];
 
     const displayItems = items && items.length > 0 ? items : staticImages;
