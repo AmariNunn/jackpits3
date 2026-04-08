@@ -16,7 +16,7 @@ export function PageHeader({ title, subtitle, backgroundImage, leftImage }: Page
       <div className="absolute inset-0 z-0 opacity-[0.04]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }} />
 
       <motion.div
-        initial={{ opacity: 0, x: 60 }}
+        initial={{ opacity: 0, x: 24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 flex items-end justify-end pointer-events-none z-[1]"
@@ -24,7 +24,7 @@ export function PageHeader({ title, subtitle, backgroundImage, leftImage }: Page
         <img
           src={sideImage}
           alt=""
-          className="h-[85%] w-auto max-w-[40%] object-contain object-right drop-shadow-2xl"
+          className="h-[88%] w-auto max-w-[32%] object-contain object-right drop-shadow-2xl translate-x-2 md:translate-x-4"
         />
       </motion.div>
 
