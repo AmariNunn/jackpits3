@@ -149,7 +149,7 @@ export default function Registration() {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const payload: Record<string, unknown> = {
+      const payload: Record<string, string> = {
         _subject: "Golf Outing Registration",
         name: form.name,
         address: form.address,
@@ -177,8 +177,8 @@ export default function Registration() {
       }
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload),
+        headers: { "Accept": "application/json" },
+        body: new URLSearchParams(payload).toString(),
       });
       if (res.ok) {
         setSubmitted(true);
