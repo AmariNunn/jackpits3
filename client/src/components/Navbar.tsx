@@ -74,6 +74,7 @@ export function Navbar() {
                       ? scrolled ? "text-[#1a6b3a] bg-[#1a6b3a]/10" : "text-[#f5f0e8] bg-[#f5f0e8]/10 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]"
                       : scrolled ? "text-[#0d1f0f]/70 hover:text-[#1a6b3a] hover:bg-[#1a6b3a]/5" : "text-[#f5f0e8] hover:text-[#f5f0e8] hover:bg-[#f5f0e8]/10 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]"
                   }`}
+                  style={link.label === "Sponsorship" ? { transform: "translateX(140px)" } : undefined}
                   data-testid={`link-nav-${link.label.toLowerCase()}`}
                 >
                   <span className="relative z-10">{link.label}</span>
