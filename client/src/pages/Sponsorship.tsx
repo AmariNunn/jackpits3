@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Check, AlertCircle, CheckCircle2, Mail } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Check, AlertCircle, CheckCircle2, Mail, X } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 
 import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_1773071637027.png";
@@ -169,19 +170,27 @@ export default function Sponsorship() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const formRef = useRef<HTMLDivElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   function set(field: keyof SponsorForm, value: string) {
     setForm(prev => ({ ...prev, [field]: value }));
     setErrors(prev => ({ ...prev, [field]: undefined }));
   }
 
-  function selectTier(tier: string) {
+  function openModal(tier: string) {
     setForm(prev => ({ ...prev, tier }));
-    setErrors(prev => ({ ...prev, tier: undefined }));
-    setTimeout(() => {
-      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
+    setErrors({});
+    setSubmitError("");
+    setSubmitted(false);
+    setModalOpen(true);
+  }
+
+  function handleModalClose(open: boolean) {
+    setModalOpen(open);
+    if (!open && submitted) {
+      setSubmitted(false);
+      setForm(defaultForm);
+    }
   }
 
   function validate(): boolean {
@@ -295,7 +304,7 @@ export default function Sponsorship() {
                     <Button
                       className="w-full bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white"
                       data-testid={`button-select-sponsorship-${index}`}
-                      onClick={() => selectTier(opportunity.tier)}
+                      onClick={() => openModal(opportunity.tier)}
                     >
                       Select Sponsorship
                     </Button>
@@ -306,17 +315,34 @@ export default function Sponsorship() {
           ))}
         </motion.div>
 
-        <div ref={formRef} className="mt-16 md:mt-24 scroll-mt-8">
+        <div className="mt-10 bg-[#1a6b3a]/5 rounded-xl p-5 border border-[#1a6b3a]/10">
+          <div className="flex items-start gap-4">
+            <Mail className="w-5 h-5 text-[#1a6b3a] shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Sponsorship Questions?</h4>
+              <p className="text-sm font-body text-[#0d1f0f]/60">
+                Contact <strong>Melvin Farmer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:farmerm1938@yahoo.com" className="text-[#1a6b3a] hover:underline">farmerm1938@yahoo.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Dialog open={modalOpen} onOpenChange={handleModalClose}>
+        <DialogContent className="p-0 overflow-hidden max-w-2xl w-[95vw] max-h-[92vh] flex flex-col">
+          <DialogTitle className="sr-only">Sponsorship Contact Form</DialogTitle>
+          <DialogDescription className="sr-only">Select your sponsorship tier and complete the form to submit your sponsorship inquiry.</DialogDescription>
+
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center border border-[#1a6b3a]/20"
+              className="p-8 md:p-10 text-center overflow-y-auto"
             >
               <div className="w-20 h-20 bg-[#1a6b3a]/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 className="w-10 h-10 text-[#1a6b3a]" />
               </div>
-              <h2 className="text-3xl font-display font-bold text-[#0d1f0f] mb-3">Sponsorship Inquiry Submitted!</h2>
+              <h2 className="text-2xl font-display font-bold text-[#0d1f0f] mb-3">Sponsorship Inquiry Submitted!</h2>
               <p className="text-[#0d1f0f]/60 font-body mb-8">Thank you for your interest in sponsoring the Jack Pitts Health Foundation Golf Outing. We will be in touch shortly.</p>
 
               <div className="bg-[#f5f0e8] rounded-xl p-6 text-left mb-6 border border-[#c9973a]/20">
@@ -348,26 +374,22 @@ export default function Sponsorship() {
                 </div>
               </div>
 
-              <p className="text-xs text-[#0d1f0f]/40 font-body">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>
+              <p className="text-xs text-[#0d1f0f]/40 font-body mb-4">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>
+              <Button
+                onClick={() => handleModalClose(false)}
+                className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-8"
+              >
+                Close
+              </Button>
             </motion.div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-[#0d1f0f] mb-2">Sponsorship Contact Form</h2>
-                <p className="text-[#0d1f0f]/60 font-body">Select your sponsorship tier and complete the form. Payment is mailed separately.</p>
+            <>
+              <div className="bg-[#0d1f0f] px-6 py-5 flex-shrink-0">
+                <h3 className="text-xl font-display font-bold text-white">Sponsorship Inquiry</h3>
+                <p className="text-white/60 text-sm font-body mt-1">Deadline: July 11, 2026</p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-xl border border-[#0d1f0f]/10 overflow-hidden">
-                <div className="bg-[#0d1f0f] px-6 py-5">
-                  <h3 className="text-xl font-display font-bold text-white">Sponsorship Inquiry</h3>
-                  <p className="text-white/60 text-sm font-body mt-1">Deadline: July 11, 2026</p>
-                </div>
-
+              <div className="overflow-y-auto flex-1">
                 <form onSubmit={handleSubmit} className="p-6 space-y-8" noValidate>
 
                   <div>
@@ -527,37 +549,37 @@ export default function Sponsorship() {
                     </div>
                   )}
 
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-3">
                     <Button
                       type="submit"
                       data-testid="button-submit-sponsorship"
                       disabled={submitting}
-                      className="w-full h-12 text-base font-bold bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white shadow-lg"
+                      className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase"
                     >
-                      {submitting ? "Submitting…" : "Submit Sponsorship Inquiry"}
+                      {submitting ? "Submitting…" : "Reserve My Sponsorship — Submit Now →"}
                     </Button>
-                    <p className="text-center text-xs text-[#0d1f0f]/40 mt-3 font-body">
+
+                    <div className="bg-[#1a6b3a]/5 rounded-lg px-4 py-3 border border-[#1a6b3a]/10">
+                      <p className="text-center text-xs text-[#0d1f0f]/50 font-body leading-relaxed">
+                        <span className="font-semibold text-[#0d1f0f]/60">Limited Spots Available · Deadline July 11, 2026</span>
+                      </p>
+                    </div>
+
+                    <p className="text-center text-[10px] text-[#0d1f0f]/30 font-body leading-snug px-2">
+                      Prefer to pay by check? Mail your check payable to <em>Jack Pitts Health Foundation</em> along with this form. Sponsorship is not confirmed until payment is received.
+                    </p>
+
+                    <p className="text-center text-xs text-[#0d1f0f]/35 font-body">
                       The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
                     </p>
                   </div>
+
                 </form>
               </div>
-
-              <div className="mt-6 bg-[#1a6b3a]/5 rounded-xl p-5 border border-[#1a6b3a]/10">
-                <div className="flex items-start gap-4">
-                  <Mail className="w-5 h-5 text-[#1a6b3a] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Sponsorship Questions?</h4>
-                    <p className="text-sm font-body text-[#0d1f0f]/60">
-                      Contact <strong>Melvin Farmer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:farmerm1938@yahoo.com" className="text-[#1a6b3a] hover:underline">farmerm1938@yahoo.com</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            </>
           )}
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
