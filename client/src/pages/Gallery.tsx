@@ -117,23 +117,7 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
           </button>
         </div>
 
-        {/* Progress dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {items.map((_, idx) => (
-            <motion.button
-              key={idx}
-              onClick={() => {
-                setDirection(idx > currentIndex ? 1 : -1);
-                setCurrentIndex(idx);
-              }}
-              className={`rounded-full transition-all duration-300 ${
-                idx === currentIndex ? "bg-[#1a6b3a] w-8 h-2" : "bg-[#0d1f0f]/20 w-2 h-2"
-              }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.95 }}
-            />
-          ))}
-        </div>
+          
       </div>
     </div>
   );
