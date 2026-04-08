@@ -16,7 +16,7 @@ export function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-8 sm:mb-12 border-b border-[#f5f0e8]/10 pb-8 sm:pb-12">
-          <p className="text-[#f5f0e8]/80 font-body italic text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto text-center">
+          <p className="text-[#f5f0e8] font-body italic text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto text-center">
             Jack Pitts — Trinity High School Class A GIA State Champion (1965) · Michigan State University ·
             2024 Georgia High School Football Hall of Fame Inductee · Dedicated to the National Kidney Foundation of Michigan.
           </p>
@@ -74,9 +74,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-[#f5f0e8]/10 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0 text-xs sm:text-sm text-[#f5f0e8]/60 font-body">
-          <p>© {new Date().getFullYear()} Jack Pitts Health Foundation. All rights reserved.</p>
-          <div className="flex items-center space-x-1">
+        <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-[#f5f0e8]/10 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0 text-xs sm:text-sm text-[#f5f0e8] font-semibold font-body relative z-10">
+          <div className="flex items-center gap-8 sm:gap-12">
+            <span>© {new Date().getFullYear()} Jack Pitts Health Foundation. All rights reserved.</span>
             <span>Made with</span>
             <Heart className="w-4 h-4 text-red-400 fill-red-400" />
             <span>for the community</span>
