@@ -102,13 +102,13 @@ export default function Home() {
               <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[9rem] font-display font-black text-[#f5f0e8] mb-1 leading-[0.85] uppercase tracking-tight">
                 Jack<br />Pitts
               </h1>
-              <p className="text-lg sm:text-xl md:text-2xl font-display font-bold text-[#f5f0e8]/90 mb-2 uppercase tracking-widest leading-tight">
+              <p className="text-lg sm:text-xl md:text-2xl font-display font-bold text-[#f5f0e8] mb-2 uppercase tracking-widest leading-tight">
                 Health Foundation
               </p>
               <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[#c9973a] mb-4 md:mb-5 uppercase tracking-wide leading-tight">
                 Annual Golf Outing
               </p>
-              <p className="text-sm text-[#f5f0e8]/80 mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.2em] uppercase">
+              <p className="text-sm font-bold text-[#f5f0e8] mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.2em] uppercase">
                 Benefiting the National Kidney Foundation of Michigan
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start">
