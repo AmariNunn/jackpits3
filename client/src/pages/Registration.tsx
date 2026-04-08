@@ -177,8 +177,8 @@ export default function Registration() {
       }
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
-        headers: { "Accept": "application/json" },
-        body: new URLSearchParams(payload).toString(),
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setSubmitted(true);
