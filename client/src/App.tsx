@@ -30,7 +30,7 @@ function ScrollProgressBar() {
   if (!showGrass) return null;
 
   return (
-    <div className="fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden" style={{ width: '76px' }}>
+    <div className="hidden md:block fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden" style={{ width: '76px' }}>
       <div
         className="absolute inset-0"
         style={{
