@@ -276,8 +276,8 @@ export default function Sponsorship() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
         >
           {opportunities.map((opportunity, index) => (
-            <motion.div key={index} variants={item}>
-              <Card className={`h-full ${opportunity.borderColor} ${opportunity.bgColor} transition-all duration-300 hover:shadow-xl hover:-translate-y-1 shadow-lg border-0`} data-testid={`card-sponsorship-${index}`}>
+            <motion.div key={index} variants={item} className="h-full">
+              <Card className={`h-full flex flex-col ${opportunity.borderColor} ${opportunity.bgColor} transition-all duration-300 hover:shadow-xl hover:-translate-y-1 shadow-lg border-0`} data-testid={`card-sponsorship-${index}`}>
                 <CardHeader>
                   <div className="flex justify-between items-start mb-2">
                     <Badge variant="outline" className={`font-athletic tracking-[0.15em] text-xs ${opportunity.badge}`}>
@@ -288,11 +288,11 @@ export default function Sponsorship() {
                     {opportunity.price}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex flex-col flex-1">
                   <p className="text-[#0d1f0f]/60 mb-6 leading-relaxed italic font-body text-sm">
                     {opportunity.description}
                   </p>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 flex-1">
                     {opportunity.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-center text-sm font-body">
                         <Check className="h-4 w-4 text-[#1a6b3a] mr-3 shrink-0" />
