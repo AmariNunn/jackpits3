@@ -88,7 +88,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center lg:text-left max-w-2xl"
+              className="text-left max-w-2xl"
             >
               <motion.span
                 initial={{ opacity: 0, y: 10 }}
@@ -108,10 +108,10 @@ export default function Home() {
               <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[#c9973a] mb-4 md:mb-5 uppercase tracking-wide leading-tight">
                 Annual Golf Outing
               </p>
-              <p className="text-sm sm:text-sm text-[#f5f0e8]/80 sm:text-[#f5f0e8]/60 mb-8 md:mb-10 max-w-lg mx-auto lg:mx-0 font-athletic tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+              <p className="text-sm text-[#f5f0e8]/80 mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.2em] uppercase">
                 Benefiting the National Kidney Foundation of Michigan
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start">
                 <Link href="/registration">
                   <Button size="lg" className="w-full sm:w-auto bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-8 sm:px-10 h-12 sm:h-14 rounded-full text-base sm:text-lg font-bold shadow-xl border-0" data-testid="button-register-hero">
                     Register Now
