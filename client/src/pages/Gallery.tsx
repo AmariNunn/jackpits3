@@ -188,18 +188,25 @@ export default function Gallery() {
       { id: -33, imageUrl: img1729b, caption: "Final group shot on the green" },
     ];
 
-    const hiddenIds = new Set([-8, -9, -10, -11, -12, -13, 25, 26, 27]);
+    // Only hide the old DB placeholder entries, not any static photos
+    const hiddenIds = new Set([19, 20, 21, 22, 23, 24, 25, 26, 27]);
     const displayItems = [...staticImages, ...(items || [])].filter((item) => !hiddenIds.has(item.id));
 
-    // Split into groups
-    const group1 = displayItems.slice(0, 5);
-    const group2 = displayItems.slice(5, 10);
-    const group3 = displayItems.slice(10);
+    // Split all 33 photos into 6 meaningful sections
+    const group1 = displayItems.slice(0, 6);
+    const group2 = displayItems.slice(6, 12);
+    const group3 = displayItems.slice(12, 18);
+    const group4 = displayItems.slice(18, 24);
+    const group5 = displayItems.slice(24, 29);
+    const group6 = displayItems.slice(29);
 
     return [
-      { title: "Tournament Highlights", description: "Celebrating the best moments", items: group1 },
-      { title: "On the Course", description: "Players in action", items: group2 },
-      { title: "Community & Celebration", description: "The heart of the event", items: group3 },
+      { title: "Awards & Banquet", description: "Honoring excellence and celebrating together", items: group1 },
+      { title: "Fairway Friends", description: "Teams and foursomes enjoying the course", items: group2 },
+      { title: "Course Action", description: "In the swing of things out on the links", items: group3 },
+      { title: "Team Spirit", description: "The camaraderie that makes this event special", items: group4 },
+      { title: "Clubhouse Memories", description: "After the round, stories and laughter are shared", items: group5 },
+      { title: "Lasting Impressions", description: "Unforgettable moments from the Jack Pitts Open", items: group6 },
     ];
   }, [items]);
 
