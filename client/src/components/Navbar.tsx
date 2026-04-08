@@ -87,7 +87,7 @@ export function Navbar() {
                   className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-6 rounded-full font-bold shadow-xl shadow-[#1a6b3a]/20"
                   data-testid="button-register-nav"
                 >
-                  Register Now
+                  Reserve Now
                 </Button>
               </Link>
             </div>
@@ -136,7 +136,7 @@ export function Navbar() {
                       className="w-full bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white rounded-xl font-bold h-12 shadow-lg"
                       data-testid="button-register-mobile"
                     >
-                      Register Now
+                      Reserve Now
                     </Button>
                   </div>
                 </Link>
