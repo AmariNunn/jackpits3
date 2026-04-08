@@ -365,9 +365,10 @@ export default function Home() {
               Turning the Love of Golf<br className="hidden sm:block" /> Into a Legacy of Health
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-[#0d1f0f]/60 max-w-3xl mx-auto font-body leading-relaxed">
-              The Jack Pitts Health Foundation provides information, education, and direct services
-              to improve health outcomes for those who need them most — in the locations most accessible
-              to them. Our annual golf outing fuels this mission, benefiting the National Kidney Foundation of Michigan.
+              The Jack Pitts Health Foundation delivers information, education, and direct services that help
+              improve health outcomes for those who need them most, wherever support is most accessible.
+              Our annual golf outing powers this mission, with proceeds benefiting the National Kidney Foundation
+              of Michigan and many others in need.
             </p>
           </div>
 
