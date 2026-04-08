@@ -70,6 +70,11 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
     }),
   };
 
+  // Preload all images so slides switch instantly
+  const preloaded = items.map((item) => (
+    <img key={item.id} src={item.imageUrl} alt="" aria-hidden className="hidden" />
+  ));
+
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
     setCurrentIndex((prev) => (prev + newDirection + items.length) % items.length);
@@ -79,6 +84,9 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
 
   return (
     <div className="mb-20">
+      {/* Hidden preload images so all slides are cached and switch instantly */}
+      <div aria-hidden className="hidden">{preloaded}</div>
+
       <div className="mb-6">
         <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0d1f0f] mb-2">{title}</h2>
         {description && <p className="text-[#0d1f0f]/60 font-body">{description}</p>}
@@ -98,18 +106,18 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
               exit="exit"
               transition={{
                 x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.5 },
+                opacity: { duration: 0.3 },
               }}
               className="absolute inset-0 w-full h-full object-contain"
             />
           </AnimatePresence>
 
-          {/* Caption */}
+          {/* Caption — always on top of the image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             key={`caption-${currentIndex}`}
-            className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6 md:p-8"
+            className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6 md:p-8 pointer-events-none"
           >
             <div>
               <p className="text-white font-body text-lg md:text-xl">{items[currentIndex].caption}</p>
@@ -122,21 +130,19 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
           {/* Navigation Buttons */}
           <button
             onClick={() => paginate(-1)}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
             aria-label="Previous slide"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={() => paginate(1)}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
             aria-label="Next slide"
           >
             <ChevronRight size={24} />
           </button>
         </div>
-
-          
       </div>
     </div>
   );
