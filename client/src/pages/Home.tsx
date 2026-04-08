@@ -216,12 +216,11 @@ export default function Home() {
       <section className="py-10 md:py-16 lg:py-20 bg-[#1a6b3a] relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"1\" fill-rule=\"evenodd\"%3E%3Cpath d=\"M0 40L40 0H20L0 20M40 40V20L20 40\"/%3E%3C/g%3E%3C/svg%3E')" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-4 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
             {[
               { value: 56, suffix: "", label: "Career Touchdowns" },
               { value: 19, suffix: "-14", label: "Championship Victory" },
               { value: 30, suffix: "+", label: "Scholarship Offers" },
-              { value: 2, suffix: "", label: "National Titles" },
               { value: 16, suffix: "+", label: "Years of Impact" },
             ].map((stat, i) => (
               <motion.div
@@ -230,7 +229,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`flex flex-col items-center ${i >= 3 ? 'col-span-1' : ''}`}
+                className={`flex flex-col items-center`}
                 data-testid={`stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <span className="text-3xl sm:text-4xl md:text-6xl font-athletic text-white mb-1 sm:mb-2">
