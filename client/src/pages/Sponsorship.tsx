@@ -191,7 +191,7 @@ export default function Sponsorship() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Button size="lg" className="w-full sm:w-auto bg-[#c9973a] hover:bg-[#c9973a]/90 text-white font-bold px-8" data-testid="button-contact-foundation">
-              <a href="mailto:jnpitts@comcast.net">Contact the Foundation</a>
+              <a href="mailto:tiger.pitts@icloud.com">Contact the Foundation</a>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#f5f0e8]/30 text-[#f5f0e8] hover:bg-[#f5f0e8]/10 font-bold px-8" data-testid="button-download-prospectus">
               Download Sponsorship Packet
