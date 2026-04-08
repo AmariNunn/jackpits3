@@ -28,6 +28,25 @@ import img1789 from "@assets/img_1789_1775627297002.jpg";
 import img1793 from "@assets/img_1793_1775627297002.jpg";
 import img1795 from "@assets/img_1795_1775627297003.jpg";
 import imgAc603f7b from "@assets/ac603f7b-fdad-4ad4-9ece-4d7b05d8bbc3_1775627299254.jpg";
+import img1858 from "@assets/img_1858_1775630634164.jpg";
+import img1729a from "@assets/img_1729_1775630634164.jpg";
+import img1770a from "@assets/img_1770_1775630634164.jpg";
+import img1771 from "@assets/img_1771_1775630634165.jpg";
+import img1712 from "@assets/img_1712_1775630634165.jpg";
+import img1801 from "@assets/img_1801_1775630634165.jpg";
+import img1809 from "@assets/img_1809_1775630634165.jpg";
+import img1820 from "@assets/img_1820_1775630634166.jpg";
+import img1748 from "@assets/img_1748_1775630634166.jpg";
+import img1868 from "@assets/img_1868_1775630634166.jpg";
+import img1844 from "@assets/img_1844_1775630634166.jpg";
+import img1784 from "@assets/img_1784_1775630634167.jpg";
+import img1759 from "@assets/img_1759_1775630634167.jpg";
+import img1867b from "@assets/img_1867_1775630634167.jpg";
+import img1770b from "@assets/img_1770_1775630647896.jpg";
+import img1745 from "@assets/img_1745_1775630647897.jpg";
+import img1732 from "@assets/img_1732_1775630647897.jpg";
+import img1858b from "@assets/img_1858_1775630647897.jpg";
+import img1729b from "@assets/img_1729_1775630647898.jpg";
 
 // Carousel component for slides
 function Carousel({ items, title, description }: { items: any[]; title: string; description?: string }) {
@@ -148,6 +167,25 @@ export default function Gallery() {
       { id: -12, imageUrl: img1793, caption: "Friends gathered after play" },
       { id: -13, imageUrl: img1795, caption: "Another winning team photo" },
       { id: -14, imageUrl: imgAc603f7b, caption: "Honorees with their trophies" },
+      { id: -15, imageUrl: img1858, caption: "Friends celebrating together indoors" },
+      { id: -16, imageUrl: img1729a, caption: "A strong group on the fairway" },
+      { id: -17, imageUrl: img1770a, caption: "Another great foursome photo" },
+      { id: -18, imageUrl: img1771, caption: "Smiling players on the course" },
+      { id: -19, imageUrl: img1712, caption: "Team red on the green" },
+      { id: -20, imageUrl: img1801, caption: "Group photo under the evening sky" },
+      { id: -21, imageUrl: img1809, caption: "Banquet guest at the tables" },
+      { id: -22, imageUrl: img1820, caption: "Seated celebration inside the clubhouse" },
+      { id: -23, imageUrl: img1748, caption: "Matching green team on the course" },
+      { id: -24, imageUrl: img1868, caption: "Large group pose at the banquet" },
+      { id: -25, imageUrl: img1844, caption: "Guests gathered for dinner" },
+      { id: -26, imageUrl: img1784, caption: "Purple team on the green" },
+      { id: -27, imageUrl: img1759, caption: "Casual team shot on the fairway" },
+      { id: -28, imageUrl: img1867b, caption: "Tournament group in the clubhouse" },
+      { id: -29, imageUrl: img1770b, caption: "Another bright team photo" },
+      { id: -30, imageUrl: img1745, caption: "Ladies in yellow at the course" },
+      { id: -31, imageUrl: img1732, caption: "Orange and yellow team group" },
+      { id: -32, imageUrl: img1858b, caption: "Indoor award presentation moment" },
+      { id: -33, imageUrl: img1729b, caption: "Final group shot on the green" },
     ];
 
     const hiddenIds = new Set([-8, -9, -10, -11, -12, -13, 25, 26, 27]);
