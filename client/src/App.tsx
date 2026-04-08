@@ -1,6 +1,7 @@
 import { Switch, Route, useLocation } from "wouter";
 import { useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
+
 import golfBallImg from "@assets/pngtree-golf-ball-3d-element-png-image_11595208_1775620613342.png";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -26,35 +27,25 @@ function ScrollProgressBar() {
 
   const showGrass = GRASS_PAGES.has(location);
 
+  if (!showGrass) return null;
+
   return (
-    <AnimatePresence>
-      {showGrass && (
-        <motion.div
-          key="grass-scroll"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.55, ease: "easeInOut" }}
-          className="fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden"
-          style={{ width: '76px' }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: "url('/images/grass.png')",
-              backgroundRepeat: 'repeat-y',
-              backgroundSize: '76px auto',
-            }}
-          />
-          <motion.img
-            src={golfBallImg}
-            alt=""
-            style={{ top, rotate }}
-            className="absolute left-[2px] w-[34px] h-[34px] object-contain drop-shadow-lg"
-          />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden" style={{ width: '76px' }}>
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: "url('/images/grass.png')",
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '76px auto',
+        }}
+      />
+      <motion.img
+        src={golfBallImg}
+        alt=""
+        style={{ top, rotate }}
+        className="absolute left-[2px] w-[34px] h-[34px] object-contain drop-shadow-lg"
+      />
+    </div>
   );
 }
 
