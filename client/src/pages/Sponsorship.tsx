@@ -1,16 +1,31 @@
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Check, AlertCircle, CheckCircle2, Mail } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 
 import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_1773071637027.png";
+
+const FORMSPREE_URL = "https://formspree.io/f/xvzvyaqz";
+
+const US_STATES = [
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
+  "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
+  "VA","WA","WV","WI","WY","DC"
+];
 
 const opportunities = [
   {
     title: "💎 PLATINUM SPONSOR",
     price: "$10,000",
+    tier: "Platinum Sponsor ($10,000)",
     description: "The pinnacle of partnership — maximum visibility and recognition across all event channels, with three foursome teams and distinguished sponsor status.",
     features: [
       "Three foursome teams (12 golfers)",
@@ -27,6 +42,7 @@ const opportunities = [
   {
     title: "🥇 GOLD SPONSOR",
     price: "$5,000",
+    tier: "Gold Sponsor ($5,000)",
     description: "A distinguished partnership offering strong brand presence and two foursome teams at this celebrated annual event.",
     features: [
       "Two foursome teams (8 golfers)",
@@ -42,6 +58,7 @@ const opportunities = [
   {
     title: "🥈 SILVER SPONSOR",
     price: "$3,000",
+    tier: "Silver Sponsor ($3,000)",
     description: "A valued partnership with course signage and full recognition in all event communications and the Awards program.",
     features: [
       "One foursome team (4 golfers)",
@@ -56,6 +73,7 @@ const opportunities = [
   {
     title: "🍽️ LUNCH AT THE TURN",
     price: "$2,500",
+    tier: "Lunch at the Turn Sponsor ($2,500)",
     description: "Exclusive sponsorship of the signature mid-round luncheon — a memorable moment of hospitality enjoyed by every golfer on the course.",
     features: [
       "One foursome team (4 golfers)",
@@ -70,6 +88,7 @@ const opportunities = [
   {
     title: "⛳ HOLE SPONSOR",
     price: "$500",
+    tier: "Hole Sponsor ($500)",
     description: "Dedicated tee or hole signage proudly displaying your name and logo at one of the course's finest stations.",
     features: [
       "Dedicated tee or hole signage with name and logo",
@@ -83,6 +102,7 @@ const opportunities = [
   {
     title: "🤝 COMMUNITY SPONSOR",
     price: "$250",
+    tier: "Community Sponsor ($250)",
     description: "A meaningful expression of community commitment, recognized with gratitude in our event program and announcements.",
     features: [
       "Company name listed in the event program",
@@ -94,6 +114,8 @@ const opportunities = [
     badge: "text-[#0d1f0f]/50 border-[#0d1f0f]/20"
   }
 ];
+
+const TIER_OPTIONS = opportunities.map(o => o.tier);
 
 const container = {
   hidden: { opacity: 0 },
@@ -108,7 +130,113 @@ const item = {
   show: { opacity: 1, y: 0 }
 };
 
+interface SponsorForm {
+  tier: string;
+  name: string;
+  organization: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  phoneHome: string;
+  phoneCell: string;
+  email: string;
+  signageMessage: string;
+}
+
+const defaultForm: SponsorForm = {
+  tier: "",
+  name: "",
+  organization: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  phoneHome: "",
+  phoneCell: "",
+  email: "",
+  signageMessage: "",
+};
+
+function FieldError({ msg }: { msg?: string }) {
+  if (!msg) return null;
+  return <p className="text-red-600 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{msg}</p>;
+}
+
 export default function Sponsorship() {
+  const [form, setForm] = useState<SponsorForm>(defaultForm);
+  const [errors, setErrors] = useState<Partial<Record<keyof SponsorForm, string>>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const formRef = useRef<HTMLDivElement>(null);
+
+  function set(field: keyof SponsorForm, value: string) {
+    setForm(prev => ({ ...prev, [field]: value }));
+    setErrors(prev => ({ ...prev, [field]: undefined }));
+  }
+
+  function selectTier(tier: string) {
+    setForm(prev => ({ ...prev, tier }));
+    setErrors(prev => ({ ...prev, tier: undefined }));
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
+  function validate(): boolean {
+    const e: Partial<Record<keyof SponsorForm, string>> = {};
+    if (!form.tier) e.tier = "Please select a sponsorship tier";
+    if (!form.name.trim()) e.name = "Name is required";
+    if (!form.address.trim()) e.address = "Address is required";
+    if (!form.city.trim()) e.city = "City is required";
+    if (!form.state) e.state = "State is required";
+    if (!form.zip.trim()) e.zip = "ZIP is required";
+    if (!form.email.trim()) e.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
+    if (!form.phoneHome.trim() && !form.phoneCell.trim()) e.phoneHome = "At least one phone number is required";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validate()) return;
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const payload = {
+        _subject: "Golf Outing Sponsorship Inquiry",
+        sponsorship_tier: form.tier,
+        name: form.name,
+        organization: form.organization || "N/A",
+        address: form.address,
+        city: form.city,
+        state: form.state,
+        zip: form.zip,
+        phone_home: form.phoneHome || "N/A",
+        phone_cell: form.phoneCell || "N/A",
+        email: form.email,
+        signage_poster_hole_message: form.signageMessage || "N/A",
+      };
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError((data as { error?: string }).error || "Submission failed. Please try again.");
+      }
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#f5f0e8] pb-12 md:pb-20">
       <PageHeader
@@ -164,7 +292,11 @@ export default function Sponsorship() {
                     ))}
                   </ul>
                   <div className="mt-8 pt-6 border-t border-[#0d1f0f]/10">
-                    <Button className="w-full bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white" data-testid={`button-select-sponsorship-${index}`}>
+                    <Button
+                      className="w-full bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white"
+                      data-testid={`button-select-sponsorship-${index}`}
+                      onClick={() => selectTier(opportunity.tier)}
+                    >
                       Select Sponsorship
                     </Button>
                   </div>
@@ -174,30 +306,257 @@ export default function Sponsorship() {
           ))}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-12 md:mt-20 bg-[#1a6b3a] text-[#f5f0e8] rounded-2xl p-6 sm:p-8 md:p-12 text-center"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 font-display text-[#f5f0e8]">
-            Become a Sponsor
-          </h2>
-          <p className="text-base sm:text-lg opacity-80 max-w-2xl mx-auto mb-2 font-body">
-            Select your tier, complete the registration form, and mail your check payable to <strong>Jack Pitts Health Foundation</strong>.
-          </p>
-          <p className="text-sm opacity-60 mb-6 md:mb-8 font-body">
-            P.O. Box 250014 · West Bloomfield, MI 48325 · tiger.pitts@icloud.com · www.jpittsfoundation.com
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <Button size="lg" className="w-full sm:w-auto bg-[#c9973a] hover:bg-[#c9973a]/90 text-white font-bold px-8" data-testid="button-contact-foundation">
-              <a href="mailto:tiger.pitts@icloud.com">Contact the Foundation</a>
-            </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#f5f0e8]/30 text-[#f5f0e8] hover:bg-[#f5f0e8]/10 font-bold px-8" data-testid="button-download-prospectus">
-              Download Sponsorship Packet
-            </Button>
-          </div>
-        </motion.div>
+        <div ref={formRef} className="mt-16 md:mt-24 scroll-mt-8">
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center border border-[#1a6b3a]/20"
+            >
+              <div className="w-20 h-20 bg-[#1a6b3a]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-[#1a6b3a]" />
+              </div>
+              <h2 className="text-3xl font-display font-bold text-[#0d1f0f] mb-3">Sponsorship Inquiry Submitted!</h2>
+              <p className="text-[#0d1f0f]/60 font-body mb-8">Thank you for your interest in sponsoring the Jack Pitts Health Foundation Golf Outing. We will be in touch shortly.</p>
+
+              <div className="bg-[#f5f0e8] rounded-xl p-6 text-left mb-6 border border-[#c9973a]/20">
+                <h3 className="font-display font-bold text-[#0d1f0f] mb-4">Payment Instructions</h3>
+                <p className="text-sm text-[#0d1f0f]/70 font-body mb-3">
+                  Make check or money order payable to:
+                </p>
+                <p className="font-bold text-[#1a6b3a] text-lg font-display mb-4">"Jack Pitts Health Foundation"</p>
+                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to:</p>
+                <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-4">
+                  Jack Pitts Health Foundation<br />
+                  P.O. Box 250014<br />
+                  West Bloomfield, MI 48325
+                </div>
+                <p className="text-sm text-[#0d1f0f]/60 font-body">
+                  Deadline: <strong className="text-[#0d1f0f]">July 11, 2026</strong>
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 text-left border border-[#0d1f0f]/10 mb-6">
+                <h3 className="font-display font-bold text-[#0d1f0f] mb-3">Questions? Contact</h3>
+                <div className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-[#1a6b3a] shrink-0 mt-0.5" />
+                  <div className="text-sm font-body text-[#0d1f0f]/70">
+                    <p><strong>Melvin Farmer</strong></p>
+                    <p><a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a></p>
+                    <p><a href="mailto:farmerm1938@yahoo.com" className="text-[#1a6b3a] hover:underline">farmerm1938@yahoo.com</a></p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-[#0d1f0f]/40 font-body">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto"
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl font-display font-bold text-[#0d1f0f] mb-2">Sponsorship Contact Form</h2>
+                <p className="text-[#0d1f0f]/60 font-body">Select your sponsorship tier and complete the form. Payment is mailed separately.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl shadow-xl border border-[#0d1f0f]/10 overflow-hidden">
+                <div className="bg-[#0d1f0f] px-6 py-5">
+                  <h3 className="text-xl font-display font-bold text-white">Sponsorship Inquiry</h3>
+                  <p className="text-white/60 text-sm font-body mt-1">Deadline: July 11, 2026</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-6 space-y-8" noValidate>
+
+                  <div>
+                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-4">Sponsorship Tier</h4>
+                    <Select value={form.tier} onValueChange={v => set("tier", v)}>
+                      <SelectTrigger data-testid="select-sponsorship-tier" className="w-full">
+                        <SelectValue placeholder="Select a sponsorship tier…" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {TIER_OPTIONS.map(t => (
+                          <SelectItem key={t} value={t}>{t}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FieldError msg={errors.tier} />
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-4">Contact Information</h4>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="sp-name" className="text-[#0d1f0f]/70 font-body text-sm">Name *</Label>
+                          <Input
+                            id="sp-name"
+                            data-testid="input-sponsor-name"
+                            value={form.name}
+                            onChange={e => set("name", e.target.value)}
+                            placeholder="Your full name"
+                            className="mt-1"
+                          />
+                          <FieldError msg={errors.name} />
+                        </div>
+                        <div>
+                          <Label htmlFor="sp-org" className="text-[#0d1f0f]/70 font-body text-sm">Organization</Label>
+                          <Input
+                            id="sp-org"
+                            data-testid="input-sponsor-organization"
+                            value={form.organization}
+                            onChange={e => set("organization", e.target.value)}
+                            placeholder="Company / Organization"
+                            className="mt-1"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="sp-address" className="text-[#0d1f0f]/70 font-body text-sm">Address *</Label>
+                        <Input
+                          id="sp-address"
+                          data-testid="input-sponsor-address"
+                          value={form.address}
+                          onChange={e => set("address", e.target.value)}
+                          placeholder="123 Main St"
+                          className="mt-1"
+                        />
+                        <FieldError msg={errors.address} />
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div className="col-span-2 sm:col-span-1">
+                          <Label htmlFor="sp-city" className="text-[#0d1f0f]/70 font-body text-sm">City *</Label>
+                          <Input
+                            id="sp-city"
+                            data-testid="input-sponsor-city"
+                            value={form.city}
+                            onChange={e => set("city", e.target.value)}
+                            placeholder="City"
+                            className="mt-1"
+                          />
+                          <FieldError msg={errors.city} />
+                        </div>
+                        <div>
+                          <Label htmlFor="sp-state" className="text-[#0d1f0f]/70 font-body text-sm">State *</Label>
+                          <Select value={form.state} onValueChange={v => set("state", v)}>
+                            <SelectTrigger id="sp-state" data-testid="select-sponsor-state" className="mt-1">
+                              <SelectValue placeholder="State" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {US_STATES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                            </SelectContent>
+                          </Select>
+                          <FieldError msg={errors.state} />
+                        </div>
+                        <div>
+                          <Label htmlFor="sp-zip" className="text-[#0d1f0f]/70 font-body text-sm">ZIP *</Label>
+                          <Input
+                            id="sp-zip"
+                            data-testid="input-sponsor-zip"
+                            value={form.zip}
+                            onChange={e => set("zip", e.target.value)}
+                            placeholder="ZIP"
+                            className="mt-1"
+                          />
+                          <FieldError msg={errors.zip} />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                          <Label htmlFor="sp-phone-home" className="text-[#0d1f0f]/70 font-body text-sm">Phone (Home)</Label>
+                          <Input
+                            id="sp-phone-home"
+                            data-testid="input-sponsor-phone-home"
+                            type="tel"
+                            value={form.phoneHome}
+                            onChange={e => set("phoneHome", e.target.value)}
+                            placeholder="(555) 000-0000"
+                            className="mt-1"
+                          />
+                          <FieldError msg={errors.phoneHome} />
+                        </div>
+                        <div>
+                          <Label htmlFor="sp-phone-cell" className="text-[#0d1f0f]/70 font-body text-sm">Phone (Cell)</Label>
+                          <Input
+                            id="sp-phone-cell"
+                            data-testid="input-sponsor-phone-cell"
+                            type="tel"
+                            value={form.phoneCell}
+                            onChange={e => set("phoneCell", e.target.value)}
+                            placeholder="(555) 000-0000"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="sp-email" className="text-[#0d1f0f]/70 font-body text-sm">Email *</Label>
+                          <Input
+                            id="sp-email"
+                            data-testid="input-sponsor-email"
+                            type="email"
+                            value={form.email}
+                            onChange={e => set("email", e.target.value)}
+                            placeholder="you@example.com"
+                            className="mt-1"
+                          />
+                          <FieldError msg={errors.email} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-4">Signage / Poster / Hole Message</h4>
+                    <Textarea
+                      data-testid="textarea-signage-message"
+                      value={form.signageMessage}
+                      onChange={e => set("signageMessage", e.target.value)}
+                      placeholder="Enter the text you'd like displayed on your signage, poster, or hole marker…"
+                      className="min-h-[100px] resize-none"
+                    />
+                  </div>
+
+                  {submitError && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-700 font-body">{submitError}</p>
+                    </div>
+                  )}
+
+                  <div className="pt-2">
+                    <Button
+                      type="submit"
+                      data-testid="button-submit-sponsorship"
+                      disabled={submitting}
+                      className="w-full h-12 text-base font-bold bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white shadow-lg"
+                    >
+                      {submitting ? "Submitting…" : "Submit Sponsorship Inquiry"}
+                    </Button>
+                    <p className="text-center text-xs text-[#0d1f0f]/40 mt-3 font-body">
+                      The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
+                    </p>
+                  </div>
+                </form>
+              </div>
+
+              <div className="mt-6 bg-[#1a6b3a]/5 rounded-xl p-5 border border-[#1a6b3a]/10">
+                <div className="flex items-start gap-4">
+                  <Mail className="w-5 h-5 text-[#1a6b3a] shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Sponsorship Questions?</h4>
+                    <p className="text-sm font-body text-[#0d1f0f]/60">
+                      Contact <strong>Melvin Farmer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:farmerm1938@yahoo.com" className="text-[#1a6b3a] hover:underline">farmerm1938@yahoo.com</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </div>
       </div>
     </div>
   );
