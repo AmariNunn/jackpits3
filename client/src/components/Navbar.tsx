@@ -24,7 +24,6 @@ export function Navbar() {
     { href: "/schedule", label: "Schedule" },
     { href: "/gallery", label: "Gallery" },
     { href: "/sponsorship", label: "Sponsorship" },
-    { href: "/registration", label: "Registration" },
   ];
 
   return (
