@@ -352,7 +352,7 @@ export default function Registration() {
                 <h3 className="font-display font-bold text-[#0d1f0f] mb-2">Questions?</h3>
                 <div className="space-y-1 text-sm font-body text-[#0d1f0f]/70">
                   <p><strong>Jack Pitts</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
-                  <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a></p>
+                  <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                 </div>
               </div>
 

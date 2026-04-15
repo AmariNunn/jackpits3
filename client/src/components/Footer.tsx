@@ -66,8 +66,8 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-3 text-[#f5f0e8]/80">
                 <Mail className="w-5 h-5 shrink-0" />
-                <a href="mailto:jnpitts@comcast.net" className="text-sm hover:text-[#f5f0e8] transition-colors font-body">
-                  jnpitts@comcast.net
+                <a href="mailto:tiger.pitts@icloud.com" className="text-sm hover:text-[#f5f0e8] transition-colors font-body">
+                  tiger.pitts@icloud.com
                 </a>
               </div>
             </div>
