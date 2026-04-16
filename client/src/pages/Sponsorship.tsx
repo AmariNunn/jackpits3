@@ -89,8 +89,8 @@ const opportunities = [
   },
   {
     title: "⛳ HOLE SPONSOR",
-    price: "$500",
-    tier: "Hole Sponsor ($500)",
+    price: "$125",
+    tier: "Hole Sponsor ($125)",
     description: "Dedicated tee or hole signage proudly displaying your name and logo at one of the course's finest stations.",
     features: [
       "Dedicated tee or hole signage with name and logo",
