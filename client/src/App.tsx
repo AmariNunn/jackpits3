@@ -30,18 +30,21 @@ function ScrollProgressBar() {
   if (!showGrass) return null;
 
   return (
-    <div className="hidden md:block fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden" style={{ width: '76px' }}>
+    <div className="hidden lg:block fixed top-0 right-0 bottom-0 z-[100] pointer-events-none overflow-hidden" style={{ width: '76px' }}>
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: "url('/images/grass.png')",
           backgroundRepeat: 'repeat-y',
           backgroundSize: '76px auto',
+          willChange: 'auto',
         }}
       />
       <motion.img
         src={golfBallImg}
         alt=""
+        loading="eager"
+        fetchpriority="high"
         style={{ top, rotate }}
         className="absolute left-[2px] w-[34px] h-[34px] object-contain drop-shadow-lg"
       />
