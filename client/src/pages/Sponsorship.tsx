@@ -322,7 +322,8 @@ export default function Sponsorship() {
             <div>
               <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Sponsorship Questions?</h4>
               <p className="text-sm font-body text-[#0d1f0f]/60">
-                Contact <strong>Melvin Farmer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a>
+                Contact <strong>Melvin Farmer, Treasurer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a><br />
+                <strong>Jack Pitts, President</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a>
               </p>
             </div>
           </div>
@@ -352,12 +353,13 @@ export default function Sponsorship() {
                   Make check or money order payable to:
                 </p>
                 <p className="font-bold text-[#1a6b3a] text-lg font-display mb-4">"Jack Pitts Health Foundation"</p>
-                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to:</p>
-                <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-4">
+                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to — <strong>Melvin Farmer, Treasurer</strong>:</p>
+                <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-2">
                   Jack Pitts Health Foundation<br />
                   P.O. Box 250014<br />
                   West Bloomfield, MI 48325
                 </div>
+                <p className="text-xs text-[#0d1f0f]/60 font-body mb-4">Payment questions? Contact <strong>Melvin Farmer, Treasurer</strong> — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a></p>
                 <a
                   href={`${ZELLE_URL}`}
                   target="_blank"
@@ -375,13 +377,10 @@ export default function Sponsorship() {
 
               <div className="bg-white rounded-xl p-6 text-left border border-[#0d1f0f]/10 mb-6">
                 <h3 className="font-display font-bold text-[#0d1f0f] mb-3">Questions? Contact</h3>
-                <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-[#1a6b3a] shrink-0 mt-0.5" />
-                  <div className="text-sm font-body text-[#0d1f0f]/70">
-                    <p><strong>Melvin Farmer</strong></p>
-                    <p><a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a></p>
-                    <p><a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
-                  </div>
+                <div className="space-y-2 text-sm font-body text-[#0d1f0f]/70">
+                  <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a></p>
+                  <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a> <span className="text-[#0d1f0f]/40">(payments)</span></p>
+                  <p><a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                 </div>
               </div>
               <div className="mb-6 flex justify-center">

@@ -308,7 +308,8 @@ export default function Registration() {
                 <div>
                   <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Questions? We're happy to help.</h4>
                   <p className="text-xs text-[#0d1f0f]/60 font-body">
-                    Call Jack Pitts: <a href="tel:2488368014" className="text-[#1a6b3a] font-semibold">(248) 836-8014</a><br />
+                    <strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a] font-semibold">(248) 836-8014</a><br />
+                    <strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a] font-semibold">(517) 323-4535</a><br />
                     Email: <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a>
                   </p>
                 </div>
@@ -340,12 +341,13 @@ export default function Registration() {
                 <h3 className="font-display font-bold text-[#0d1f0f] mb-3">How to Send Payment</h3>
                 <p className="text-sm text-[#0d1f0f]/70 font-body mb-2">Make check or money order payable to:</p>
                 <p className="font-bold text-[#1a6b3a] text-lg font-display mb-3">"Jack Pitts Health Foundation"</p>
-                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to:</p>
+                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to — <strong>Melvin Farmer, Treasurer</strong>:</p>
                 <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-3">
                   Jack Pitts Health Foundation<br />
                   P.O. Box 250014<br />
                   West Bloomfield, MI 48325
                 </div>
+                <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">For payment questions, contact <strong>Melvin Farmer, Treasurer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a></p>
                 <a
                   href={`${ZELLE_URL}`}
                   target="_blank"
@@ -362,8 +364,9 @@ export default function Registration() {
               <div className="bg-white rounded-xl p-5 text-left border border-[#0d1f0f]/10 mb-6">
                 <h3 className="font-display font-bold text-[#0d1f0f] mb-2">Questions?</h3>
                 <div className="space-y-1 text-sm font-body text-[#0d1f0f]/70">
-                  <p><strong>Jack Pitts</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
-                  <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
+                  <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
+                  <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a> <span className="text-[#0d1f0f]/40">(payments)</span></p>
+                  <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a></p>
                 </div>
               </div>
               <div className="mb-6 flex justify-center">
