@@ -61,7 +61,7 @@ export function Footer() {
                 <MapPin className="w-5 h-5 mt-0.5 shrink-0" />
                 <span className="text-sm font-body">
                   P.O. Box 250014<br />
-                  West Bloomfield, MI 48323
+                  West Bloomfield, MI 48235
                 </span>
               </div>
               <div className="flex items-center space-x-3 text-[#f5f0e8]/80">
