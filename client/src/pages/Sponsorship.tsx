@@ -8,12 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Check, AlertCircle, CheckCircle2, Mail, X } from "lucide-react";
+import { Check, AlertCircle, CheckCircle2, Mail, X, ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 
 import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_1773071637027.png";
 
 const FORMSPREE_URL = "https://formspree.io/f/xvzvyaqz";
+const ZELLE_URL = "https://www.zellepay.com/";
 
 const US_STATES = [
   "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
@@ -357,6 +358,16 @@ export default function Sponsorship() {
                   P.O. Box 250014<br />
                   West Bloomfield, MI 48325
                 </div>
+                <a
+                  href={`${ZELLE_URL}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-4 py-2 text-white font-semibold hover:bg-[#155932] transition-colors mb-4"
+                  data-testid="button-zelle-sponsorship"
+                >
+                  Pay via Zelle to 2488368014
+                  <ExternalLink className="w-4 h-4" />
+                </a>
                 <p className="text-sm text-[#0d1f0f]/60 font-body">
                   Deadline: <strong className="text-[#0d1f0f]">July 11, 2026</strong>
                 </p>
@@ -372,6 +383,18 @@ export default function Sponsorship() {
                     <p><a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                   </div>
                 </div>
+              </div>
+              <div className="mb-6 flex justify-center">
+                <a
+                  href={`${ZELLE_URL}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-5 py-3 text-white font-semibold hover:bg-[#155932] transition-colors"
+                  data-testid="button-zelle-confirmation-sponsor"
+                >
+                  Pay via Zelle to 2488368014
+                  <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
 
               <p className="text-xs text-[#0d1f0f]/40 font-body mb-4">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>

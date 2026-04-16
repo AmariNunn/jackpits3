@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Heart } from "lucide-react";
+import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Heart, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import puttingImg from "@assets/Golfer_focused_on_the_perfect_putt_1773071637027.png";
 
 const FORMSPREE_URL = "https://formspree.io/f/xvzvyaqz";
+const ZELLE_URL = "https://www.zellepay.com/";
 
 const US_STATES = [
   "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
@@ -345,6 +346,16 @@ export default function Registration() {
                   P.O. Box 250014<br />
                   West Bloomfield, MI 48325
                 </div>
+                <a
+                  href={`${ZELLE_URL}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-4 py-2 text-white font-semibold hover:bg-[#155932] transition-colors mb-3"
+                  data-testid="button-zelle-registration"
+                >
+                  Pay via Zelle to 2488368014
+                  <ExternalLink className="w-4 h-4" />
+                </a>
                 <p className="text-sm font-bold text-[#0d1f0f]">Total Due: <span className="text-[#1a6b3a]">${total.toFixed(2)}</span></p>
               </div>
 
@@ -354,6 +365,18 @@ export default function Registration() {
                   <p><strong>Jack Pitts</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                   <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                 </div>
+              </div>
+              <div className="mb-6 flex justify-center">
+                <a
+                  href={`${ZELLE_URL}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-5 py-3 text-white font-semibold hover:bg-[#155932] transition-colors"
+                  data-testid="button-zelle-confirmation"
+                >
+                  Pay via Zelle to 2488368014
+                  <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
 
               <p className="text-xs text-[#0d1f0f]/40 font-body mb-4">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>
