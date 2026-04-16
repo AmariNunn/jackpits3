@@ -313,6 +313,7 @@ export default function Registration() {
                   <p className="text-xs text-[#0d1f0f]/60 font-body">
                     <strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a] font-semibold">(248) 836-8014</a><br />
                     <strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a] font-semibold">(517) 323-4535</a><br />
+                    <strong>Deborah Sudduth</strong>, Golf Committee Chair — <a href="tel:5179747796" className="text-[#1a6b3a] font-semibold">(517) 974-7796</a> · <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a><br />
                     Email: <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a>
                   </p>
                 </div>
@@ -369,7 +370,7 @@ export default function Registration() {
                 <div className="space-y-1 text-sm font-body text-[#0d1f0f]/70">
                   <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                   <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a> <span className="text-[#0d1f0f]/40">(payments)</span></p>
-                  <p><strong>Deborah Sudduth</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a></p>
+                  <p><strong>Deborah Sudduth</strong>, Golf Committee Chair — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a></p>
                 </div>
               </div>
               <div className="mb-6 flex justify-center">

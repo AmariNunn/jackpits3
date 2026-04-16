@@ -326,7 +326,8 @@ export default function Sponsorship() {
               <h4 className="font-display font-bold text-[#0d1f0f] text-sm mb-1">Sponsorship Questions?</h4>
               <p className="text-sm font-body text-[#0d1f0f]/60">
                 Contact <strong>Melvin Farmer, Treasurer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">517-323-4535</a> or <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a><br />
-                <strong>Jack Pitts, President</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a>
+                <strong>Jack Pitts, President</strong> — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a><br />
+                <strong>Deborah Sudduth, Golf Committee Chair</strong> — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> or <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a>
               </p>
             </div>
           </div>
@@ -383,6 +384,7 @@ export default function Sponsorship() {
                 <div className="space-y-2 text-sm font-body text-[#0d1f0f]/70">
                   <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a></p>
                   <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a> <span className="text-[#0d1f0f]/40">(payments)</span></p>
+                  <p><strong>Deborah Sudduth</strong>, Golf Committee Chair — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a></p>
                   <p><a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
                 </div>
               </div>
