@@ -349,7 +349,7 @@ export default function Registration() {
                 <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-3">
                   Jack Pitts Health Foundation<br />
                   P.O. Box 250014<br />
-                  West Bloomfield, MI 48235
+                  West Bloomfield, MI 48325
                 </div>
                 <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">For payment questions, contact <strong>Melvin Farmer, Treasurer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a></p>
                 <a
