@@ -27,14 +27,14 @@ export function PageHeader({ title, subtitle, backgroundImage, leftImage }: Page
           src={sideImage}
           alt=""
           loading="eager"
-          fetchPriority="high"
+          fetchpriority="high"
           className="h-[88%] w-auto max-w-[38%] sm:max-w-[32%] object-contain object-right drop-shadow-2xl sm:-translate-x-[150px]"
         />
       </motion.div>
 
       {backgroundImage && (
         <div className="absolute inset-0 z-0 opacity-20">
-          <img src={backgroundImage} alt="Header background" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
+          <img src={backgroundImage} alt="Header background" className="w-full h-full object-cover" loading="eager" fetchpriority="high" />
         </div>
       )}
 

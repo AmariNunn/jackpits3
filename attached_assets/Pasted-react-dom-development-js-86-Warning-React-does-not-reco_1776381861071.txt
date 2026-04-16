@@ -1,0 +1,22 @@
+react-dom.development.js:86 Warning: React does not recognize the `fetchPriority` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `fetchpriority` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at img
+    at div
+    at MotionComponent (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=47b0656e:6537:40)
+    at div
+    at PageHeader (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/src/components/PageHeader.tsx?t=1776380501470:19:30)
+    at div
+    at Registration (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/src/pages/Registration.tsx?t=1776381721628:132:27)
+    at Route (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=47b0656e:322:16)
+    at Switch (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=47b0656e:378:17)
+    at div
+    at MotionComponent (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=47b0656e:6537:40)
+    at PageTransition (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/src/App.tsx?t=1776381738371:107:27)
+    at PresenceChild (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=47b0656e:7743:24)
+    at AnimatePresence (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=47b0656e:7801:26)
+    at main
+    at div
+    at Router (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/src/App.tsx?t=1776381738371:132:22)
+    at Provider (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-M7FCE5Z2.js?v=47b0656e:37:15)
+    at TooltipProvider (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=47b0656e:58:5)
+    at QueryClientProvider (https://5c055cb1-613a-4502-8c90-3461a0708737-00-ea5vihqggugq.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=47b0656e:2747:3)
+    at App

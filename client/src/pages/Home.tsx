@@ -77,7 +77,7 @@ export default function Home() {
                 src={trophyRaise}
                 alt="Jack Pitts raising trophy"
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
                 className="w-[45%] sm:w-2/3 md:w-1/2 lg:w-1/2 h-auto object-contain animate-float drop-shadow-2xl"
                 data-testid="img-hero-trophy"
               />
