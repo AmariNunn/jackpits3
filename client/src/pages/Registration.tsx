@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 
 import puttingImg from "@assets/Golfer_focused_on_the_perfect_putt_1773071637027.png";
 
-const FORMSPREE_URL = "https://formspree.io/f/xvzvyaqz";
+const FORMSPREE_URL = "https://formspree.io/f/xkokjkae";
 const ZELLE_URL = "https://www.zellepay.com/";
 
 const US_STATES = [

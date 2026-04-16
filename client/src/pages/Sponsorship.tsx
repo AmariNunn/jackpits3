@@ -13,7 +13,7 @@ import { PageHeader } from "@/components/PageHeader";
 
 import celebrationImg from "@assets/Golfer's_winning_moment_in_anime_style_1773071637027.png";
 
-const FORMSPREE_URL = "https://formspree.io/f/xvzvyaqz";
+const FORMSPREE_URL = "https://formspree.io/f/xkokjkae";
 const ZELLE_URL = "https://www.zellepay.com/";
 
 const US_STATES = [
