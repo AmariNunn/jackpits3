@@ -38,6 +38,7 @@ interface FormData {
   teamMembers: TeamMember[];
   banquetTickets: string;
   donation: string;
+  paymentStatus: string;
 }
 
 const defaultTeamMember = (): TeamMember => ({ name: "", email: "", phone: "" });
@@ -54,6 +55,7 @@ const defaultForm: FormData = {
   teamMembers: [defaultTeamMember(), defaultTeamMember(), defaultTeamMember(), defaultTeamMember()],
   banquetTickets: "0",
   donation: "",
+  paymentStatus: "",
 };
 
 function isAfterJuly11() {
@@ -168,6 +170,7 @@ export default function Registration() {
         banquet_total: "$" + (parseInt(form.banquetTickets || "0") * 45).toFixed(2),
         donation: form.donation ? "$" + form.donation : "None",
         total_amount_due: "$" + total.toFixed(2),
+        payment_status: form.paymentStatus || "Not yet paid",
       };
       if (form.entryType === "team") {
         form.teamMembers.forEach((m, i) => {
@@ -544,6 +547,23 @@ export default function Registration() {
                         <span className="text-[#0d1f0f]/50 font-bold text-lg">$</span>
                         <Input id="donation" data-testid="input-donation" type="number" min="0" step="1" value={form.donation} onChange={e => set("donation", e.target.value)} placeholder="0" className="bg-white max-w-[120px] h-10" />
                       </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Payment Status</h4>
+                    <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
+                      <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">Have you already sent payment? Let us know so we can confirm your spot faster.</p>
+                      <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
+                        <SelectTrigger data-testid="select-payment-status" className="bg-white h-11">
+                          <SelectValue placeholder="Select payment status…" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Not yet paid">Not yet paid</SelectItem>
+                          <SelectItem value="Paid via Zelle">Paid via Zelle (to 2488368014)</SelectItem>
+                          <SelectItem value="Paid via check/money order">Paid via check or money order</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 

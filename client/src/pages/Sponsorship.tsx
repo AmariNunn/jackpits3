@@ -144,6 +144,7 @@ interface SponsorForm {
   phoneCell: string;
   email: string;
   signageMessage: string;
+  paymentStatus: string;
 }
 
 const defaultForm: SponsorForm = {
@@ -158,6 +159,7 @@ const defaultForm: SponsorForm = {
   phoneCell: "",
   email: "",
   signageMessage: "",
+  paymentStatus: "",
 };
 
 function FieldError({ msg }: { msg?: string }) {
@@ -228,6 +230,7 @@ export default function Sponsorship() {
         phone_cell: form.phoneCell || "N/A",
         email: form.email,
         signage_poster_hole_message: form.signageMessage || "N/A",
+        payment_status: form.paymentStatus || "Not yet paid",
       };
       const res = await fetch(FORMSPREE_URL, {
         method: "POST",
@@ -562,6 +565,23 @@ export default function Sponsorship() {
                       placeholder="Enter the text you'd like displayed on your signage, poster, or hole marker…"
                       className="min-h-[100px] resize-none"
                     />
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Payment Status</h4>
+                    <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
+                      <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">Have you already sent payment? Let us know so we can confirm your sponsorship faster.</p>
+                      <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
+                        <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-11">
+                          <SelectValue placeholder="Select payment status…" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Not yet paid">Not yet paid</SelectItem>
+                          <SelectItem value="Paid via Zelle">Paid via Zelle (to 2488368014)</SelectItem>
+                          <SelectItem value="Paid via check/money order">Paid via check or money order</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   {submitError && (
