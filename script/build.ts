@@ -35,6 +35,10 @@ const allowlist = [
 async function buildAll() {
   await rm("dist", { recursive: true, force: true });
 
+  console.log("optimizing images...");
+  const { optimizeImages } = await import("../scripts/optimize-images");
+  await optimizeImages();
+
   console.log("building client...");
   await viteBuild();
 

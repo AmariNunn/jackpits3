@@ -45,12 +45,12 @@ async function seedDatabase() {
     { imageUrl: "/images/tournament-1.jpg", caption: "A memorable day on the course", altText: "Tournament highlights" },
     { imageUrl: "/images/tournament-2.jpg", caption: "Team photo at the 18th", altText: "Team photo" },
     { imageUrl: "/images/tournament-3.jpg", caption: "The winning drive", altText: "Golf action" },
-    { imageUrl: "/images/tournament-4.png", caption: "Celebrating excellence", altText: "Celebration" },
-    { imageUrl: "/images/tournament-5.png", caption: "Awards ceremony", altText: "Awards" },
-    { imageUrl: "/images/tournament-6.png", caption: "Starting the day", altText: "Morning start" },
-    { imageUrl: "/images/tournament-7.png", caption: "In full swing", altText: "Golf swing" },
-    { imageUrl: "/images/tournament-8.png", caption: "Focused on the perfect putt", altText: "Putting" },
-    { imageUrl: "/images/tournament-9.png", caption: "A winning moment", altText: "Victory" },
+    { imageUrl: "/images/tournament-4.jpg", caption: "Celebrating excellence", altText: "Celebration" },
+    { imageUrl: "/images/tournament-5.jpg", caption: "Awards ceremony", altText: "Awards" },
+    { imageUrl: "/images/tournament-6.jpg", caption: "Starting the day", altText: "Morning start" },
+    { imageUrl: "/images/tournament-7.jpg", caption: "In full swing", altText: "Golf swing" },
+    { imageUrl: "/images/tournament-8.jpg", caption: "Focused on the perfect putt", altText: "Putting" },
+    { imageUrl: "/images/tournament-9.jpg", caption: "A winning moment", altText: "Victory" },
   ];
 
   for (const img of images) {
