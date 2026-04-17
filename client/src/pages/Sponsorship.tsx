@@ -88,6 +88,21 @@ const opportunities = [
     badge: "text-[#1a6b3a] border-[#1a6b3a]/40"
   },
   {
+    title: "🤝 COMMUNITY SPONSOR",
+    price: "$250",
+    tier: "Community Sponsor ($250)",
+    description: "A meaningful expression of community commitment, recognized with gratitude in our event program and announcements.",
+    features: [
+      "Company name listed in the event program",
+      "Listing in the event program",
+      "Recognition in event announcements",
+      "Certificate of appreciation"
+    ],
+    borderColor: "border-t-[#0d1f0f]/30 border-t-4",
+    bgColor: "bg-white",
+    badge: "text-[#0d1f0f]/50 border-[#0d1f0f]/20"
+  },
+  {
     title: "⛳ HOLE SPONSOR",
     price: "$125",
     tier: "Hole Sponsor ($125)",
@@ -95,25 +110,11 @@ const opportunities = [
     features: [
       "Dedicated tee or hole signage with name and logo",
       "Listing in the event program",
-      "Recognition in event announcements"
+      "Recognition in event announcements",
     ],
     borderColor: "border-t-[#1a6b3a]/70 border-t-4",
     bgColor: "bg-white",
     badge: "text-[#1a6b3a]/70 border-[#1a6b3a]/30"
-  },
-  {
-    title: "🤝 COMMUNITY SPONSOR",
-    price: "$250",
-    tier: "Community Sponsor ($250)",
-    description: "A meaningful expression of community commitment, recognized with gratitude in our event program and announcements.",
-    features: [
-      "Company name listed in the event program",
-      "Recognition in event announcements",
-      "Certificate of appreciation"
-    ],
-    borderColor: "border-t-[#0d1f0f]/30 border-t-4",
-    bgColor: "bg-white",
-    badge: "text-[#0d1f0f]/50 border-[#0d1f0f]/20"
   }
 ];
 
