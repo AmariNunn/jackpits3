@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { useGalleryItems, useCreateGalleryItem } from "@/hooks/use-gallery";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Plus, ChevronLeft, ChevronRight } from "lucide-react";
-import { Fragment, useState, useMemo } from "react";
+import { Fragment, useState, useMemo, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -54,7 +54,7 @@ import img1632 from "@assets/img_1632_1775631232296.jpg";
 import img1655 from "@assets/img_1655_1775631232298.jpg";
 
 // Carousel component for slides
-function Carousel({ items, title, description }: { items: any[]; title: string; description?: string }) {
+function Carousel({ items, title, description, eager }: { items: any[]; title: string; description?: string; eager?: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -75,10 +75,20 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
     }),
   };
 
-  // Preload all images so slides switch instantly
-  const preloaded = items.map((item) => (
-    <img key={item.id} src={item.imageUrl} alt="" aria-hidden className="hidden" />
-  ));
+  // Warm the browser cache for the adjacent slides so navigation feels
+  // instant, without eagerly downloading every photo in the set.
+  useEffect(() => {
+    if (items.length < 2) return;
+    const nextIndex = (currentIndex + 1) % items.length;
+    const prevIndex = (currentIndex - 1 + items.length) % items.length;
+    const toPrefetch = new Set([nextIndex, prevIndex]);
+    toPrefetch.delete(currentIndex);
+    toPrefetch.forEach((i) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = items[i].imageUrl;
+    });
+  }, [currentIndex, items]);
 
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
@@ -89,9 +99,6 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
 
   return (
     <div className="mb-20">
-      {/* Hidden preload images so all slides are cached and switch instantly */}
-      <div aria-hidden className="hidden">{preloaded}</div>
-
       <div className="mb-6">
         <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0d1f0f] mb-2">{title}</h2>
         {description && <p className="text-[#0d1f0f]/60 font-body">{description}</p>}
@@ -104,6 +111,8 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
               key={currentIndex}
               src={items[currentIndex].imageUrl}
               alt={items[currentIndex].caption}
+              loading={eager && currentIndex === 0 ? "eager" : "lazy"}
+              decoding="async"
               custom={direction}
               variants={slideVariants}
               initial="enter"
@@ -153,8 +162,45 @@ function Carousel({ items, title, description }: { items: any[]; title: string; 
   );
 }
 
+// Mounts its children only when scrolled near the viewport so off-screen
+// carousels don't download their images eagerly on page load.
+function LazyMount({ children, minHeight = 480, rootMargin = "600px" }: { children: React.ReactNode; minHeight?: number; rootMargin?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (visible) return;
+    const node = ref.current;
+    if (!node) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visible, rootMargin]);
+
+  return (
+    <div ref={ref} style={visible ? undefined : { minHeight }}>
+      {visible ? children : null}
+    </div>
+  );
+}
+
 export default function Gallery() {
-  const { data: items, isLoading, error } = useGalleryItems();
+  const { data: items, isLoading } = useGalleryItems();
   const createItem = useCreateGalleryItem();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -270,17 +316,17 @@ export default function Gallery() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
 
-          {isLoading ? (
-            <div className="flex justify-center py-32">
-              <Loader2 className="w-12 h-12 text-[#1a6b3a] animate-spin" />
-            </div>
-          ) : error ? (
-            <div className="text-center py-32 text-destructive font-body text-lg">
-              Failed to load gallery. Please try again later.
-            </div>
-          ) : (
-            <div className="space-y-24">
-              {carouselGroups.map((group, idx) => (
+          <div className="space-y-24">
+            {carouselGroups.map((group, idx) => {
+              const carousel = (
+                <Carousel
+                  items={group.items}
+                  title={group.title}
+                  description={group.description}
+                  eager={idx === 0}
+                />
+              );
+              return (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
@@ -288,9 +334,14 @@ export default function Gallery() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Carousel items={group.items} title={group.title} description={group.description} />
+                  {idx === 0 ? carousel : <LazyMount>{carousel}</LazyMount>}
                 </motion.div>
-              ))}
+              );
+            })}
+          </div>
+          {isLoading && (
+            <div aria-hidden className="sr-only">
+              <Loader2 className="w-12 h-12 animate-spin" />
             </div>
           )}
         </div>

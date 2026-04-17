@@ -1,16 +1,24 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, buildUrl } from "@shared/routes";
+import { api, buildUrl, type GalleryItemResponse } from "@shared/routes";
 import { insertGalleryItemSchema } from "@shared/schema";
 import { z } from "zod";
 
 export function useGalleryItems() {
-  return useQuery({
+  return useQuery<GalleryItemResponse>({
     queryKey: [api.gallery.list.path],
     queryFn: async () => {
-      const res = await fetch(api.gallery.list.path);
-      if (!res.ok) throw new Error("Failed to fetch gallery items");
-      return api.gallery.list.responses[200].parse(await res.json());
+      try {
+        const res = await fetch(api.gallery.list.path);
+        if (!res.ok) return [];
+        const contentType = res.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) return [];
+        return api.gallery.list.responses[200].parse(await res.json());
+      } catch {
+        return [];
+      }
     },
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 }
 
