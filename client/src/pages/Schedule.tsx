@@ -9,8 +9,7 @@ export default function Schedule() {
     { time: "7:00 AM", title: "Registration Opens", desc: "Check in at the clubhouse, collect your cart, and prepare for a distinguished day on the course. Registration closes promptly at 8:00 AM." },
     { time: "8:30 AM", title: "Shotgun Start — 4-Person Scramble", desc: "All teams tee off simultaneously across the course in our signature 4-person scramble format with cash prizes and the spirit of friendly competition." },
     { time: "11:00 AM", title: "Lunch at the Turn", desc: "A gracious lunch is served throughout the round at the Michigan State University Club — not limited to the back nine. Enjoy refreshments and fine company as play continues." },
-    { time: "3:30 PM", title: "Scores & Skins Announced", desc: "Scores and Skins are carefully tallied during lunch and announced at 3:30 PM — honoring the finest play of the day with well-deserved recognition." },
-    { time: "4:00 PM", title: "Annual Awards Celebration", desc: "Our distinguished annual celebration of community impact, professional achievement, and dedicated service. Selected individuals are honored at the luncheon for their exceptional contributions to the foundation's mission." },
+    { time: "4:00 PM", title: "Annual Awards Celebration", desc: "Our distinguished annual celebration of community impact, professional achievement, and dedicated service. Scores & Skins are announced alongside the honoring of selected individuals for their exceptional contributions to the foundation's mission." },
   ];
 
   return (
