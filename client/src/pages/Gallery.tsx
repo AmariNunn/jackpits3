@@ -53,6 +53,28 @@ import img1628 from "@/assets/gallery/img_1628_1775631232296.jpg";
 import img1632 from "@/assets/gallery/img_1632_1775631232296.jpg";
 import img1655 from "@/assets/gallery/img_1655_1775631232298.jpg";
 
+// Teams With Jack — newly added foursomes posing with Jack
+import jackTeam01 from "@assets/img_1765_1776699094609.jpg";
+import jackTeam02 from "@assets/img_1766_1776699094610.jpg";
+import jackTeam03 from "@assets/img_1769_1776699094612.jpg";
+import jackTeam04 from "@assets/img_1771_1776699094613.jpg";
+import jackTeam05 from "@assets/img_1773_1776699094615.jpg";
+import jackTeam06 from "@assets/img_1777_1776699094615.jpg";
+import jackTeam07 from "@assets/img_1778_1776699094615.jpg";
+import jackTeam08 from "@assets/img_1725_1776699094615.jpg";
+import jackTeam09 from "@assets/img_1726_1776699094615.jpg";
+import jackTeam10 from "@assets/img_1729_1776699094615.jpg";
+import jackTeam11 from "@assets/img_1732_1776699094615.jpg";
+import jackTeam12 from "@assets/img_1737_1776699094615.jpg";
+import jackTeam13 from "@assets/img_1740_1776699094615.jpg";
+import jackTeam14 from "@assets/img_1742_1776699094616.jpg";
+import jackTeam15 from "@assets/img_1745_1776699094616.jpg";
+import jackTeam16 from "@assets/img_1748_1776699094616.jpg";
+import jackTeam17 from "@assets/img_1754_1776699094616.jpg";
+import jackTeam18 from "@assets/img_1712_1776699094616.jpg";
+import jackTeam19 from "@assets/img_1719_1776699094616.jpg";
+import jackTeam20 from "@assets/img_1720_1776699094616.jpg";
+
 // Carousel component for slides
 function Carousel({ items, title, description, eager }: { items: any[]; title: string; description?: string; eager?: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -262,6 +284,29 @@ export default function Gallery() {
     const group5 = displayItems.slice(26, 32);
     const group6 = displayItems.slice(32);
 
+    const teamsWithJack = [
+      { id: -101, imageUrl: jackTeam01, caption: "Foursome with Jack on the tee box" },
+      { id: -102, imageUrl: jackTeam02, caption: "Omega Psi Phi brothers in purple with Jack" },
+      { id: -103, imageUrl: jackTeam03, caption: "Green team and the next generation alongside Jack" },
+      { id: -104, imageUrl: jackTeam04, caption: "Detroit crew posing with Jack on the green" },
+      { id: -105, imageUrl: jackTeam05, caption: "Family foursome sharing the moment with Jack" },
+      { id: -106, imageUrl: jackTeam06, caption: "Fraternity brothers gathered around Jack" },
+      { id: -107, imageUrl: jackTeam07, caption: "Friends in white and red on the green with Jack" },
+      { id: -108, imageUrl: jackTeam08, caption: "Distinguished foursome by the cart with Jack" },
+      { id: -109, imageUrl: jackTeam09, caption: "All-green team flanking Jack on the fairway" },
+      { id: -110, imageUrl: jackTeam10, caption: "Big smiles from this foursome with Jack" },
+      { id: -111, imageUrl: jackTeam11, caption: "Tee-off crew lined up with Jack" },
+      { id: -112, imageUrl: jackTeam12, caption: "65 Golf squad standing tall with Jack" },
+      { id: -113, imageUrl: jackTeam13, caption: "Young foursome celebrating Jack" },
+      { id: -114, imageUrl: jackTeam14, caption: "Three generations on the cart path with Jack" },
+      { id: -115, imageUrl: jackTeam15, caption: "Yellow and pink team with Jack on the green" },
+      { id: -116, imageUrl: jackTeam16, caption: "Green-shirt foursome with Jack mid-round" },
+      { id: -117, imageUrl: jackTeam17, caption: "Friends leaning on putters next to Jack" },
+      { id: -118, imageUrl: jackTeam18, caption: "Red team shoulder to shoulder with Jack" },
+      { id: -119, imageUrl: jackTeam19, caption: "Foursome from Detroit posing with Jack" },
+      { id: -120, imageUrl: jackTeam20, caption: "Spartans green crew gathered with Jack" },
+    ];
+
     return [
       { title: "Awards & Banquet", description: "Honoring excellence and celebrating together", items: group1 },
       { title: "Fairway Friends", description: "Teams and foursomes enjoying the course", items: group2 },
@@ -269,6 +314,7 @@ export default function Gallery() {
       { title: "Team Spirit", description: "The camaraderie that makes this event special", items: group4 },
       { title: "Clubhouse Memories", description: "After the round, stories and laughter are shared", items: group5 },
       { title: "Lasting Impressions", description: "Unforgettable moments from the Jack Pitts Open", items: group6 },
+      { title: "Teams With Jack", description: "Foursomes and friends posing with Jack on the course", items: teamsWithJack },
     ];
   }, [items]);
 
