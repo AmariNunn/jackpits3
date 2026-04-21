@@ -584,6 +584,9 @@ export default function Sponsorship() {
                           <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a6b3a]/10 text-[#1a6b3a] text-xs font-bold">2</div>
                           <p className="text-sm text-[#0d1f0f]/70 font-body leading-relaxed">
                             Choose <span className="font-semibold text-[#0d1f0f]">Paid via check or money order</span> if you are mailing payment with this form.
+                            <span className="block mt-2 text-[#0d1f0f]/60">
+                              Mail it to: <span className="font-semibold text-[#0d1f0f]">Jack Pitts Health Foundation</span>, P.O. Box 361, Detroit, MI 48207
+                            </span>
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
@@ -594,7 +597,7 @@ export default function Sponsorship() {
                         </div>
                       </div>
                       <p className="text-xs text-[#0d1f0f]/60 font-body leading-relaxed">
-                        Have you already sent payment? Let us know so we can confirm your sponsorship faster.
+                        Have you already sent payment? Let us know so we can confirm your sponsorship faster. If you are mailing a check, send it to Jack Pitts Health Foundation, P.O. Box 361, Detroit, MI 48207.
                       </p>
                       <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
                         <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-11">
