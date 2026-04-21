@@ -63,28 +63,27 @@ export function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center gap-1 lg:gap-2">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <motion.span
                   whileHover={{ y: -2 }}
-                  className={`px-4 py-2 text-sm font-body font-medium transition-all duration-300 rounded-full cursor-pointer relative ${
+                  className={`inline-block px-3 lg:px-4 py-2 text-sm font-body font-medium transition-all duration-300 rounded-full cursor-pointer relative whitespace-nowrap ${
                     location === link.href
                       ? scrolled ? "text-[#1a6b3a] bg-[#1a6b3a]/10" : "text-[#f5f0e8] bg-[#f5f0e8]/10 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]"
                       : scrolled ? "text-[#0d1f0f]/70 hover:text-[#1a6b3a] hover:bg-[#1a6b3a]/5" : "text-[#f5f0e8] hover:text-[#f5f0e8] hover:bg-[#f5f0e8]/10 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]"
                   }`}
-                  style={link.label === "Sponsorship" ? { transform: "translateX(140px)" } : undefined}
                   data-testid={`link-nav-${link.label.toLowerCase()}`}
                 >
                   <span className="relative z-10">{link.label}</span>
                 </motion.span>
               </Link>
             ))}
-            <div className="pl-0 -translate-x-2">
+            <div className="ml-2 lg:ml-3">
               <Link href="/registration">
                 <Button
                   variant="default"
-                  className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-6 rounded-full font-bold shadow-xl shadow-[#1a6b3a]/20"
+                  className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-5 lg:px-6 rounded-full font-bold shadow-xl shadow-[#1a6b3a]/20 whitespace-nowrap"
                   data-testid="button-register-nav"
                 >
                   Register Now
