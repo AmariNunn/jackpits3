@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Check, AlertCircle, CheckCircle2, Mail, X, ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
@@ -602,16 +602,25 @@ export default function Sponsorship() {
                           If you mailed a check, use the West Bloomfield address above. If you paid by Zelle, choose that option so we can confirm it faster.
                         </p>
                       </div>
-                      <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
-                        <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-12 text-sm font-medium text-[#0d1f0f]">
-                          <SelectValue placeholder="Select one of the following" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Not yet paid">Not yet paid</SelectItem>
-                          <SelectItem value="Paid via Zelle">Paid via Zelle — 248-836-8014</SelectItem>
-                          <SelectItem value="Paid via check/money order">Paid via check or money order</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <RadioGroup value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)} className="space-y-3">
+                        {[
+                          { value: "Not yet paid", label: "Not yet paid", description: "Choose this if you still need to submit payment." },
+                          { value: "Paid via Zelle", label: "Paid via Zelle", description: "Use this if you already sent payment to 248-836-8014." },
+                          { value: "Paid via check/money order", label: "Paid via check or money order", description: "Use this if you mailed payment to P.O. Box 250014, West Bloomfield, MI 48325." },
+                        ].map((option) => (
+                          <label
+                            key={option.value}
+                            data-testid={`radio-sponsor-payment-status-${option.value.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                            className="flex cursor-pointer items-start gap-3 rounded-lg border border-[#0d1f0f]/10 bg-white px-4 py-3 transition-colors hover:border-[#1a6b3a]/40 hover:bg-[#1a6b3a]/5"
+                          >
+                            <RadioGroupItem value={option.value} className="mt-0.5" />
+                            <div className="space-y-1">
+                              <p className="text-sm font-semibold text-[#0d1f0f]">{option.label}</p>
+                              <p className="text-xs text-[#0d1f0f]/65 font-body leading-relaxed">{option.description}</p>
+                            </div>
+                          </label>
+                        ))}
+                      </RadioGroup>
                     </div>
                   </div>
 
