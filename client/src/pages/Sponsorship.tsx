@@ -611,7 +611,11 @@ export default function Sponsorship() {
                           <label
                             key={option.value}
                             data-testid={`radio-sponsor-payment-status-${option.value.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                            className="flex cursor-pointer items-start gap-3 rounded-lg border border-[#0d1f0f]/10 bg-white px-4 py-3 transition-colors hover:border-[#1a6b3a]/40 hover:bg-[#1a6b3a]/5"
+                            className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-colors ${
+                              form.paymentStatus === option.value
+                                ? "border-[#1a6b3a] bg-[#1a6b3a]/8"
+                                : "border-[#0d1f0f]/10 bg-white hover:border-[#1a6b3a]/40 hover:bg-[#1a6b3a]/5"
+                            }`}
                           >
                             <RadioGroupItem value={option.value} className="mt-0.5" />
                             <div className="space-y-1">
