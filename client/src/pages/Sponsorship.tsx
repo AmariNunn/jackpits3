@@ -604,7 +604,7 @@ export default function Sponsorship() {
                       </div>
                       <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
                         <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-12 text-sm font-medium text-[#0d1f0f]">
-                          <SelectValue placeholder="Choose your payment status" />
+                          <SelectValue placeholder="Select one of the following" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="Not yet paid">Not yet paid</SelectItem>
