@@ -576,31 +576,34 @@ export default function Sponsorship() {
                       <div className="bg-white rounded-lg border border-[#0d1f0f]/10 p-4 space-y-3">
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a6b3a]/10 text-[#1a6b3a] text-xs font-bold">1</div>
-                          <p className="text-sm text-[#0d1f0f]/70 font-body leading-relaxed">
+                          <p className="text-sm text-[#0d1f0f]/80 font-body leading-relaxed">
                             Choose <span className="font-semibold text-[#0d1f0f]">Paid via Zelle</span> if you’ve already sent payment to <span className="font-semibold text-[#0d1f0f]">248-836-8014</span>.
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a6b3a]/10 text-[#1a6b3a] text-xs font-bold">2</div>
-                          <p className="text-sm text-[#0d1f0f]/70 font-body leading-relaxed">
+                          <p className="text-sm text-[#0d1f0f]/80 font-body leading-relaxed">
                             Choose <span className="font-semibold text-[#0d1f0f]">Paid via check or money order</span> if you are mailing payment with this form.
                             <span className="block mt-2 text-[#0d1f0f]/60">
-                              Mail it to: <span className="font-semibold text-[#0d1f0f]">Jack Pitts Health Foundation</span>, P.O. Box 361, Detroit, MI 48207
+                              Mail it to: <span className="font-semibold text-[#0d1f0f]">Jack Pitts Health Foundation</span>, P.O. Box 250014, West Bloomfield, MI 48325
                             </span>
                           </p>
                         </div>
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1a6b3a]/10 text-[#1a6b3a] text-xs font-bold">3</div>
-                          <p className="text-sm text-[#0d1f0f]/70 font-body leading-relaxed">
+                          <p className="text-sm text-[#0d1f0f]/80 font-body leading-relaxed">
                             Choose <span className="font-semibold text-[#0d1f0f]">Not yet paid</span> if you still need to submit payment.
                           </p>
                         </div>
                       </div>
-                      <p className="text-xs text-[#0d1f0f]/60 font-body leading-relaxed">
-                        Have you already sent payment? Let us know so we can confirm your sponsorship faster. If you are mailing a check, send it to Jack Pitts Health Foundation, P.O. Box 361, Detroit, MI 48207.
-                      </p>
+                      <div className="rounded-lg border border-[#0d1f0f]/10 bg-white px-4 py-3">
+                        <p className="text-sm font-semibold text-[#0d1f0f] mb-1">Select the matching payment status below</p>
+                        <p className="text-xs text-[#0d1f0f]/65 font-body leading-relaxed">
+                          If you mailed a check, use the West Bloomfield address above. If you paid by Zelle, choose that option so we can confirm it faster.
+                        </p>
+                      </div>
                       <Select value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)}>
-                        <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-11">
+                        <SelectTrigger data-testid="select-sponsor-payment-status" className="bg-white h-12 text-sm font-medium text-[#0d1f0f]">
                           <SelectValue placeholder="Choose your payment status" />
                         </SelectTrigger>
                         <SelectContent>
