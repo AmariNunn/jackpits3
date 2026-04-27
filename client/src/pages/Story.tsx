@@ -132,9 +132,9 @@ export default function Story() {
         {/* Layered photos */}
         <motion.div style={{ y: heroY }} className="absolute inset-0 flex">
           <div className="absolute inset-0 grid grid-cols-3 gap-0 opacity-30">
-            <img src={img1} alt="" className="w-full h-full object-cover object-center" />
-            <img src={img3} alt="" className="w-full h-full object-cover object-top" />
-            <img src={img5} alt="" className="w-full h-full object-cover object-center" />
+            <img src={img1} alt="" loading="eager" fetchpriority="high" decoding="async" className="w-full h-full object-cover object-center" />
+            <img src={img3} alt="" loading="eager" fetchpriority="high" decoding="async" className="w-full h-full object-cover object-top" />
+            <img src={img5} alt="" loading="eager" fetchpriority="high" decoding="async" className="w-full h-full object-cover object-center" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f0f] via-[#0d1f0f]/70 to-[#0d1f0f]/40" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f0f]/60 via-transparent to-[#0d1f0f]/20" />
@@ -215,12 +215,12 @@ export default function Story() {
             <FadeInSection delay={0.15} className="order-1 lg:order-2">
               <div className="grid grid-cols-2 gap-3 h-[480px]">
                 <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                  <img src={img2} alt="Jack Pitts Foundation event" className="w-full h-full object-cover" />
+                  <img src={img2} alt="Jack Pitts Foundation event" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f0f]/40 to-transparent" />
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex-1 relative rounded-2xl overflow-hidden shadow-xl">
-                    <img src={img4} alt="Foundation activity" className="w-full h-full object-cover" />
+                    <img src={img4} alt="Foundation activity" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 relative rounded-2xl overflow-hidden shadow-xl bg-[#0d1f0f] flex items-center justify-center p-6">
                     <div className="text-center">
@@ -331,7 +331,7 @@ export default function Story() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-16 h-[320px] md:h-[400px]">
             {[img6, img7, img8, img9].map((src, i) => (
               <FadeInSection key={i} delay={i * 0.07} className="relative rounded-2xl overflow-hidden shadow-lg h-full">
-                <img src={src} alt="Foundation event" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src={src} alt="Foundation event" loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f0f]/30 to-transparent" />
               </FadeInSection>
             ))}
