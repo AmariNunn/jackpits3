@@ -10,9 +10,10 @@ import img2 from "@assets/img_1679_1768237549325.jpg";
 import img3 from "@assets/img_1869_1775630718066.jpg";
 import img4 from "@assets/img_1867_1775627182910.jpg";
 import img5 from "@assets/img_1858_1775630647897.jpg";
-import img6 from "@assets/img_1844_1775630634166.jpg";
-import img7 from "@assets/img_1856_1775630718068.jpg";
-import img8 from "@assets/img_1840_1775630737968.jpg";
+import img6 from "@assets/img_1725_1776699094615.jpg";
+import img7 from "@assets/img_1771_1776699094613.jpg";
+import img8 from "@assets/img_1745_1776699094616.jpg";
+import img9 from "@assets/img_1712_1776699094616.jpg";
 
 function AnimatedCounter({ end, suffix = "", duration = 2000 }: { end: number; suffix?: string; duration?: number }) {
   const [count, setCount] = useState(0);
@@ -328,7 +329,7 @@ export default function Story() {
 
           {/* Photo mosaic */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-16 h-[320px] md:h-[400px]">
-            {[img6, img7, img8, img5].map((src, i) => (
+            {[img6, img7, img8, img9].map((src, i) => (
               <FadeInSection key={i} delay={i * 0.07} className="relative rounded-2xl overflow-hidden shadow-lg h-full">
                 <img src={src} alt="Foundation event" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f0f]/30 to-transparent" />
