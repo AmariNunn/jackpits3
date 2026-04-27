@@ -13,6 +13,7 @@ import Schedule from "@/pages/Schedule";
 import Registration from "@/pages/Registration";
 import Gallery from "@/pages/Gallery";
 import Sponsorship from "@/pages/Sponsorship";
+import Story from "@/pages/Story";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -88,6 +89,7 @@ function Router() {
               <Route path="/schedule" component={Schedule} />
               <Route path="/registration" component={Registration} />
               <Route path="/gallery" component={Gallery} />
+              <Route path="/story" component={Story} />
               <Route path="/sponsorship" component={Sponsorship} />
               <Route component={NotFound} />
             </Switch>

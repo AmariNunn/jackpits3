@@ -21,6 +21,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/story", label: "Our Story" },
     { href: "/schedule", label: "Schedule" },
     { href: "/gallery", label: "Gallery" },
     { href: "/sponsorship", label: "Sponsorship" },
