@@ -236,18 +236,14 @@ export default function Sponsorship() {
     }
   }
 
-  function handleContinue(e: React.FormEvent) {
+  async function handleContinue(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-    setStep("payment-choice");
-  }
-
-  async function handleChooseZeffy() {
     setSubmitting(true);
     setSubmitError("");
     try {
-      await submitToFormspree("Zeffy Online");
-      setStep("zeffy");
+      await submitToFormspree("Pending — payment method not yet selected");
+      setStep("payment-choice");
     } catch (err: unknown) {
       setSubmitError(err instanceof Error ? err.message : "Network error. Please check your connection and try again.");
     } finally {
@@ -255,17 +251,12 @@ export default function Sponsorship() {
     }
   }
 
-  async function handleChooseCheck() {
-    setSubmitting(true);
-    setSubmitError("");
-    try {
-      await submitToFormspree("Check / Money Order");
-      setStep("check-confirmed");
-    } catch (err: unknown) {
-      setSubmitError(err instanceof Error ? err.message : "Network error. Please check your connection and try again.");
-    } finally {
-      setSubmitting(false);
-    }
+  function handleChooseZeffy() {
+    setStep("zeffy");
+  }
+
+  function handleChooseCheck() {
+    setStep("check-confirmed");
   }
 
   return (
@@ -531,9 +522,10 @@ export default function Sponsorship() {
                       <Button
                         type="submit"
                         data-testid="button-continue-to-payment"
-                        className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase"
+                        disabled={submitting}
+                        className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase disabled:opacity-70"
                       >
-                        Continue to Payment →
+                        {submitting ? "Saving your info…" : "Continue to Payment →"}
                       </Button>
                       <p className="text-center text-xs text-[#0d1f0f]/35 font-body">
                         The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
@@ -579,9 +571,8 @@ export default function Sponsorship() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <button
                       data-testid="button-choose-zeffy"
-                      disabled={submitting}
                       onClick={handleChooseZeffy}
-                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#1a6b3a]/20 bg-white hover:border-[#1a6b3a] hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#1a6b3a]/20 bg-white hover:border-[#1a6b3a] hover:shadow-lg transition-all duration-200"
                     >
                       <div className="w-14 h-14 rounded-full bg-[#1a6b3a]/10 flex items-center justify-center mb-4 group-hover:bg-[#1a6b3a]/20 transition-colors">
                         <CreditCard size={28} className="text-[#1a6b3a]" />
@@ -597,9 +588,8 @@ export default function Sponsorship() {
 
                     <button
                       data-testid="button-choose-check"
-                      disabled={submitting}
                       onClick={handleChooseCheck}
-                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#c9973a]/20 bg-white hover:border-[#c9973a] hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#c9973a]/20 bg-white hover:border-[#c9973a] hover:shadow-lg transition-all duration-200"
                     >
                       <div className="w-14 h-14 rounded-full bg-[#c9973a]/10 flex items-center justify-center mb-4 group-hover:bg-[#c9973a]/20 transition-colors">
                         <Landmark size={28} className="text-[#c9973a]" />
@@ -613,17 +603,6 @@ export default function Sponsorship() {
                       </span>
                     </button>
                   </div>
-
-                  {submitting && (
-                    <p className="text-center text-sm text-[#0d1f0f]/50 font-body animate-pulse">Saving your sponsorship inquiry…</p>
-                  )}
-
-                  {submitError && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
-                      <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                      <p className="text-sm text-red-700 font-body">{submitError}</p>
-                    </div>
-                  )}
 
                   <p className="text-center text-xs text-[#0d1f0f]/35 font-body mt-4">
                     The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
