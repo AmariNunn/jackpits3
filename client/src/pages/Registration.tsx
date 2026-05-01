@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Heart, ExternalLink } from "lucide-react";
+import { Check, Mail, AlertCircle, CheckCircle2, Users, User, Heart, ExternalLink, ArrowLeft, CreditCard, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 import puttingImg from "@assets/Golfer_focused_on_the_perfect_putt_1773071637027.png";
 
 const FORMSPREE_URL = "https://formspree.io/f/xkokjkae";
-const ZELLE_URL = "https://www.zellepay.com/";
+const ZEFFY_URL = "https://www.zeffy.com/en-US/ticketing/annual-golf-outing-21";
 
 const US_STATES = [
   "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
@@ -39,8 +38,9 @@ interface FormData {
   teamMembers: TeamMember[];
   banquetTickets: string;
   donation: string;
-  paymentStatus: string;
 }
+
+type Step = "form" | "payment-choice" | "zeffy" | "check-confirmed";
 
 const defaultTeamMember = (): TeamMember => ({ name: "", email: "", phone: "" });
 
@@ -56,7 +56,6 @@ const defaultForm: FormData = {
   teamMembers: [defaultTeamMember(), defaultTeamMember(), defaultTeamMember(), defaultTeamMember()],
   banquetTickets: "0",
   donation: "",
-  paymentStatus: "",
 };
 
 function isAfterJuly11() {
@@ -87,9 +86,9 @@ export default function Registration() {
   const [form, setForm] = useState<FormData>(defaultForm);
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [step, setStep] = useState<Step>("form");
 
   const late = isAfterJuly11();
   const total = calcTotal(form);
@@ -111,14 +110,14 @@ export default function Registration() {
     setForm({ ...defaultForm, entryType, banquetTickets: entryType === "banquet" ? "1" : "0" });
     setErrors({});
     setSubmitError("");
-    setSubmitted(false);
+    setStep("form");
     setModalOpen(true);
   }
 
   function handleModalClose(open: boolean) {
     setModalOpen(open);
-    if (!open && submitted) {
-      setSubmitted(false);
+    if (!open) {
+      setStep("form");
       setForm(defaultForm);
     }
   }
@@ -147,56 +146,79 @@ export default function Registration() {
     return Object.keys(e).length === 0;
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function submitToFormspree(paymentMethod: string) {
+    const payload: Record<string, string> = {
+      _subject: "Golf Outing Registration",
+      name: form.name,
+      address: form.address,
+      city: form.city,
+      state: form.state,
+      zip: form.zip,
+      phone: form.phone,
+      email: form.email,
+      entry_type: form.entryType === "individual"
+        ? "Individual ($" + (late ? "150" : "125") + ")"
+        : form.entryType === "team"
+        ? "Team of Four ($" + (late ? "600" : "500") + ")"
+        : "Banquet Only",
+      banquet_non_golfer_tickets: form.banquetTickets,
+      banquet_total: "$" + (parseInt(form.banquetTickets || "0") * 45).toFixed(2),
+      donation: form.donation ? "$" + form.donation : "None",
+      total_amount_due: "$" + total.toFixed(2),
+      payment_method: paymentMethod,
+    };
+    if (form.entryType === "team") {
+      form.teamMembers.forEach((m, i) => {
+        payload[`team_member_${i + 1}_name`] = m.name;
+        payload[`team_member_${i + 1}_email`] = m.email;
+        payload[`team_member_${i + 1}_phone`] = m.phone;
+      });
+    }
+    const res = await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error((data as { error?: string }).error || "Submission failed. Please try again.");
+    }
+  }
+
+  function handleContinue(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+    setStep("payment-choice");
+  }
+
+  async function handleChooseCheck() {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const payload: Record<string, string> = {
-        _subject: "Golf Outing Registration",
-        name: form.name,
-        address: form.address,
-        city: form.city,
-        state: form.state,
-        zip: form.zip,
-        phone: form.phone,
-        email: form.email,
-        entry_type: form.entryType === "individual"
-          ? "Individual ($" + (late ? "150" : "125") + ")"
-          : form.entryType === "team"
-          ? "Team of Four ($" + (late ? "600" : "500") + ")"
-          : "Banquet Only",
-        banquet_non_golfer_tickets: form.banquetTickets,
-        banquet_total: "$" + (parseInt(form.banquetTickets || "0") * 45).toFixed(2),
-        donation: form.donation ? "$" + form.donation : "None",
-        total_amount_due: "$" + total.toFixed(2),
-        payment_status: form.paymentStatus || "Not yet paid",
-      };
-      if (form.entryType === "team") {
-        form.teamMembers.forEach((m, i) => {
-          payload[`team_member_${i + 1}_name`] = m.name;
-          payload[`team_member_${i + 1}_email`] = m.email;
-          payload[`team_member_${i + 1}_phone`] = m.phone;
-        });
-      }
-      const res = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setSubmitError((data as { error?: string }).error || "Submission failed. Please try again.");
-      }
-    } catch {
-      setSubmitError("Network error. Please check your connection and try again.");
+      await submitToFormspree("Check / Money Order");
+      setStep("check-confirmed");
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : "Network error. Please check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
   }
+
+  async function handleChooseZeffy() {
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      await submitToFormspree("Zeffy Online");
+      setStep("zeffy");
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : "Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  const headerColor = form.entryType === "team" ? "bg-[#c9973a]" : form.entryType === "banquet" ? "bg-[#0d1f0f]" : "bg-[#1a6b3a]";
+  const headerTitle = form.entryType === "individual" ? "Individual Registration" : form.entryType === "team" ? "Team of Four Registration" : "Banquet Ticket Registration";
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -287,7 +309,6 @@ export default function Registration() {
                 </Button>
               </div>
             </div>
-
           </motion.div>
 
           <motion.div
@@ -330,280 +351,289 @@ export default function Registration() {
           <DialogTitle className="sr-only">Registration Form</DialogTitle>
           <DialogDescription className="sr-only">Complete your registration for the Jack Pitts Health Foundation Golf Outing.</DialogDescription>
 
-          {submitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="p-8 md:p-10 text-center overflow-y-auto"
-            >
-              <div className="w-20 h-20 bg-[#1a6b3a]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-10 h-10 text-[#1a6b3a]" />
-              </div>
-              <h2 className="text-2xl font-display font-bold text-[#0d1f0f] mb-3">You're Registered!</h2>
-              <p className="text-[#0d1f0f]/60 font-body mb-8">Thank you! Your spot is reserved. Please complete your registration by sending payment.</p>
+          <AnimatePresence mode="wait">
 
-              <div className="bg-[#f5f0e8] rounded-xl p-6 text-left mb-5 border border-[#c9973a]/20">
-                <h3 className="font-display font-bold text-[#0d1f0f] mb-3">How to Send Payment</h3>
-                <p className="text-sm text-[#0d1f0f]/70 font-body mb-2">Make check or money order payable to:</p>
-                <p className="font-bold text-[#1a6b3a] text-lg font-display mb-3">"Jack Pitts Health Foundation"</p>
-                <p className="text-sm text-[#0d1f0f]/70 font-body mb-1">Mail to — <strong>Melvin Farmer, Treasurer</strong>:</p>
-                <div className="bg-white rounded-lg p-3 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] mb-3">
-                  Jack Pitts Health Foundation<br />
-                  P.O. Box 250014<br />
-                  West Bloomfield, MI 48325
+            {/* ── STEP 1: INFO FORM ──────────────────────────────────────── */}
+            {step === "form" && (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.22 }}
+                className="flex flex-col flex-1 min-h-0 overflow-hidden"
+              >
+                <div className={`px-6 py-5 flex-shrink-0 ${headerColor}`}>
+                  <h3 className="text-xl font-display font-bold text-white">{headerTitle}</h3>
+                  <p className="text-white/70 text-sm font-body mt-1">
+                    {form.entryType === "banquet"
+                      ? "Reserve your seat at the James & Martha Bibbs Humanitarian Awards Banquet."
+                      : "Fill in your details below, then choose how to pay."}
+                  </p>
                 </div>
-                <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">For payment questions, contact <strong>Melvin Farmer, Treasurer</strong> at <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a></p>
-                <a
-                  href={`${ZELLE_URL}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-4 py-2 text-white font-semibold hover:bg-[#155932] transition-colors mb-3"
-                  data-testid="button-zelle-registration"
-                >
-                  Pay via Zelle to 2488368014
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <p className="text-sm font-bold text-[#0d1f0f]">Total Due: <span className="text-[#1a6b3a]">${total.toFixed(2)}</span></p>
-              </div>
 
-              <div className="bg-white rounded-xl p-5 text-left border border-[#0d1f0f]/10 mb-6">
-                <h3 className="font-display font-bold text-[#0d1f0f] mb-2">Questions?</h3>
-                <div className="space-y-1 text-sm font-body text-[#0d1f0f]/70">
-                  <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
-                  <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a> <span className="text-[#0d1f0f]/40">(payments)</span></p>
-                  <p><strong>Deborah Sudduth</strong>, Golf Committee Chair — <a href="tel:5179747796" className="text-[#1a6b3a]">(517) 974-7796</a> · <a href="mailto:deborah228@yahoo.com" className="text-[#1a6b3a] hover:underline">deborah228@yahoo.com</a></p>
-                </div>
-              </div>
-              <div className="mb-6 flex justify-center">
-                <a
-                  href={`${ZELLE_URL}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a6b3a] px-5 py-3 text-white font-semibold hover:bg-[#155932] transition-colors"
-                  data-testid="button-zelle-confirmation"
-                >
-                  Pay via Zelle to 2488368014
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+                <div className="overflow-y-auto flex-1">
+                  <form onSubmit={handleContinue} className="p-6 space-y-7" noValidate>
 
-              <p className="text-xs text-[#0d1f0f]/40 font-body mb-4">The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.</p>
-              <Button onClick={() => handleModalClose(false)} className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-8">
-                Close
-              </Button>
-            </motion.div>
-          ) : (
-            <>
-              <div className={`px-6 py-5 flex-shrink-0 ${form.entryType === "team" ? "bg-[#c9973a]" : form.entryType === "banquet" ? "bg-[#0d1f0f]" : "bg-[#1a6b3a]"}`}>
-                <h3 className="text-xl font-display font-bold text-white">
-                  {form.entryType === "individual" ? "Individual Registration" : form.entryType === "team" ? "Team of Four Registration" : "Banquet Ticket Registration"}
-                </h3>
-                <p className="text-white/70 text-sm font-body mt-1">
-                  {form.entryType === "banquet" ? "Reserve your seat at the James & Martha Bibbs Humanitarian Awards Banquet." : "Fill in your details below to reserve your spot."}
-                </p>
-              </div>
-
-              <div className="overflow-y-auto flex-1">
-                <form onSubmit={handleSubmit} className="p-6 space-y-7" noValidate>
-
-                  <div>
-                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-4">Your Information</h4>
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="reg-name" className="text-[#0d1f0f]/70 font-body text-sm">Full Name *</Label>
-                        <Input id="reg-name" data-testid="input-name" value={form.name} onChange={e => set("name", e.target.value)} placeholder="Your full name" className="mt-1 h-11" />
-                        <FieldError msg={errors.name} />
-                      </div>
-                      <div>
-                        <Label htmlFor="reg-address" className="text-[#0d1f0f]/70 font-body text-sm">Street Address *</Label>
-                        <Input id="reg-address" data-testid="input-address" value={form.address} onChange={e => set("address", e.target.value)} placeholder="123 Main St" className="mt-1 h-11" />
-                        <FieldError msg={errors.address} />
-                      </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div className="col-span-2 sm:col-span-1">
-                          <Label htmlFor="reg-city" className="text-[#0d1f0f]/70 font-body text-sm">City *</Label>
-                          <Input id="reg-city" data-testid="input-city" value={form.city} onChange={e => set("city", e.target.value)} placeholder="City" className="mt-1 h-11" />
-                          <FieldError msg={errors.city} />
-                        </div>
-                        <div>
-                          <Label htmlFor="reg-state" className="text-[#0d1f0f]/70 font-body text-sm">State *</Label>
-                          <Select value={form.state} onValueChange={v => set("state", v)}>
-                            <SelectTrigger id="reg-state" data-testid="select-state" className="mt-1 h-11">
-                              <SelectValue placeholder="State" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {US_STATES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                            </SelectContent>
-                          </Select>
-                          <FieldError msg={errors.state} />
-                        </div>
-                        <div>
-                          <Label htmlFor="reg-zip" className="text-[#0d1f0f]/70 font-body text-sm">ZIP *</Label>
-                          <Input id="reg-zip" data-testid="input-zip" value={form.zip} onChange={e => set("zip", e.target.value)} placeholder="ZIP" className="mt-1 h-11" />
-                          <FieldError msg={errors.zip} />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <Label htmlFor="reg-phone" className="text-[#0d1f0f]/70 font-body text-sm">Phone Number *</Label>
-                          <Input id="reg-phone" data-testid="input-phone" type="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="(555) 000-0000" className="mt-1 h-11" />
-                          <FieldError msg={errors.phone} />
-                        </div>
-                        <div>
-                          <Label htmlFor="reg-email" className="text-[#0d1f0f]/70 font-body text-sm">Email Address *</Label>
-                          <Input id="reg-email" data-testid="input-email" type="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" className="mt-1 h-11" />
-                          <FieldError msg={errors.email} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {form.entryType === "team" && (
                     <div>
-                      <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-1">Your 4 Team Members</h4>
-                      <p className="text-xs text-[#0d1f0f]/50 font-body mb-4">Enter each golfer's name, email, and phone number.</p>
+                      <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-4">Your Information</h4>
                       <div className="space-y-4">
-                        {form.teamMembers.map((member, i) => (
-                          <div key={i} className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
-                            <p className="font-bold text-[#0d1f0f] text-sm mb-3">Golfer {i + 1}</p>
-                            <div className="space-y-3">
-                              <div>
-                                <Label className="text-[#0d1f0f]/70 text-xs">Full Name *</Label>
-                                <Input data-testid={`input-team-${i}-name`} value={member.name} onChange={e => setTeamMember(i, "name", e.target.value)} placeholder="Full name" className="mt-1 bg-white h-10" />
-                                <FieldError msg={errors[`team_${i}_name`]} />
-                              </div>
-                              <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                  <Label className="text-[#0d1f0f]/70 text-xs">Email *</Label>
-                                  <Input data-testid={`input-team-${i}-email`} type="email" value={member.email} onChange={e => setTeamMember(i, "email", e.target.value)} placeholder="email@example.com" className="mt-1 bg-white h-10" />
-                                  <FieldError msg={errors[`team_${i}_email`]} />
-                                </div>
-                                <div>
-                                  <Label className="text-[#0d1f0f]/70 text-xs">Phone *</Label>
-                                  <Input data-testid={`input-team-${i}-phone`} type="tel" value={member.phone} onChange={e => setTeamMember(i, "phone", e.target.value)} placeholder="(555) 000-0000" className="mt-1 bg-white h-10" />
-                                  <FieldError msg={errors[`team_${i}_phone`]} />
-                                </div>
-                              </div>
-                            </div>
+                        <div>
+                          <Label htmlFor="reg-name" className="text-[#0d1f0f]/70 font-body text-sm">Full Name *</Label>
+                          <Input id="reg-name" data-testid="input-name" value={form.name} onChange={e => set("name", e.target.value)} placeholder="Your full name" className="mt-1 h-11" />
+                          <FieldError msg={errors.name} />
+                        </div>
+                        <div>
+                          <Label htmlFor="reg-address" className="text-[#0d1f0f]/70 font-body text-sm">Street Address *</Label>
+                          <Input id="reg-address" data-testid="input-address" value={form.address} onChange={e => set("address", e.target.value)} placeholder="123 Main St" className="mt-1 h-11" />
+                          <FieldError msg={errors.address} />
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                          <div className="col-span-2 sm:col-span-1">
+                            <Label htmlFor="reg-city" className="text-[#0d1f0f]/70 font-body text-sm">City *</Label>
+                            <Input id="reg-city" data-testid="input-city" value={form.city} onChange={e => set("city", e.target.value)} placeholder="City" className="mt-1 h-11" />
+                            <FieldError msg={errors.city} />
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {form.entryType !== "banquet" && (
-                    <div>
-                      <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Add Banquet Tickets? <span className="text-[#0d1f0f]/30 normal-case tracking-normal font-body">(optional)</span></h4>
-                      <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#c9973a]/20">
-                        <p className="font-display font-bold text-[#0d1f0f] text-sm mb-1">James & Martha Bibbs Humanitarian Awards Banquet</p>
-                        <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">$45 per ticket — for non-golfers attending the evening banquet</p>
-                        <div className="flex items-center gap-3">
-                          <Label htmlFor="banquet-tickets" className="text-[#0d1f0f]/70 text-sm font-body whitespace-nowrap">Number of tickets:</Label>
-                          <Select value={form.banquetTickets} onValueChange={v => set("banquetTickets", v)}>
-                            <SelectTrigger id="banquet-tickets" data-testid="select-banquet-tickets" className="w-24 bg-white h-10">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {[0,1,2,3,4,5,6,7,8,9,10].map(n => (
-                                <SelectItem key={n} value={String(n)}>{n}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          {parseInt(form.banquetTickets) > 0 && (
-                            <span className="text-sm font-body text-[#1a6b3a] font-bold">= ${(parseInt(form.banquetTickets) * 45).toFixed(2)}</span>
-                          )}
+                          <div>
+                            <Label htmlFor="reg-state" className="text-[#0d1f0f]/70 font-body text-sm">State *</Label>
+                            <Select value={form.state} onValueChange={v => set("state", v)}>
+                              <SelectTrigger id="reg-state" data-testid="select-state" className="mt-1 h-11">
+                                <SelectValue placeholder="State" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {US_STATES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                              </SelectContent>
+                            </Select>
+                            <FieldError msg={errors.state} />
+                          </div>
+                          <div>
+                            <Label htmlFor="reg-zip" className="text-[#0d1f0f]/70 font-body text-sm">ZIP *</Label>
+                            <Input id="reg-zip" data-testid="input-zip" value={form.zip} onChange={e => set("zip", e.target.value)} placeholder="ZIP" className="mt-1 h-11" />
+                            <FieldError msg={errors.zip} />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <Label htmlFor="reg-phone" className="text-[#0d1f0f]/70 font-body text-sm">Phone Number *</Label>
+                            <Input id="reg-phone" data-testid="input-phone" type="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="(555) 000-0000" className="mt-1 h-11" />
+                            <FieldError msg={errors.phone} />
+                          </div>
+                          <div>
+                            <Label htmlFor="reg-email" className="text-[#0d1f0f]/70 font-body text-sm">Email Address *</Label>
+                            <Input id="reg-email" data-testid="input-email" type="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" className="mt-1 h-11" />
+                            <FieldError msg={errors.email} />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  )}
 
-                  {form.entryType === "banquet" && (
-                    <div>
-                      <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">How many tickets?</h4>
-                      <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#c9973a]/20">
-                        <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">$45 per ticket</p>
-                        <div className="flex items-center gap-3">
-                          <Label htmlFor="banquet-tickets-only" className="text-[#0d1f0f]/70 text-sm font-body whitespace-nowrap">Tickets needed:</Label>
-                          <Select value={form.banquetTickets} onValueChange={v => set("banquetTickets", v)}>
-                            <SelectTrigger id="banquet-tickets-only" data-testid="select-banquet-tickets" className="w-24 bg-white h-10">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {[1,2,3,4,5,6,7,8,9,10].map(n => (
-                                <SelectItem key={n} value={String(n)}>{n}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <span className="text-sm font-body text-[#1a6b3a] font-bold">= ${(parseInt(form.banquetTickets || "1") * 45).toFixed(2)}</span>
-                        </div>
-                        <FieldError msg={errors.banquetTickets} />
-                      </div>
-                    </div>
-                  )}
-
-                  <div>
-                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Optional Donation <span className="text-[#0d1f0f]/30 normal-case tracking-normal font-body">(any amount welcome)</span></h4>
-                    <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
-                      <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">Support the National Kidney Foundation of Michigan with an additional gift.</p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[#0d1f0f]/50 font-bold text-lg">$</span>
-                        <Input id="donation" data-testid="input-donation" type="number" min="0" step="1" value={form.donation} onChange={e => set("donation", e.target.value)} placeholder="0" className="bg-white max-w-[120px] h-10" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Payment Status</h4>
-                    <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
-                      <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">Have you already sent payment? Let us know so we can confirm your spot faster.</p>
-                      <RadioGroup value={form.paymentStatus} onValueChange={v => set("paymentStatus", v)} className="space-y-2">
-                        {[
-                          { value: "Not yet paid", label: "Not yet paid", description: "Choose this if you still need to submit payment." },
-                          { value: "Paid via Zelle", label: "Paid via Zelle", description: "Use this if you already sent payment to 248-836-8014." },
-                          { value: "Paid via check/money order", label: "Paid via check or money order", description: "Use this if you mailed payment to P.O. Box 250014, West Bloomfield, MI 48325." },
-                        ].map((option) => (
-                          <label
-                            key={option.value}
-                            data-testid={`radio-reg-payment-${option.value.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                            className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-colors ${
-                              form.paymentStatus === option.value
-                                ? "border-[#1a6b3a] bg-[#1a6b3a]/8"
-                                : "border-[#0d1f0f]/10 bg-white hover:border-[#1a6b3a]/40 hover:bg-[#1a6b3a]/5"
-                            }`}
-                          >
-                            <RadioGroupItem value={option.value} className="mt-0.5" />
-                            <div className="space-y-0.5">
-                              <p className="text-sm font-semibold text-[#0d1f0f]">{option.label}</p>
-                              <p className="text-xs text-[#0d1f0f]/65 font-body leading-relaxed">{option.description}</p>
-                            </div>
-                          </label>
-                        ))}
-                      </RadioGroup>
-                    </div>
-                  </div>
-
-                  <div className="bg-[#1a6b3a]/5 rounded-xl p-5 border border-[#1a6b3a]/20">
-                    <div className="flex items-center justify-between">
+                    {form.entryType === "team" && (
                       <div>
-                        <p className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-1">Your Total</p>
-                        <div className="space-y-1 text-xs text-[#0d1f0f]/50 font-body">
-                          {form.entryType !== "banquet" && (
-                            <p>{form.entryType === "individual" ? "Individual entry" : "Team of four"}: ${form.entryType === "individual" ? (late ? "150" : "125") : (late ? "600" : "500")}.00</p>
-                          )}
-                          {parseInt(form.banquetTickets) > 0 && (
-                            <p>{form.banquetTickets} banquet ticket{parseInt(form.banquetTickets) > 1 ? "s" : ""}: ${(parseInt(form.banquetTickets) * 45).toFixed(2)}</p>
-                          )}
-                          {parseFloat(form.donation) > 0 && (
-                            <p>Donation: ${parseFloat(form.donation).toFixed(2)}</p>
-                          )}
+                        <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-1">Your 4 Team Members</h4>
+                        <p className="text-xs text-[#0d1f0f]/50 font-body mb-4">Enter each golfer's name, email, and phone number.</p>
+                        <div className="space-y-4">
+                          {form.teamMembers.map((member, i) => (
+                            <div key={i} className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
+                              <p className="font-bold text-[#0d1f0f] text-sm mb-3">Golfer {i + 1}</p>
+                              <div className="space-y-3">
+                                <div>
+                                  <Label className="text-[#0d1f0f]/70 text-xs">Full Name *</Label>
+                                  <Input data-testid={`input-team-${i}-name`} value={member.name} onChange={e => setTeamMember(i, "name", e.target.value)} placeholder="Full name" className="mt-1 bg-white h-10" />
+                                  <FieldError msg={errors[`team_${i}_name`]} />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div>
+                                    <Label className="text-[#0d1f0f]/70 text-xs">Email *</Label>
+                                    <Input data-testid={`input-team-${i}-email`} type="email" value={member.email} onChange={e => setTeamMember(i, "email", e.target.value)} placeholder="email@example.com" className="mt-1 bg-white h-10" />
+                                    <FieldError msg={errors[`team_${i}_email`]} />
+                                  </div>
+                                  <div>
+                                    <Label className="text-[#0d1f0f]/70 text-xs">Phone *</Label>
+                                    <Input data-testid={`input-team-${i}-phone`} type="tel" value={member.phone} onChange={e => setTeamMember(i, "phone", e.target.value)} placeholder="(555) 000-0000" className="mt-1 bg-white h-10" />
+                                    <FieldError msg={errors[`team_${i}_phone`]} />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-3xl font-display font-bold text-[#1a6b3a]" data-testid="text-total">${total.toFixed(2)}</p>
-                        <p className="text-xs text-[#1a6b3a]/70 font-body font-semibold">due at registration</p>
+                    )}
+
+                    {form.entryType !== "banquet" && (
+                      <div>
+                        <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Add Banquet Tickets? <span className="text-[#0d1f0f]/30 normal-case tracking-normal font-body">(optional)</span></h4>
+                        <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#c9973a]/20">
+                          <p className="font-display font-bold text-[#0d1f0f] text-sm mb-1">James & Martha Bibbs Humanitarian Awards Banquet</p>
+                          <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">$45 per ticket — for non-golfers attending the evening banquet</p>
+                          <div className="flex items-center gap-3">
+                            <Label htmlFor="banquet-tickets" className="text-[#0d1f0f]/70 text-sm font-body whitespace-nowrap">Number of tickets:</Label>
+                            <Select value={form.banquetTickets} onValueChange={v => set("banquetTickets", v)}>
+                              <SelectTrigger id="banquet-tickets" data-testid="select-banquet-tickets" className="w-24 bg-white h-10">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {[0,1,2,3,4,5,6,7,8,9,10].map(n => (
+                                  <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            {parseInt(form.banquetTickets) > 0 && (
+                              <span className="text-sm font-body text-[#1a6b3a] font-bold">= ${(parseInt(form.banquetTickets) * 45).toFixed(2)}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {form.entryType === "banquet" && (
+                      <div>
+                        <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">How many tickets?</h4>
+                        <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#c9973a]/20">
+                          <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">$45 per ticket</p>
+                          <div className="flex items-center gap-3">
+                            <Label htmlFor="banquet-tickets-only" className="text-[#0d1f0f]/70 text-sm font-body whitespace-nowrap">Tickets needed:</Label>
+                            <Select value={form.banquetTickets} onValueChange={v => set("banquetTickets", v)}>
+                              <SelectTrigger id="banquet-tickets-only" data-testid="select-banquet-tickets-only" className="w-24 bg-white h-10">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {[1,2,3,4,5,6,7,8,9,10].map(n => (
+                                  <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <span className="text-sm font-body text-[#1a6b3a] font-bold">= ${(parseInt(form.banquetTickets || "1") * 45).toFixed(2)}</span>
+                          </div>
+                          <FieldError msg={errors.banquetTickets} />
+                        </div>
+                      </div>
+                    )}
+
+                    <div>
+                      <h4 className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-3">Optional Donation <span className="text-[#0d1f0f]/30 normal-case tracking-normal font-body">(any amount welcome)</span></h4>
+                      <div className="p-4 bg-[#f5f0e8] rounded-xl border border-[#0d1f0f]/10">
+                        <p className="text-xs text-[#0d1f0f]/60 font-body mb-3">Support the National Kidney Foundation of Michigan with an additional gift.</p>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#0d1f0f]/50 font-bold text-lg">$</span>
+                          <Input id="donation" data-testid="input-donation" type="number" min="0" step="1" value={form.donation} onChange={e => set("donation", e.target.value)} placeholder="0" className="bg-white max-w-[120px] h-10" />
+                        </div>
                       </div>
                     </div>
+
+                    <div className="bg-[#1a6b3a]/5 rounded-xl p-5 border border-[#1a6b3a]/20">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-athletic tracking-wider uppercase text-[#0d1f0f]/50 mb-1">Your Total</p>
+                          <div className="space-y-1 text-xs text-[#0d1f0f]/50 font-body">
+                            {form.entryType !== "banquet" && (
+                              <p>{form.entryType === "individual" ? "Individual entry" : "Team of four"}: ${form.entryType === "individual" ? (late ? "150" : "125") : (late ? "600" : "500")}.00</p>
+                            )}
+                            {parseInt(form.banquetTickets) > 0 && (
+                              <p>{form.banquetTickets} banquet ticket{parseInt(form.banquetTickets) > 1 ? "s" : ""}: ${(parseInt(form.banquetTickets) * 45).toFixed(2)}</p>
+                            )}
+                            {parseFloat(form.donation) > 0 && (
+                              <p>Donation: ${parseFloat(form.donation).toFixed(2)}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-3xl font-display font-bold text-[#1a6b3a]" data-testid="text-total">${total.toFixed(2)}</p>
+                          <p className="text-xs text-[#1a6b3a]/70 font-body font-semibold">due at registration</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-1 space-y-3">
+                      <Button
+                        type="submit"
+                        data-testid="button-continue-to-payment"
+                        className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase"
+                      >
+                        Continue to Payment →
+                      </Button>
+                      <p className="text-center text-xs text-[#0d1f0f]/35 font-body">
+                        The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
+                      </p>
+                    </div>
+
+                  </form>
+                </div>
+              </motion.div>
+            )}
+
+            {/* ── STEP 2: PAYMENT CHOICE ─────────────────────────────────── */}
+            {step === "payment-choice" && (
+              <motion.div
+                key="payment-choice"
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 16 }}
+                transition={{ duration: 0.22 }}
+                className="flex flex-col flex-1 min-h-0 overflow-hidden"
+              >
+                <div className={`px-6 py-5 flex-shrink-0 ${headerColor}`}>
+                  <button
+                    onClick={() => setStep("form")}
+                    className="flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-body mb-3 transition-colors"
+                    data-testid="button-back-to-form"
+                  >
+                    <ArrowLeft size={14} /> Back to form
+                  </button>
+                  <h3 className="text-xl font-display font-bold text-white">Choose How to Pay</h3>
+                  <p className="text-white/70 text-sm font-body mt-1">Your info is saved. Select a payment method below.</p>
+                </div>
+
+                <div className="overflow-y-auto flex-1 p-6">
+                  <div className="bg-[#1a6b3a]/5 rounded-xl p-4 border border-[#1a6b3a]/20 mb-6 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-athletic tracking-wider uppercase text-[#0d1f0f]/50">Amount Due</p>
+                      <p className="text-sm font-body text-[#0d1f0f]/60 mt-0.5">{form.name} · {headerTitle.replace(" Registration", "")}</p>
+                    </div>
+                    <p className="text-3xl font-display font-bold text-[#1a6b3a]">${total.toFixed(2)}</p>
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <button
+                      data-testid="button-choose-zeffy"
+                      disabled={submitting}
+                      onClick={handleChooseZeffy}
+                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#1a6b3a]/20 bg-white hover:border-[#1a6b3a] hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      <div className="w-14 h-14 rounded-full bg-[#1a6b3a]/10 flex items-center justify-center mb-4 group-hover:bg-[#1a6b3a]/20 transition-colors">
+                        <CreditCard size={28} className="text-[#1a6b3a]" />
+                      </div>
+                      <h4 className="font-display font-bold text-lg text-[#0d1f0f] mb-2">Pay Online</h4>
+                      <p className="text-sm text-[#0d1f0f]/60 font-body leading-relaxed mb-3">
+                        Secure online payment via Zeffy — no fees, 100% goes to the foundation.
+                      </p>
+                      <span className="inline-block px-4 py-1.5 rounded-full bg-[#1a6b3a] text-white text-xs font-bold tracking-wide uppercase">
+                        Pay Now with Zeffy
+                      </span>
+                    </button>
+
+                    <button
+                      data-testid="button-choose-check"
+                      disabled={submitting}
+                      onClick={handleChooseCheck}
+                      className="group flex flex-col items-center text-center p-6 rounded-2xl border-2 border-[#c9973a]/20 bg-white hover:border-[#c9973a] hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      <div className="w-14 h-14 rounded-full bg-[#c9973a]/10 flex items-center justify-center mb-4 group-hover:bg-[#c9973a]/20 transition-colors">
+                        <Landmark size={28} className="text-[#c9973a]" />
+                      </div>
+                      <h4 className="font-display font-bold text-lg text-[#0d1f0f] mb-2">Pay by Check</h4>
+                      <p className="text-sm text-[#0d1f0f]/60 font-body leading-relaxed mb-3">
+                        Mail a check or money order to our treasurer. We'll confirm your spot on receipt.
+                      </p>
+                      <span className="inline-block px-4 py-1.5 rounded-full bg-[#c9973a] text-white text-xs font-bold tracking-wide uppercase">
+                        Mail a Check
+                      </span>
+                    </button>
+                  </div>
+
+                  {submitting && (
+                    <p className="text-center text-sm text-[#0d1f0f]/50 font-body animate-pulse">Saving your registration…</p>
+                  )}
 
                   {submitError && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
@@ -612,35 +642,134 @@ export default function Registration() {
                     </div>
                   )}
 
-                  <div className="pt-1 space-y-3">
-                    <Button
-                      type="submit"
-                      data-testid="button-submit-registration"
-                      disabled={submitting}
-                      className="w-full h-14 text-base font-bold bg-[#c9973a] hover:bg-[#b8862e] text-white shadow-lg tracking-wide uppercase"
-                    >
-                      {submitting ? "Submitting…" : `Reserve My Spot — Pay $${total.toFixed(2)} Online Now →`}
-                    </Button>
+                  <p className="text-center text-xs text-[#0d1f0f]/35 font-body mt-4">
+                    The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
+                  </p>
+                </div>
+              </motion.div>
+            )}
 
-                    <div className="bg-[#1a6b3a]/5 rounded-lg px-4 py-3 border border-[#1a6b3a]/10">
-                      <p className="text-center text-xs font-semibold text-[#0d1f0f]/60 font-body">
-                        100% Secure · Instant Confirmation · Limited Spots Available
-                      </p>
+            {/* ── STEP 3a: ZEFFY IFRAME ──────────────────────────────────── */}
+            {step === "zeffy" && (
+              <motion.div
+                key="zeffy"
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 16 }}
+                transition={{ duration: 0.22 }}
+                className="flex flex-col flex-1 min-h-0 overflow-hidden"
+              >
+                <div className="px-6 py-4 flex-shrink-0 bg-[#1a6b3a] flex items-center justify-between">
+                  <div>
+                    <button
+                      onClick={() => setStep("payment-choice")}
+                      className="flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-body mb-1 transition-colors"
+                      data-testid="button-back-to-payment-choice"
+                    >
+                      <ArrowLeft size={14} /> Choose different method
+                    </button>
+                    <h3 className="text-lg font-display font-bold text-white">Pay via Zeffy</h3>
+                  </div>
+                  <a
+                    href={ZEFFY_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-testid="link-zeffy-new-tab"
+                    className="flex items-center gap-1.5 text-white/70 hover:text-white text-xs font-body transition-colors"
+                  >
+                    Open in new tab <ExternalLink size={12} />
+                  </a>
+                </div>
+
+                <div className="flex-1 min-h-0">
+                  <iframe
+                    src={ZEFFY_URL}
+                    title="Zeffy Ticketing — Jack Pitts Health Foundation Golf Outing"
+                    data-testid="iframe-zeffy"
+                    className="w-full h-full border-0"
+                    style={{ minHeight: "480px" }}
+                    allow="payment"
+                  />
+                </div>
+
+                <div className="px-6 py-3 flex-shrink-0 border-t border-[#0d1f0f]/10 bg-white text-center">
+                  <p className="text-xs text-[#0d1f0f]/40 font-body">
+                    Having trouble loading?{" "}
+                    <a href={ZEFFY_URL} target="_blank" rel="noreferrer" className="text-[#1a6b3a] underline">
+                      Open Zeffy directly
+                    </a>{" "}
+                    · 100% of proceeds support the Jack Pitts Health Foundation.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+
+            {/* ── STEP 3b: CHECK CONFIRMED ───────────────────────────────── */}
+            {step === "check-confirmed" && (
+              <motion.div
+                key="check-confirmed"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.28 }}
+                className="p-8 md:p-10 text-center overflow-y-auto"
+              >
+                <div className="w-20 h-20 bg-[#1a6b3a]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="w-10 h-10 text-[#1a6b3a]" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-[#0d1f0f] mb-2">You're Registered!</h2>
+                <p className="text-[#0d1f0f]/60 font-body mb-8">
+                  Thank you, {form.name}! Your spot is reserved — please mail your payment to secure it.
+                </p>
+
+                <div className="bg-[#f5f0e8] rounded-2xl p-6 text-left mb-6 border border-[#c9973a]/20">
+                  <h3 className="font-display font-bold text-[#0d1f0f] mb-5 text-lg">How to Send Payment</h3>
+
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-xs font-athletic tracking-[0.12em] uppercase text-[#0d1f0f]/40 mb-1">Make check or money order payable to</p>
+                      <p className="font-display font-bold text-[#1a6b3a] text-xl">"Jack Pitts Health Foundation"</p>
                     </div>
 
-                    <p className="text-center text-[10px] text-[#0d1f0f]/30 font-body leading-snug px-2">
-                      Prefer to pay by check? Mail your check payable to <em>Jack Pitts Health Foundation</em> along with a printed copy of your submitted form. Spot is not guaranteed until payment is received.
-                    </p>
+                    <div>
+                      <p className="text-xs font-athletic tracking-[0.12em] uppercase text-[#0d1f0f]/40 mb-2">Mail to — Melvin Farmer, Treasurer</p>
+                      <div className="bg-white rounded-xl p-4 border border-[#0d1f0f]/10 font-mono text-sm text-[#0d1f0f] leading-relaxed">
+                        Jack Pitts Health Foundation<br />
+                        P.O. Box 250014<br />
+                        West Bloomfield, MI 48325
+                      </div>
+                    </div>
 
-                    <p className="text-center text-xs text-[#0d1f0f]/35 font-body">
-                      The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.
-                    </p>
+                    <div className="flex items-center justify-between pt-3 border-t border-[#0d1f0f]/10">
+                      <p className="text-sm text-[#0d1f0f]/60 font-body">Amount due</p>
+                      <p className="text-2xl font-display font-bold text-[#1a6b3a]">${total.toFixed(2)}</p>
+                    </div>
                   </div>
+                </div>
 
-                </form>
-              </div>
-            </>
-          )}
+                <div className="bg-white rounded-xl p-5 text-left border border-[#0d1f0f]/10 mb-6">
+                  <h3 className="font-display font-bold text-[#0d1f0f] mb-3">Payment Questions?</h3>
+                  <div className="space-y-1 text-sm font-body text-[#0d1f0f]/70">
+                    <p><strong>Melvin Farmer</strong>, Treasurer — <a href="tel:5173234535" className="text-[#1a6b3a]">(517) 323-4535</a></p>
+                    <p><strong>Jack Pitts</strong>, President — <a href="tel:2488368014" className="text-[#1a6b3a]">(248) 836-8014</a> · <a href="mailto:tiger.pitts@icloud.com" className="text-[#1a6b3a] hover:underline">tiger.pitts@icloud.com</a></p>
+                  </div>
+                </div>
+
+                <p className="text-xs text-[#0d1f0f]/40 font-body mb-5">
+                  The Jack Pitts Health Foundation is a 501(c)(3) non-profit organization.<br />
+                  Your spot is not guaranteed until payment is received.
+                </p>
+                <Button
+                  onClick={() => handleModalClose(false)}
+                  data-testid="button-close-confirmation"
+                  className="bg-[#1a6b3a] hover:bg-[#1a6b3a]/90 text-white px-8"
+                >
+                  Done
+                </Button>
+              </motion.div>
+            )}
+
+          </AnimatePresence>
         </DialogContent>
       </Dialog>
     </div>
