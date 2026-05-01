@@ -16,7 +16,7 @@ export default function Schedule() {
     <div className="min-h-screen bg-[#f5f0e8]">
       <PageHeader
         title="Event Schedule"
-        subtitle="Annual Golf Outing · 4-Person Scramble · Michigan State University Club"
+        subtitle="Annual Golf Outing · July 24–26, 2026 · Michigan State University Club"
         leftImage={swingImg}
       />
 

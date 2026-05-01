@@ -263,7 +263,7 @@ export default function Sponsorship() {
     <div className="min-h-screen bg-[#f5f0e8] pb-12 md:pb-20">
       <PageHeader
         title="Sponsorship"
-        subtitle="Jack Pitts Health Foundation Annual Golf Outing · Benefiting the National Kidney Foundation of Michigan"
+        subtitle="Annual Golf Outing · July 24–26, 2026 · Michigan State University Club"
         leftImage={celebrationImg}
       />
 

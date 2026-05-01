@@ -215,7 +215,7 @@ export default function Registration() {
     <div className="min-h-screen bg-[#f5f0e8]">
       <PageHeader
         title="Registration"
-        subtitle="Annual Golf Outing · 4-Person Scramble · Cash Prizes Up to $1,000"
+        subtitle="Annual Golf Outing · July 24–26, 2026 · Michigan State University Club"
         leftImage={puttingImg}
       />
 

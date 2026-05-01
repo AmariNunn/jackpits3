@@ -110,8 +110,11 @@ export default function Home() {
               <p className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[#c9973a] mb-4 md:mb-5 uppercase tracking-wide leading-tight">
                 Annual Golf Outing
               </p>
-              <p className="text-sm font-bold text-[#f5f0e8] mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.2em] uppercase">
+              <p className="text-sm font-bold text-[#f5f0e8] mb-3 max-w-lg font-athletic tracking-[0.2em] uppercase">
                 Benefiting the National Kidney Foundation of Michigan
+              </p>
+              <p className="text-sm font-bold text-[#c9973a] mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.15em] uppercase">
+                July 24–26, 2026 · Michigan State University Club
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start">
                 <Link href="/registration">
