@@ -114,7 +114,7 @@ export default function Home() {
                 Benefiting the National Kidney Foundation of Michigan
               </p>
               <p className="text-sm font-bold text-[#c9973a] mb-8 md:mb-10 max-w-lg font-athletic tracking-[0.15em] uppercase">
-                July 24–26, 2026 · Michigan State University Club
+                July 25–26, 2026 · Michigan State University Club
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start">
                 <Link href="/registration">
