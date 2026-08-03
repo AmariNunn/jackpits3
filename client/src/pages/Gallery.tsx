@@ -458,7 +458,6 @@ export default function Gallery() {
       title: "Teams With Jack",
       description: CATEGORY_DESCRIPTIONS["Teams With Jack"],
       items: [
-        { id: -125, imageUrl: g26s13, caption: "Sharing the course with Jack" },
         { id: -126, imageUrl: g26s14, caption: "Honored to be part of the outing" },
         { id: -127, imageUrl: g26s15, caption: "A foursome to remember" },
         { id: -128, imageUrl: g26n01, caption: "Sharing the course with Jack" },
