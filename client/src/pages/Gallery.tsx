@@ -428,6 +428,7 @@ export default function Gallery() {
       title: "Team Spirit",
       description: CATEGORY_DESCRIPTIONS["Team Spirit"],
       items: [
+        { id: -113, imageUrl: g26s01, caption: "Wearing your colors with pride" },
         { id: -114, imageUrl: g26s02, caption: "United on the fairway" },
         { id: -115, imageUrl: g26s03, caption: "The camaraderie that defines this event" },
         { id: -116, imageUrl: g26s04, caption: "Teammates and friends, always" },
@@ -460,8 +461,6 @@ export default function Gallery() {
         { id: -125, imageUrl: g26s13, caption: "Sharing the course with Jack" },
         { id: -126, imageUrl: g26s14, caption: "Honored to be part of the outing" },
         { id: -127, imageUrl: g26s15, caption: "A foursome to remember" },
-        { id: -128, imageUrl: g26n01, caption: "Sharing the course with Jack" },
-        { id: -129, imageUrl: g26n02, caption: "A foursome to remember" },
         { id: -130, imageUrl: g26n03, caption: "Honored to tee it up with Jack" },
       ],
     },
