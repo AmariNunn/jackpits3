@@ -428,7 +428,6 @@ export default function Gallery() {
       title: "Team Spirit",
       description: CATEGORY_DESCRIPTIONS["Team Spirit"],
       items: [
-        { id: -113, imageUrl: g26s13, caption: "Sharing the course with Jack" },
         { id: -114, imageUrl: g26s02, caption: "United on the fairway" },
         { id: -115, imageUrl: g26s03, caption: "The camaraderie that defines this event" },
         { id: -116, imageUrl: g26s04, caption: "Teammates and friends, always" },
