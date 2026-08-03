@@ -1,7 +1,5 @@
-import { PageHeader } from "@/components/PageHeader";
-import { useGalleryItems, useCreateGalleryItem } from "@/hooks/use-gallery";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Plus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Upload, Camera } from "lucide-react";
 import { Fragment, useState, useMemo, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useGalleryItems, useUploadGalleryPhoto } from "@/hooks/use-gallery";
 
 import img1869 from "@/assets/gallery/img_1869_1775627155323.jpg";
 import img1867 from "@/assets/gallery/img_1867_1775627182910.jpg";
@@ -75,6 +74,27 @@ import jackTeam18 from "@assets/img_1712_1776699094616.jpg";
 import jackTeam19 from "@assets/img_1719_1776699094616.jpg";
 import jackTeam20 from "@assets/img_1720_1776699094616.jpg";
 
+// Category names shared across both years
+const CATEGORY_NAMES = [
+  "Awards & Banquet",
+  "Fairway Friends",
+  "Course Action",
+  "Team Spirit",
+  "Clubhouse Memories",
+  "Lasting Impressions",
+  "Teams With Jack",
+];
+
+const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+  "Awards & Banquet": "Honoring excellence and celebrating together",
+  "Fairway Friends": "Teams and foursomes enjoying the course",
+  "Course Action": "In the swing of things out on the links",
+  "Team Spirit": "The camaraderie that makes this event special",
+  "Clubhouse Memories": "After the round, stories and laughter are shared",
+  "Lasting Impressions": "Unforgettable moments from the Jack Pitts Open",
+  "Teams With Jack": "Foursomes and friends posing with Jack on the course",
+};
+
 // Carousel component for slides
 function Carousel({ items, title, description, eager }: { items: any[]; title: string; description?: string; eager?: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -97,8 +117,6 @@ function Carousel({ items, title, description, eager }: { items: any[]; title: s
     }),
   };
 
-  // Warm the browser cache for the adjacent slides so navigation feels
-  // instant, without eagerly downloading every photo in the set.
   useEffect(() => {
     if (items.length < 2) return;
     const nextIndex = (currentIndex + 1) % items.length;
@@ -148,7 +166,7 @@ function Carousel({ items, title, description, eager }: { items: any[]; title: s
             />
           </AnimatePresence>
 
-          {/* Caption — always on top of the image */}
+          {/* Caption */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -184,8 +202,25 @@ function Carousel({ items, title, description, eager }: { items: any[]; title: s
   );
 }
 
-// Mounts its children only when scrolled near the viewport so off-screen
-// carousels don't download their images eagerly on page load.
+// Placeholder card for a category that has no photos yet
+function EmptyCategoryCard({ title, description }: { title: string; description?: string }) {
+  return (
+    <div className="mb-20">
+      <div className="mb-6">
+        <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0d1f0f] mb-2">{title}</h2>
+        {description && <p className="text-[#0d1f0f]/60 font-body">{description}</p>}
+      </div>
+      <div className="relative aspect-video rounded-3xl overflow-hidden bg-[#0d1f0f]/5 border-2 border-dashed border-[#0d1f0f]/20 flex items-center justify-center">
+        <div className="text-center px-6">
+          <Camera size={40} className="mx-auto mb-3 text-[#0d1f0f]/25" />
+          <p className="text-[#0d1f0f]/40 font-body text-lg font-medium">Photos coming soon</p>
+          <p className="text-[#0d1f0f]/30 font-body text-sm mt-1">2026 tournament photos will appear here</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LazyMount({ children, minHeight = 480, rootMargin = "600px" }: { children: React.ReactNode; minHeight?: number; rootMargin?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -223,14 +258,21 @@ function LazyMount({ children, minHeight = 480, rootMargin = "600px" }: { childr
 
 export default function Gallery() {
   const { data: items, isLoading } = useGalleryItems();
-  const createItem = useCreateGalleryItem();
+  const uploadPhoto = useUploadGalleryPhoto();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeYear, setActiveYear] = useState<2025 | 2026>(2025);
+  const galleryTopRef = useRef<HTMLDivElement>(null);
 
-  const [imageUrl, setImageUrl] = useState("");
-  const [caption, setCaption] = useState("");
+  // Upload form state
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadCaption, setUploadCaption] = useState("");
+  const [uploadCategory, setUploadCategory] = useState(CATEGORY_NAMES[0]);
+  const [uploadYear, setUploadYear] = useState<"2025" | "2026">("2026");
+  const [uploadAdminKey, setUploadAdminKey] = useState("");
+  const [uploadError, setUploadError] = useState("");
 
-  // Organize items into different carousel groups
-  const carouselGroups = useMemo(() => {
+  // 2025 carousel groups — static imports split into sections
+  const carouselGroups2025 = useMemo(() => {
     const staticImages = [
       { id: -1, imageUrl: img1869, caption: "Celebrating with friends at the banquet" },
       { id: -2, imageUrl: img1867, caption: "Group photo at the awards luncheon" },
@@ -272,11 +314,11 @@ export default function Gallery() {
       { id: -38, imageUrl: img1655, caption: "Ready for another round" },
     ];
 
-    // Only hide the old DB placeholder entries, not any static photos
     const hiddenIds = new Set([19, 20, 21, 22, 23, 24, 25, 26, 27]);
-    const displayItems = [...staticImages, ...(items || [])].filter((item) => !hiddenIds.has(item.id));
+    const displayItems = [...staticImages, ...(items || []).filter((i) => (i as any).year === 2025 || !(i as any).year)].filter(
+      (item) => !hiddenIds.has(item.id),
+    );
 
-    // Split all 38 photos into 6 sections (~6-7 each)
     const group1 = displayItems.slice(0, 7);
     const group2 = displayItems.slice(7, 14);
     const group3 = displayItems.slice(14, 20);
@@ -308,36 +350,78 @@ export default function Gallery() {
     ];
 
     return [
-      { title: "Awards & Banquet", description: "Honoring excellence and celebrating together", items: group1 },
-      { title: "Fairway Friends", description: "Teams and foursomes enjoying the course", items: group2 },
-      { title: "Course Action", description: "In the swing of things out on the links", items: group3 },
-      { title: "Team Spirit", description: "The camaraderie that makes this event special", items: group4 },
-      { title: "Clubhouse Memories", description: "After the round, stories and laughter are shared", items: group5 },
-      { title: "Lasting Impressions", description: "Unforgettable moments from the Jack Pitts Open", items: group6 },
-      { title: "Teams With Jack", description: "Foursomes and friends posing with Jack on the course", items: teamsWithJack },
+      { title: "Awards & Banquet", description: CATEGORY_DESCRIPTIONS["Awards & Banquet"], items: group1 },
+      { title: "Fairway Friends", description: CATEGORY_DESCRIPTIONS["Fairway Friends"], items: group2 },
+      { title: "Course Action", description: CATEGORY_DESCRIPTIONS["Course Action"], items: group3 },
+      { title: "Team Spirit", description: CATEGORY_DESCRIPTIONS["Team Spirit"], items: group4 },
+      { title: "Clubhouse Memories", description: CATEGORY_DESCRIPTIONS["Clubhouse Memories"], items: group5 },
+      { title: "Lasting Impressions", description: CATEGORY_DESCRIPTIONS["Lasting Impressions"], items: group6 },
+      { title: "Teams With Jack", description: CATEGORY_DESCRIPTIONS["Teams With Jack"], items: teamsWithJack },
     ];
   }, [items]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // 2026 carousel groups — built from DB items with year=2026, grouped by category
+  const carouselGroups2026 = useMemo(() => {
+    const items2026 = (items || []).filter((i) => (i as any).year === 2026);
+    return CATEGORY_NAMES.map((catName) => {
+      const catItems = items2026.filter((i) => (i as any).category === catName);
+      return {
+        title: catName,
+        description: CATEGORY_DESCRIPTIONS[catName],
+        items: catItems,
+      };
+    });
+  }, [items]);
+
+  const handleTabSwitch = (year: 2025 | 2026) => {
+    setActiveYear(year);
+    // Scroll to just below the hero/tabs so you see the first carousel
+    setTimeout(() => {
+      galleryTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
+
+  const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploadError("");
+    if (!uploadFile) {
+      setUploadError("Please select a photo to upload.");
+      return;
+    }
+    if (!uploadAdminKey) {
+      setUploadError("Admin key is required.");
+      return;
+    }
+    const fd = new FormData();
+    fd.append("file", uploadFile);
+    fd.append("caption", uploadCaption);
+    fd.append("altText", uploadCaption);
+    fd.append("year", uploadYear);
+    fd.append("category", uploadCategory);
     try {
-      await createItem.mutateAsync({
-        imageUrl,
-        caption,
-        altText: caption
-      });
+      await uploadPhoto.mutateAsync({ formData: fd, adminKey: uploadAdminKey });
       setIsOpen(false);
-      setImageUrl("");
-      setCaption("");
-    } catch (err) {
-      console.error(err);
+      setUploadFile(null);
+      setUploadCaption("");
+      setUploadCategory(CATEGORY_NAMES[0]);
+      setUploadYear("2026");
+      setUploadAdminKey("");
+    } catch (err: any) {
+      setUploadError(err.message || "Upload failed. Please try again.");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
+      {/* Hero */}
       <div className="relative pt-28 pb-14 md:pt-40 md:pb-28 overflow-hidden bg-[#0d1f0f]">
-        <div className="absolute inset-0 z-0 opacity-[0.04]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }} />
+        <div
+          className="absolute inset-0 z-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
+          }}
+        />
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -360,19 +444,178 @@ export default function Gallery() {
 
       <section className="py-12 md:py-20 bg-[#f5f0e8]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
 
-          <div className="space-y-24">
-            {carouselGroups.map((group, idx) => {
-              const carousel = (
-                <Carousel
-                  items={group.items}
-                  title={group.title}
-                  description={group.description}
-                  eager={idx === 0}
-                />
-              );
-              return (
+          {/* Year Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-3 mb-14"
+          >
+            <div className="inline-flex bg-[#0d1f0f]/8 rounded-2xl p-1.5 gap-1">
+              {([2025, 2026] as const).map((yr) => (
+                <button
+                  key={yr}
+                  onClick={() => handleTabSwitch(yr)}
+                  className={`px-7 py-3 rounded-xl font-display font-semibold text-base transition-all duration-200 ${
+                    activeYear === yr
+                      ? "bg-[#0d1f0f] text-[#f5f0e8] shadow-md"
+                      : "text-[#0d1f0f]/60 hover:text-[#0d1f0f]/80 hover:bg-[#0d1f0f]/5"
+                  }`}
+                >
+                  {yr} Photos
+                </button>
+              ))}
+            </div>
+
+            {/* Upload button for 2026 */}
+            {activeYear === 2026 && (
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="ml-auto border-[#0d1f0f]/20 text-[#0d1f0f] hover:bg-[#0d1f0f] hover:text-[#f5f0e8] rounded-xl px-5 py-3 h-auto font-display font-semibold"
+                  >
+                    <Upload size={16} className="mr-2" />
+                    Add Photo
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle className="font-display">Upload a Photo</DialogTitle>
+                  </DialogHeader>
+                  <form onSubmit={handleUpload} className="space-y-4 mt-2">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="upload-admin-key">Admin key</Label>
+                      <Input
+                        id="upload-admin-key"
+                        type="password"
+                        placeholder="Enter admin key to upload"
+                        value={uploadAdminKey}
+                        onChange={(e) => setUploadAdminKey(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="upload-file">Photo file</Label>
+                      <Input
+                        id="upload-file"
+                        type="file"
+                        accept="image/*,.heic,.heif"
+                        onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
+                        required
+                        className="cursor-pointer"
+                      />
+                      <p className="text-xs text-muted-foreground">HEIC, JPG, PNG and other image formats accepted.</p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="upload-caption">Caption</Label>
+                      <Input
+                        id="upload-caption"
+                        placeholder="Describe the photo..."
+                        value={uploadCaption}
+                        onChange={(e) => setUploadCaption(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="upload-category">Category</Label>
+                      <select
+                        id="upload-category"
+                        value={uploadCategory}
+                        onChange={(e) => setUploadCategory(e.target.value)}
+                        className="w-full border border-input rounded-md px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                      >
+                        {CATEGORY_NAMES.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="upload-year">Year</Label>
+                      <select
+                        id="upload-year"
+                        value={uploadYear}
+                        onChange={(e) => setUploadYear(e.target.value as "2025" | "2026")}
+                        className="w-full border border-input rounded-md px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                      >
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                      </select>
+                    </div>
+
+                    {uploadError && (
+                      <p className="text-sm text-red-600">{uploadError}</p>
+                    )}
+
+                    <div className="flex gap-3 pt-2">
+                      <Button
+                        type="submit"
+                        disabled={uploadPhoto.isPending}
+                        className="flex-1 bg-[#0d1f0f] hover:bg-[#0d1f0f]/90 text-[#f5f0e8]"
+                      >
+                        {uploadPhoto.isPending ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Uploading…
+                          </>
+                        ) : (
+                          "Upload Photo"
+                        )}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            )}
+          </motion.div>
+
+          {/* Scroll anchor — placed just above carousels */}
+          <div ref={galleryTopRef} />
+
+          {/* 2025 Carousels */}
+          {activeYear === 2025 && (
+            <div className="space-y-24">
+              {carouselGroups2025.map((group, idx) => {
+                const carousel = (
+                  <Carousel
+                    items={group.items}
+                    title={group.title}
+                    description={group.description}
+                    eager={idx === 0}
+                  />
+                );
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    {idx === 0 ? carousel : <LazyMount>{carousel}</LazyMount>}
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* 2026 Carousels */}
+          {activeYear === 2026 && (
+            <div className="space-y-24">
+              {carouselGroups2026.map((group, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
@@ -380,11 +623,36 @@ export default function Gallery() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  {idx === 0 ? carousel : <LazyMount>{carousel}</LazyMount>}
+                  {group.items.length > 0 ? (
+                    idx === 0 ? (
+                      <Carousel
+                        items={group.items}
+                        title={group.title}
+                        description={group.description}
+                        eager
+                      />
+                    ) : (
+                      <LazyMount>
+                        <Carousel
+                          items={group.items}
+                          title={group.title}
+                          description={group.description}
+                        />
+                      </LazyMount>
+                    )
+                  ) : (
+                    <LazyMount>
+                      <EmptyCategoryCard
+                        title={group.title}
+                        description={group.description}
+                      />
+                    </LazyMount>
+                  )}
                 </motion.div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
+
           {isLoading && (
             <div aria-hidden className="sr-only">
               <Loader2 className="w-12 h-12 animate-spin" />

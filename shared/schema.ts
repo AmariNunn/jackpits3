@@ -1,4 +1,4 @@
-import { pgTable, text, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -7,6 +7,8 @@ export const galleryItems = pgTable("gallery_items", {
   imageUrl: text("image_url").notNull(),
   altText: text("alt_text"),
   caption: text("caption"),
+  year: integer("year").notNull().default(2025),
+  category: text("category"),
 });
 
 export const insertGalleryItemSchema = createInsertSchema(galleryItems).omit({ id: true });

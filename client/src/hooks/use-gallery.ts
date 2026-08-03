@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, buildUrl, type GalleryItemResponse } from "@shared/routes";
+import { api, type GalleryItemResponse } from "@shared/routes";
 import { insertGalleryItemSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -36,7 +36,6 @@ export function useCreateGalleryItem() {
 
       if (!res.ok) {
         if (res.status === 400) {
-          // Parse specific validation error from backend
           const error = api.gallery.create.responses[400].parse(await res.json());
           throw new Error(error.message);
         }
@@ -44,6 +43,27 @@ export function useCreateGalleryItem() {
       }
 
       return api.gallery.create.responses[201].parse(await res.json());
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [api.gallery.list.path] });
+    },
+  });
+}
+
+export function useUploadGalleryPhoto() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ formData, adminKey }: { formData: FormData; adminKey: string }) => {
+      const res = await fetch("/api/gallery/upload", {
+        method: "POST",
+        headers: { "x-admin-key": adminKey },
+        body: formData,
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: "Upload failed" }));
+        throw new Error(err.message || "Upload failed");
+      }
+      return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [api.gallery.list.path] });
