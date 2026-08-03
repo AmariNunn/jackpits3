@@ -260,7 +260,7 @@ export default function Gallery() {
   const { data: items, isLoading } = useGalleryItems();
   const uploadPhoto = useUploadGalleryPhoto();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeYear, setActiveYear] = useState<2025 | 2026>(2025);
+  const [activeYear, setActiveYear] = useState<2025 | 2026>(2026);
   const galleryTopRef = useRef<HTMLDivElement>(null);
 
   // Upload form state
@@ -468,17 +468,11 @@ export default function Gallery() {
               ))}
             </div>
 
-            {/* Upload button for 2026 */}
+            {/* Upload dialog for 2026 (triggered programmatically, no visible button) */}
             {activeYear === 2026 && (
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="ml-auto border-[#0d1f0f]/20 text-[#0d1f0f] hover:bg-[#0d1f0f] hover:text-[#f5f0e8] rounded-xl px-5 py-3 h-auto font-display font-semibold"
-                  >
-                    <Upload size={16} className="mr-2" />
-                    Add Photo
-                  </Button>
+                  <span className="sr-only" />
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
