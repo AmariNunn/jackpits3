@@ -74,6 +74,38 @@ import jackTeam18 from "@assets/img_1712_1776699094616.jpg";
 import jackTeam19 from "@assets/img_1719_1776699094616.jpg";
 import jackTeam20 from "@assets/img_1720_1776699094616.jpg";
 
+// 2026 static assets — bundled at build time so photos never disappear
+import g26j01 from "@/assets/gallery/img2026-jack-01.jpg";
+import g26j02 from "@/assets/gallery/img2026-jack-02.jpg";
+import g26j03 from "@/assets/gallery/img2026-jack-03.jpg";
+import g26j04 from "@/assets/gallery/img2026-jack-04.jpg";
+import g26j05 from "@/assets/gallery/img2026-jack-05.jpg";
+import g26j06 from "@/assets/gallery/img2026-jack-06.jpg";
+import g26j07 from "@/assets/gallery/img2026-jack-07.jpg";
+import g26j08 from "@/assets/gallery/img2026-jack-08.jpg";
+import g26j09 from "@/assets/gallery/img2026-jack-09.jpg";
+import g26j10 from "@/assets/gallery/img2026-jack-10.jpg";
+import g26j11 from "@/assets/gallery/img2026-jack-11.jpg";
+import g26j12 from "@/assets/gallery/img2026-jack-12.jpg";
+import g26s01 from "@/assets/gallery/img2026-spread-01.jpg";
+import g26s02 from "@/assets/gallery/img2026-spread-02.jpg";
+import g26s03 from "@/assets/gallery/img2026-spread-03.jpg";
+import g26s04 from "@/assets/gallery/img2026-spread-04.jpg";
+import g26s05 from "@/assets/gallery/img2026-spread-05.jpg";
+import g26s06 from "@/assets/gallery/img2026-spread-06.jpg";
+import g26s07 from "@/assets/gallery/img2026-spread-07.jpg";
+import g26s08 from "@/assets/gallery/img2026-spread-08.jpg";
+import g26s09 from "@/assets/gallery/img2026-spread-09.jpg";
+import g26s10 from "@/assets/gallery/img2026-spread-10.jpg";
+import g26s11 from "@/assets/gallery/img2026-spread-11.jpg";
+import g26s12 from "@/assets/gallery/img2026-spread-12.jpg";
+import g26s13 from "@/assets/gallery/img2026-spread-13.jpg";
+import g26s14 from "@/assets/gallery/img2026-spread-14.jpg";
+import g26s15 from "@/assets/gallery/img2026-spread-15.jpg";
+import g26n01 from "@/assets/gallery/img2026-new-01.jpg";
+import g26n02 from "@/assets/gallery/img2026-new-02.jpg";
+import g26n03 from "@/assets/gallery/img2026-new-03.jpg";
+
 // Category names shared across both years
 const CATEGORY_NAMES = [
   "Moments to Remember",
@@ -360,18 +392,81 @@ export default function Gallery() {
     ];
   }, [items]);
 
-  // 2026 carousel groups — built from DB items with year=2026, grouped by category
-  const carouselGroups2026 = useMemo(() => {
-    const items2026 = (items || []).filter((i) => (i as any).year === 2026);
-    return CATEGORY_NAMES.map((catName) => {
-      const catItems = items2026.filter((i) => (i as any).category === catName);
-      return {
-        title: catName,
-        description: CATEGORY_DESCRIPTIONS[catName],
-        items: catItems,
-      };
-    });
-  }, [items]);
+  // 2026 carousel groups — hardcoded static imports, never depends on DB or uploads/
+  const carouselGroups2026 = [
+    {
+      title: "Moments to Remember",
+      description: CATEGORY_DESCRIPTIONS["Moments to Remember"],
+      items: [
+        { id: -101, imageUrl: g26j01, caption: "A day of excellence on and off the course" },
+        { id: -102, imageUrl: g26j02, caption: "Celebrating the spirit of the Jack Pitts Open" },
+        { id: -103, imageUrl: g26j03, caption: "Together in the moment" },
+        { id: -104, imageUrl: g26j04, caption: "Community, competition, and connection" },
+      ],
+    },
+    {
+      title: "Fairway Friends",
+      description: CATEGORY_DESCRIPTIONS["Fairway Friends"],
+      items: [
+        { id: -105, imageUrl: g26j05, caption: "Good company makes every round better" },
+        { id: -106, imageUrl: g26j06, caption: "Friends for life, bonded by the game" },
+        { id: -107, imageUrl: g26j07, caption: "Out on the fairway with the best crew" },
+        { id: -108, imageUrl: g26j08, caption: "Another round, another memory" },
+      ],
+    },
+    {
+      title: "Course Action",
+      description: CATEGORY_DESCRIPTIONS["Course Action"],
+      items: [
+        { id: -109, imageUrl: g26j09, caption: "Every shot tells a story" },
+        { id: -110, imageUrl: g26j10, caption: "On the links and in the zone" },
+        { id: -111, imageUrl: g26j11, caption: "The course brought out the best in everyone" },
+        { id: -112, imageUrl: g26j12, caption: "A perfect day for golf" },
+      ],
+    },
+    {
+      title: "Team Spirit",
+      description: CATEGORY_DESCRIPTIONS["Team Spirit"],
+      items: [
+        { id: -113, imageUrl: g26s01, caption: "Wearing your colors with pride" },
+        { id: -114, imageUrl: g26s02, caption: "United on the fairway" },
+        { id: -115, imageUrl: g26s03, caption: "The camaraderie that defines this event" },
+        { id: -116, imageUrl: g26s04, caption: "Teammates and friends, always" },
+      ],
+    },
+    {
+      title: "Clubhouse Memories",
+      description: CATEGORY_DESCRIPTIONS["Clubhouse Memories"],
+      items: [
+        { id: -117, imageUrl: g26s05, caption: "Winding down after a great round" },
+        { id: -118, imageUrl: g26s06, caption: "The conversations after the final hole" },
+        { id: -119, imageUrl: g26s07, caption: "Where the stories get told" },
+        { id: -120, imageUrl: g26s08, caption: "From the course to the clubhouse" },
+      ],
+    },
+    {
+      title: "Lasting Impressions",
+      description: CATEGORY_DESCRIPTIONS["Lasting Impressions"],
+      items: [
+        { id: -121, imageUrl: g26s09, caption: "A moment worth holding onto" },
+        { id: -122, imageUrl: g26s10, caption: "The Jack Pitts Open — unforgettable every year" },
+        { id: -123, imageUrl: g26s11, caption: "More than a tournament — a tradition" },
+        { id: -124, imageUrl: g26s12, caption: "Until next year" },
+      ],
+    },
+    {
+      title: "Teams With Jack",
+      description: CATEGORY_DESCRIPTIONS["Teams With Jack"],
+      items: [
+        { id: -125, imageUrl: g26s13, caption: "Sharing the course with Jack" },
+        { id: -126, imageUrl: g26s14, caption: "Honored to be part of the outing" },
+        { id: -127, imageUrl: g26s15, caption: "A foursome to remember" },
+        { id: -128, imageUrl: g26n01, caption: "Sharing the course with Jack" },
+        { id: -129, imageUrl: g26n02, caption: "A foursome to remember" },
+        { id: -130, imageUrl: g26n03, caption: "Honored to tee it up with Jack" },
+      ],
+    },
+  ];
 
   const handleTabSwitch = (year: 2025 | 2026) => {
     setActiveYear(year);
