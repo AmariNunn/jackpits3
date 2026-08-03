@@ -76,7 +76,7 @@ import jackTeam20 from "@assets/img_1720_1776699094616.jpg";
 
 // Category names shared across both years
 const CATEGORY_NAMES = [
-  "Awards & Banquet",
+  "Moments to Remember",
   "Fairway Friends",
   "Course Action",
   "Team Spirit",
@@ -86,7 +86,7 @@ const CATEGORY_NAMES = [
 ];
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  "Awards & Banquet": "Honoring excellence and celebrating together",
+  "Moments to Remember": "Honoring excellence and celebrating together",
   "Fairway Friends": "Teams and foursomes enjoying the course",
   "Course Action": "In the swing of things out on the links",
   "Team Spirit": "The camaraderie that makes this event special",

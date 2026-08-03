@@ -23,7 +23,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 
 const ALLOWED_MIME_PREFIXES = ["image/"];
 const ALLOWED_YEARS = new Set([2025, 2026]);
 const ALLOWED_CATEGORIES = new Set([
-  "Awards & Banquet",
+  "Moments to Remember",
   "Fairway Friends",
   "Course Action",
   "Team Spirit",
