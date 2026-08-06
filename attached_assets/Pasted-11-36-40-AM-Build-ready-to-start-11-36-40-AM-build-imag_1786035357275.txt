@@ -1,0 +1,34 @@
+11:36:40 AM: Build ready to start
+11:36:40 AM: build-image version: 969defd95f3977f8de9cb1f48802a7e6f3d8c0b3 (noble-new-builds)
+11:36:40 AM: buildbot version: 28be32b1fbed3d4d1daa9ac3c8ecb4a4de15bbdd
+11:36:41 AM: Fetching cached dependencies
+11:36:41 AM: Failed to fetch cache, continuing with build
+11:36:41 AM: Starting to prepare the repo for build
+11:36:41 AM: No cached dependencies found. Cloning fresh repo
+11:36:41 AM: git clone --filter=blob:none https://github.com/AmariNunn/jackpits3
+11:36:41 AM: Preparing Git Reference refs/heads/main
+11:36:59 AM: Installing dependencies
+11:36:59 AM: mise ~/.config/mise/config.toml tools: python@3.14.3
+11:36:59 AM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+11:36:59 AM: mise ~/.config/mise/config.toml tools: go@1.26.2
+11:36:59 AM: Downloading and installing node v22.23.2...
+11:36:59 AM: Downloading https://nodejs.org/dist/v22.23.2/node-v22.23.2-linux-x64.tar.xz...
+11:37:00 AM: Computing checksum with sha256sum
+11:37:00 AM: Checksums matched!
+11:37:02 AM: Now using node v22.23.2 (npm v10.9.8)
+11:37:02 AM: Enabling Node.js Corepack
+11:37:02 AM: No npm workspaces detected
+11:37:02 AM: Installing npm packages using npm version 10.9.8
+11:38:14 AM: npm error code ENOTFOUND
+11:38:14 AM: npm error syscall getaddrinfo
+11:38:14 AM: npm error errno ENOTFOUND
+11:38:14 AM: npm error network request to http://package-firewall.replit.local/npm/multer/-/multer-2.2.0.tgz failed, reason: getaddrinfo ENOTFOUND package-firewall.replit.local
+11:38:14 AM: npm error network This is a problem related to network connectivity.
+11:38:14 AM: npm error network In most cases you are behind a proxy or have bad network settings.
+11:38:14 AM: npm error network
+11:38:14 AM: npm error network If you are behind a proxy, please make sure that the
+11:38:14 AM: npm error network 'proxy' config is set properly.  See: 'npm help config'
+11:38:14 AM: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-08-03T16_37_02_856Z-debug-0.log
+11:38:14 AM: Error during npm install
+11:38:14 AM: Failing build: Failed to install dependencies
+11:38:15 AM: Failed during stage 'Install dependencies': dependency_installation script returned non-zero exit code: 1
