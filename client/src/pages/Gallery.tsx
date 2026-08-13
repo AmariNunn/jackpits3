@@ -115,6 +115,12 @@ import g26b07 from "@/assets/gallery/img2026-b2-07.jpg";
 import g26b08 from "@/assets/gallery/img2026-b2-08.jpg";
 import g26b09 from "@/assets/gallery/img2026-b2-09.jpg";
 import g26b10 from "@/assets/gallery/img2026-b2-10.jpg";
+import g26c01 from "@/assets/gallery/img2026-b3-01.jpg";
+import g26c02 from "@/assets/gallery/img2026-b3-02.jpg";
+import g26c03 from "@/assets/gallery/img2026-b3-03.jpg";
+import g26c04 from "@/assets/gallery/img2026-b3-04.jpg";
+import g26c06 from "@/assets/gallery/img2026-b3-06.jpg";
+import g26c07 from "@/assets/gallery/img2026-b3-07.jpg";
 
 // Category names shared across both years
 const CATEGORY_NAMES = [
@@ -416,6 +422,7 @@ export default function Gallery() {
         { id: -142, imageUrl: g26b03, caption: "A well-earned recognition" },
         { id: -143, imageUrl: g26b04, caption: "Celebrating a champion" },
         { id: -144, imageUrl: g26b06, caption: "A trophy well deserved" },
+        { id: -153, imageUrl: g26c03, caption: "Stepping up to receive a hard-earned honor" },
       ],
     },
     {
@@ -426,6 +433,7 @@ export default function Gallery() {
         { id: -106, imageUrl: g26j06, caption: "Friends for life, bonded by the game" },
         { id: -107, imageUrl: g26j07, caption: "Out on the fairway with the best crew" },
         { id: -108, imageUrl: g26j08, caption: "Another round, another memory" },
+        { id: -151, imageUrl: g26c01, caption: "A foursome ready to take on the course" },
       ],
     },
     {
@@ -436,6 +444,8 @@ export default function Gallery() {
         { id: -110, imageUrl: g26j10, caption: "On the links and in the zone" },
         { id: -111, imageUrl: g26j11, caption: "The course brought out the best in everyone" },
         { id: -112, imageUrl: g26j12, caption: "A perfect day for golf" },
+        { id: -155, imageUrl: g26c06, caption: "Lining up on the fairway" },
+        { id: -156, imageUrl: g26c07, caption: "Reading the green, making it count" },
       ],
     },
     {
@@ -446,6 +456,7 @@ export default function Gallery() {
         { id: -114, imageUrl: g26s02, caption: "United on the fairway" },
         { id: -115, imageUrl: g26s03, caption: "The camaraderie that defines this event" },
         { id: -116, imageUrl: g26s04, caption: "Teammates and friends, always" },
+        { id: -152, imageUrl: g26c02, caption: "Representing the Jack Pitts Open in style" },
       ],
     },
     {
@@ -459,6 +470,7 @@ export default function Gallery() {
         { id: -145, imageUrl: g26b02, caption: "The room comes together after a great day on the course" },
         { id: -146, imageUrl: g26b05, caption: "Words from the heart at the Jack Pitts Open" },
         { id: -147, imageUrl: g26b07, caption: "Sharing the spirit of the day" },
+        { id: -154, imageUrl: g26c04, caption: "Running the show behind the podium" },
       ],
     },
     {
