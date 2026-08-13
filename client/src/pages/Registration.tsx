@@ -59,7 +59,7 @@ const defaultForm: FormData = {
 };
 
 function isAfterJuly11() {
-  return new Date() > new Date("2026-07-11");
+  return new Date() > new Date("2027-07-11");
 }
 
 function calcTotal(form: FormData): number {
@@ -215,7 +215,7 @@ export default function Registration() {
     <div className="min-h-screen bg-[#f5f0e8]">
       <PageHeader
         title="Registration"
-        subtitle="Annual Golf Outing · July 25–26, 2026 · Michigan State University Club"
+        subtitle="Annual Golf Outing · July 24, 2027 · Michigan State University Club"
         leftImage={puttingImg}
       />
 
@@ -248,7 +248,7 @@ export default function Registration() {
                 <div className="text-center mb-4">
                   <p className="text-4xl font-display font-bold text-[#1a6b3a]">{late ? "$150" : "$125"}</p>
                   <p className="text-[#0d1f0f]/50 text-sm font-body">per golfer</p>
-                  {!late && <p className="text-[#c9973a] text-xs mt-1 font-body">$150 after July 11, 2026</p>}
+                  {!late && <p className="text-[#c9973a] text-xs mt-1 font-body">$150 after July 11, 2027</p>}
                 </div>
                 <ul className="space-y-2 mb-6 flex-1">
                   {["18 Holes of Golf with Cart", "Lunch at the Turn", "Cash Prizes", "Awards Banquet", "Prizes for Men & Women"].map((f, i) => (
@@ -281,7 +281,7 @@ export default function Registration() {
                 <div className="text-center mb-4">
                   <p className="text-4xl font-display font-bold text-[#c9973a]">{late ? "$600" : "$500"}</p>
                   <p className="text-[#0d1f0f]/50 text-sm font-body">for 4 golfers</p>
-                  {!late && <p className="text-[#c9973a] text-xs mt-1 font-body">$600 after July 11, 2026</p>}
+                  {!late && <p className="text-[#c9973a] text-xs mt-1 font-body">$600 after July 11, 2027</p>}
                 </div>
                 <ul className="space-y-2 mb-6 flex-1">
                   {["18 Holes of Golf with Cart", "Lunch at the Turn", "Cash Prizes", "Awards Banquet", "Prizes for Men & Women"].map((f, i) => (
