@@ -105,6 +105,16 @@ import g26s15 from "@/assets/gallery/img2026-spread-15.jpg";
 import g26n01 from "@/assets/gallery/img2026-new-01.jpg";
 import g26n02 from "@/assets/gallery/img2026-new-02.jpg";
 import g26n03 from "@/assets/gallery/img2026-new-03.jpg";
+import g26b01 from "@/assets/gallery/img2026-b2-01.jpg";
+import g26b02 from "@/assets/gallery/img2026-b2-02.jpg";
+import g26b03 from "@/assets/gallery/img2026-b2-03.jpg";
+import g26b04 from "@/assets/gallery/img2026-b2-04.jpg";
+import g26b05 from "@/assets/gallery/img2026-b2-05.jpg";
+import g26b06 from "@/assets/gallery/img2026-b2-06.jpg";
+import g26b07 from "@/assets/gallery/img2026-b2-07.jpg";
+import g26b08 from "@/assets/gallery/img2026-b2-08.jpg";
+import g26b09 from "@/assets/gallery/img2026-b2-09.jpg";
+import g26b10 from "@/assets/gallery/img2026-b2-10.jpg";
 
 // Category names shared across both years
 const CATEGORY_NAMES = [
@@ -402,6 +412,10 @@ export default function Gallery() {
         { id: -102, imageUrl: g26j02, caption: "Celebrating the spirit of the Jack Pitts Open" },
         { id: -103, imageUrl: g26j03, caption: "Together in the moment" },
         { id: -104, imageUrl: g26j04, caption: "Community, competition, and connection" },
+        { id: -141, imageUrl: g26b01, caption: "Presenting the trophy with pride" },
+        { id: -142, imageUrl: g26b03, caption: "A well-earned recognition" },
+        { id: -143, imageUrl: g26b04, caption: "Celebrating a champion" },
+        { id: -144, imageUrl: g26b06, caption: "A trophy well deserved" },
       ],
     },
     {
@@ -442,6 +456,9 @@ export default function Gallery() {
         { id: -118, imageUrl: g26s06, caption: "The conversations after the final hole" },
         { id: -119, imageUrl: g26s07, caption: "Where the stories get told" },
         { id: -120, imageUrl: g26s08, caption: "From the course to the clubhouse" },
+        { id: -145, imageUrl: g26b02, caption: "The room comes together after a great day on the course" },
+        { id: -146, imageUrl: g26b05, caption: "Words from the heart at the Jack Pitts Open" },
+        { id: -147, imageUrl: g26b07, caption: "Sharing the spirit of the day" },
       ],
     },
     {
@@ -452,6 +469,9 @@ export default function Gallery() {
         { id: -122, imageUrl: g26s10, caption: "The Jack Pitts Open — unforgettable every year" },
         { id: -123, imageUrl: g26s11, caption: "More than a tournament — a tradition" },
         { id: -124, imageUrl: g26s12, caption: "Until next year" },
+        { id: -148, imageUrl: g26b08, caption: "Honored and recognized" },
+        { id: -149, imageUrl: g26b09, caption: "The winning team with their crystal" },
+        { id: -150, imageUrl: g26b10, caption: "A champion moment at the Jack Pitts Open" },
       ],
     },
     {
