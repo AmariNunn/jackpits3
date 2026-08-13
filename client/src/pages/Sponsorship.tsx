@@ -263,7 +263,7 @@ export default function Sponsorship() {
     <div className="min-h-screen bg-[#f5f0e8] pb-12 md:pb-20">
       <PageHeader
         title="Sponsorship"
-        subtitle="Annual Golf Outing · July 25–26, 2026 · Michigan State University Club"
+        subtitle="Annual Golf Outing · July 24, 2027 · Michigan State University Club"
         leftImage={celebrationImg}
       />
 
@@ -362,7 +362,7 @@ export default function Sponsorship() {
               >
                 <div className="bg-[#0d1f0f] px-6 py-5 flex-shrink-0">
                   <h3 className="text-xl font-display font-bold text-white">Sponsorship Inquiry</h3>
-                  <p className="text-white/60 text-sm font-body mt-1">Fill in your details, then choose how to pay. Deadline: July 11, 2026</p>
+                  <p className="text-white/60 text-sm font-body mt-1">Fill in your details, then choose how to pay. Deadline: July 11, 2027</p>
                 </div>
 
                 <div className="overflow-y-auto flex-1">
@@ -705,7 +705,7 @@ export default function Sponsorship() {
                     <div className="pt-3 border-t border-[#0d1f0f]/10">
                       <p className="text-xs font-athletic tracking-[0.12em] uppercase text-[#0d1f0f]/40 mb-1">Sponsorship tier</p>
                       <p className="font-display font-bold text-[#0d1f0f]">{form.tier}</p>
-                      <p className="text-sm text-[#1a6b3a] font-body mt-1">Deadline: <strong>July 11, 2026</strong></p>
+                      <p className="text-sm text-[#1a6b3a] font-body mt-1">Deadline: <strong>July 11, 2027</strong></p>
                     </div>
                   </div>
                 </div>
